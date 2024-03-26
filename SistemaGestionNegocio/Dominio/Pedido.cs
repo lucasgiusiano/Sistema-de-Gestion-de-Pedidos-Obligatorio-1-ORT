@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SistemaGestionNegocio.Dominio
 {
-    public abstract class Pedido
+    public abstract class Pedido 
     {
         public Guid Id { get; set; }
         public DateTime FechaPedido { get; set; }
