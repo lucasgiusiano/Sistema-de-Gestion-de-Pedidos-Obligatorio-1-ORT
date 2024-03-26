@@ -14,6 +14,7 @@ namespace SistemaGestionNegocio.Dominio
         public string CodigoProveedor { get; set; }
         public double PrecioVenta { get; set; }
         public int Stock { get; set; }
+
         public Articulo(string nombre, string descripcion, string codigoProveedor, double precioVenta, int stock)
         {
             Id = Guid.NewGuid();

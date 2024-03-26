@@ -13,6 +13,7 @@ namespace SistemaGestionNegocio.Dominio
         public int Numero { get; set; }
         public string Ciudad { get; set; }
         public double DistanciaDeposito { get; set; }
+
         public Direccion(string calle, int numero, string ciudad, double distanciaDeposito)
         {
             Id = Guid.NewGuid();
