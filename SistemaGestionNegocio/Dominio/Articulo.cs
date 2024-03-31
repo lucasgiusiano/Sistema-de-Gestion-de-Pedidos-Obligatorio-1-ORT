@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SistemaGestionNegocio.InterfacesDominio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SistemaGestionNegocio.Dominio
 {
-    public class Articulo
+    public class Articulo: IValidable
     {
         public Guid Id { get; set; }
         public string Nombre { get; set; }
@@ -23,6 +24,11 @@ namespace SistemaGestionNegocio.Dominio
             CodigoProveedor = codigoProveedor;
             PrecioVenta = precioVenta;
             Stock = stock;
+        }
+
+        public void Validar()
+        {
+            throw new NotImplementedException();
         }
     }
 }

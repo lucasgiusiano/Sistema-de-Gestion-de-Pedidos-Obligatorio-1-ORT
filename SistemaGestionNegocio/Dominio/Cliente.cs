@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SistemaGestionNegocio.InterfacesDominio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SistemaGestionNegocio.Dominio
 {
-    public class Cliente
+    public class Cliente: IValidable
     {
         public Guid Id { get; set; }
         public string RazonSocial { get; set; }
@@ -19,6 +20,11 @@ namespace SistemaGestionNegocio.Dominio
             RazonSocial = razonSocial;
             Rut = rut;
             Direccion = direccion;
+        }
+
+        public void Validar()
+        {
+            throw new NotImplementedException();
         }
     }
 }

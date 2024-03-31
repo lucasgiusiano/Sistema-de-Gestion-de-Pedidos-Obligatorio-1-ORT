@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BCrypt.Net;
+using SistemaGestionNegocio.InterfacesDominio;
 
 namespace SistemaGestionNegocio.Dominio
 {
-    public class Usuario
+    public class Usuario: IValidable
     {
         public Guid Id { get; set; }
         public string Email { get; set; }
@@ -36,6 +37,11 @@ namespace SistemaGestionNegocio.Dominio
         public bool ValidarContraseña(string contrasenia) // Validar la contraseña ingresada comparándola con el hash almacenado
         {
             return BCrypt.Net.BCrypt.Verify(contrasenia, ContraseniaHasheada);
+        }
+
+        public void Validar()
+        {
+            throw new NotImplementedException();
         }
     }
 }
