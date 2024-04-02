@@ -16,12 +16,12 @@ namespace SistemaGestionNegocio.Dominio
         {
             Articulo = articulo;
             Cantidad = cantidad;
-            PrecioUnitario = CalcularSubtotal();
+            PrecioUnitario = Articulo.PrecioVenta;
         }
 
         public double CalcularSubtotal()
         {
-            return Cantidad * Articulo.PrecioVenta;
+            return Cantidad * PrecioUnitario;
         }
     }
 }
