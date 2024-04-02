@@ -8,29 +8,24 @@ using System.Threading.Tasks;
 
 namespace SistemaGestionDatos.Repositorios
 {
-    public class RepositorioUsuario : IRepositorioUsuario
+    public class RepositorioPedido : IRepositorioPedido
     {
-        public void Alta(Usuario nuevo)
+        public void Alta(Pedido nuevo)
         {
             throw new NotImplementedException();
         }
 
-        public void Baja(int id)
+        public void Anular(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Usuario BuscarPorId(int id)
+        public Pedido BuscarPorId(int id)
         {
             throw new NotImplementedException();
         }
 
-        public void Modificar(Usuario modificado)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Usuario> ObtenerListado()
+        public List<Pedido> ListadoFiltrado(DateTime fechaFiltro1, DateTime fechaFiltro2)
         {
             throw new NotImplementedException();
         }

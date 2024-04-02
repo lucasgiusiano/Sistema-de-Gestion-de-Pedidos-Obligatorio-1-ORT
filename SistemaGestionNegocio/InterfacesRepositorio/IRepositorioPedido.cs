@@ -12,6 +12,6 @@ namespace SistemaGestionNegocio.InterfacesRepositorio
         void Alta(Pedido nuevo);
         void Anular(int id);
         Pedido BuscarPorId(int id);
-        List<Pedido> Listado(DateTime fechaFiltro);
+        List<Pedido> ListadoFiltrado(DateTime fechaFiltro1, DateTime fechaFiltro2);
     }
 }

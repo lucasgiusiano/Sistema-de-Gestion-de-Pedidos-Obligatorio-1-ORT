@@ -18,9 +18,9 @@ namespace SistemaGestionAplicacion.CasosUso.CUPedido
             Repo = repo;
         }
 
-        public List<Pedido> Listado(DateTime fechaFiltro)
+        public List<Pedido> ListadoFiltrado(DateTime fechaFiltro1, DateTime fechaFiltro2)
         {
-            return Repo.Listado(fechaFiltro);
+            return Repo.ListadoFiltrado(fechaFiltro1, fechaFiltro2);
         }
     }
 }

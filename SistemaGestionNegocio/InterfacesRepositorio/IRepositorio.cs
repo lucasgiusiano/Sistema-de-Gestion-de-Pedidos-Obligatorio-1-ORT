@@ -8,7 +8,6 @@ namespace SistemaGestionNegocio.InterfacesRepositorio
 {
     public interface IRepositorio<T>
     {
-
         void Alta(T nuevo);
         void Baja(int id);
         void Modificar(T modificado);
