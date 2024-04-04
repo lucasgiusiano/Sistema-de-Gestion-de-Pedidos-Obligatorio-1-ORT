@@ -1,10 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SistemaGestionNegocio.Dominio;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SistemaGestionNegocio.ExcepcionesPropias;
 
 namespace SistemaGestionDatos.Repositorios
 {
@@ -18,10 +14,24 @@ namespace SistemaGestionDatos.Repositorios
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
+            
+
+            if (!optionsBuilder.IsConfigured) //se comprueba si la base de datos ya esta configurada.
             {
-                optionsBuilder.UseSqlServer("Data Source = (localdb)\\MSSQLLOCALDB; Initial Catalog = SistemaGestionPedidos; Integrated Security=SSPI;");
+                try
+                {
+                    base.OnConfiguring(optionsBuilder);
+                    optionsBuilder.UseSqlServer("Data Source = (localdb)\\MSSQLLOCALDB; Initial Catalog = SistemaGestionPedidos; Integrated Security=SSPI;");
+                }
+                catch (Exception ex)
+                {
+                    
+                    Console.WriteLine("Error al configurar la base de datos: " + ex.Message);
+                    
+                    throw new DatabaseConfigurationException("Error al configurar la base de datos.", ex);
+                }
             }
+
         }
     }
 }
