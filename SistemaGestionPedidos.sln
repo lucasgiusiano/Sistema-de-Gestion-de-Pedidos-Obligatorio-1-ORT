@@ -3,16 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.34607.79
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaGestionPedidos", "SistemaGestionPedidos\SistemaGestionPedidos.csproj", "{FC4BE0DB-34AB-4F1A-BD01-DDA79FAE8DA5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemaGestionPedidos", "SistemaGestionPedidos\SistemaGestionPedidos.csproj", "{FC4BE0DB-34AB-4F1A-BD01-DDA79FAE8DA5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{02FEC15E-5EC7-42B0-A8DD-932BAD2C5752} = {02FEC15E-5EC7-42B0-A8DD-932BAD2C5752}
+		{1F411DB7-4DFA-43E6-ACB0-123B0CDCAA22} = {1F411DB7-4DFA-43E6-ACB0-123B0CDCAA22}
+		{51470786-9A57-4556-94D0-AEB59BD43894} = {51470786-9A57-4556-94D0-AEB59BD43894}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaGestionNegocio", "SistemaGestionNegocio\SistemaGestionNegocio.csproj", "{51470786-9A57-4556-94D0-AEB59BD43894}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemaGestionNegocio", "SistemaGestionNegocio\SistemaGestionNegocio.csproj", "{51470786-9A57-4556-94D0-AEB59BD43894}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaGestionAplicacion", "SistemaGestionAplicacion\SistemaGestionAplicacion.csproj", "{1F411DB7-4DFA-43E6-ACB0-123B0CDCAA22}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemaGestionAplicacion", "SistemaGestionAplicacion\SistemaGestionAplicacion.csproj", "{1F411DB7-4DFA-43E6-ACB0-123B0CDCAA22}"
 	ProjectSection(ProjectDependencies) = postProject
 		{51470786-9A57-4556-94D0-AEB59BD43894} = {51470786-9A57-4556-94D0-AEB59BD43894}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaGestionDatos", "SistemaGestionDatos\SistemaGestionDatos.csproj", "{02FEC15E-5EC7-42B0-A8DD-932BAD2C5752}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemaGestionDatos", "SistemaGestionDatos\SistemaGestionDatos.csproj", "{02FEC15E-5EC7-42B0-A8DD-932BAD2C5752}"
 	ProjectSection(ProjectDependencies) = postProject
 		{51470786-9A57-4556-94D0-AEB59BD43894} = {51470786-9A57-4556-94D0-AEB59BD43894}
 	EndProjectSection
