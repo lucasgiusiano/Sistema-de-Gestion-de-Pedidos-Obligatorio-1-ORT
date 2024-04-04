@@ -16,22 +16,12 @@ namespace SistemaGestionNegocio.Dominio
         public bool Anulado { get; set; }
         public double PrecioFinal { get; set; }
 
-        public Pedido(DateTime fechaPedido, DateTime fechaEntrega, Cliente cliente, List<Linea> lineas, bool anulado, double precioFinal)
-        {
-            Id = Guid.NewGuid();
-            FechaPedido = fechaPedido;
-            FechaEntrega = fechaEntrega;
-            Cliente = cliente;
-            Lineas = lineas;
-            Anulado = false;
-            PrecioFinal = CalcularTotal();
-        }
-
         public Pedido()
         {
             Id = Guid.NewGuid();
-            Anulado = false;
+            Lineas = new List<Linea>();
         }
+
 
         public abstract double CalcularTotal();
     }

@@ -10,6 +10,9 @@ namespace SistemaGestionDatos.Repositorios
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Pedido> Pedidos { get; set; }
+        public DbSet<PedidoComun> PedidosComunes { get; set; }
+        public DbSet<PedidoExpress> PedidosExpress { get; set; }
+        public DbSet<Direccion> Direcciones { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -8,12 +8,16 @@ namespace SistemaGestionNegocio.ExcepcionesPropias
 {
     public class DatabaseConfigurationException: Exception
     {
-        public DatabaseConfigurationException() { }
+        public DatabaseConfigurationException()
+        {
+        }
 
-        public DatabaseConfigurationException(string message)
-            : base(message) { }
+        public DatabaseConfigurationException(string message): base(message)
+        {
+        }
 
-        public DatabaseConfigurationException(string message, Exception innerException)
-            : base(message, innerException) { }
+        public DatabaseConfigurationException(string message, Exception innerException): base(message, innerException)
+        {
+        }
     }
 }
