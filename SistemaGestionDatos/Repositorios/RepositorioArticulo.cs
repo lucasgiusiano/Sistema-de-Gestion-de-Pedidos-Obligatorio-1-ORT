@@ -10,6 +10,13 @@ namespace SistemaGestionDatos.Repositorios
 {
     public class RepositorioArticulo : IRepositorioArticulo
     {
+        public SistemaGestionContext DBContext { get; set; }
+
+        public RepositorioArticulo(SistemaGestionContext ctx)
+        {
+            DBContext = ctx;
+        }
+
         public void Alta(Articulo nuevo)
         {
             throw new NotImplementedException();

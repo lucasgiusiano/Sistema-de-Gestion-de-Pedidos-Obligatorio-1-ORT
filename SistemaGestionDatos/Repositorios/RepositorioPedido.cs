@@ -10,24 +10,44 @@ namespace SistemaGestionDatos.Repositorios
 {
     public class RepositorioPedido : IRepositorioPedido
     {
+        public SistemaGestionContext DBContext { get; set; }
+
+        public RepositorioPedido(SistemaGestionContext ctx)
+        {
+            DBContext = ctx;
+        }
+
         public void Alta(Pedido nuevo)
         {
-            throw new NotImplementedException();
+            if (nuevo != null)
+            {
+                nuevo.Validar();
+                DBContext.Pedidos.Add(nuevo);
+                DBContext.SaveChanges();
+            }
         }
 
-        public void Anular(int id)
+        public void Anular(Guid id)
         {
-            throw new NotImplementedException();
+            Pedido aAnular = BuscarPorId(id);
+            if (aAnular != null)
+            {
+                aAnular.AnularPedido();
+                DBContext.Update(aAnular);
+                DBContext.SaveChanges();
+            }
         }
 
-        public Pedido BuscarPorId(int id)
+        public Pedido BuscarPorId(Guid id)
         {
-            throw new NotImplementedException();
+            return DBContext.Pedidos.Where(p => p.Id == id).SingleOrDefault();
         }
 
-        public List<Pedido> ListadoFiltrado(DateTime fechaFiltro1, DateTime fechaFiltro2)
+        public List<Pedido> ListadoFiltrado(DateTime fechaFiltro)
         {
-            throw new NotImplementedException();
+            //Devuelve hechos en la fecha filtrada que no hayan sido entregadas aún
+            //(Usa el valor de la fecha de entrega para saber si ya fue entregado o no si es != de DateTime.MinValue asume que se entregó)
+            return DBContext.Pedidos.Where(p => p.FechaPedido.Date == fechaFiltro.Date && p.FechaEntrega == DateTime.MinValue).ToList();
         }
     }
 }

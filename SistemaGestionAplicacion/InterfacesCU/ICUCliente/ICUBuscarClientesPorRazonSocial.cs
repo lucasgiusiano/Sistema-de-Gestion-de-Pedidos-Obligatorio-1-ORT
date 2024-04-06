@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace SistemaGestionAplicacion.InterfacesCU.ICUCliente
 {
-    public interface ICUBuscarClientesPorNombre
+    public interface ICUBuscarClientesPorRazonSocial
     {
-        List<Cliente> BuscarClientesPorNOA(string nombreOApellido);
+        List<Cliente> BuscarClientesPorRazonSocial(string nombreOApellido);
     }
 }

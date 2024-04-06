@@ -1,6 +1,6 @@
 ﻿namespace SistemaGestionPedidos.Models
 {
-    public class CliienteViewModel
+    public class ClienteViewModel
     {
     }
 }

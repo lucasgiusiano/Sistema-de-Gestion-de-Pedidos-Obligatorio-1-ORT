@@ -1,4 +1,5 @@
-﻿using SistemaGestionNegocio.Dominio;
+﻿using Microsoft.EntityFrameworkCore.Infrastructure;
+using SistemaGestionNegocio.Dominio;
 using SistemaGestionNegocio.InterfacesRepositorio;
 using System;
 using System.Collections.Generic;
@@ -10,29 +11,54 @@ namespace SistemaGestionDatos.Repositorios
 {
     public class RepositorioUsuario : IRepositorioUsuario
     {
+
+        public SistemaGestionContext DBContext { get; set; }
+
+        public RepositorioUsuario(SistemaGestionContext ctx)
+        {
+            DBContext = ctx;
+        }
+
         public void Alta(Usuario nuevo)
         {
-            throw new NotImplementedException();
+            if (nuevo != null)
+            {
+                nuevo.Validar();
+                DBContext.Usuarios.Add(nuevo);
+                DBContext.SaveChanges();
+            }
+
         }
 
-        public void Baja(int id)
+        public void Baja(Guid id)
         {
-            throw new NotImplementedException();
+            Usuario aEliminar = DBContext.Usuarios.Find(id);
+            if (aEliminar != null)
+            {
+                DBContext.Usuarios.Remove(aEliminar);
+                DBContext.SaveChanges();
+            }
+
         }
 
-        public Usuario BuscarPorId(int id)
+        public Usuario BuscarPorId(Guid id)
         {
-            throw new NotImplementedException();
+            return DBContext.Usuarios.Where(u => u.Id == id).SingleOrDefault();
         }
 
         public void Modificar(Usuario modificado)
         {
-            throw new NotImplementedException();
+            if (modificado != null)
+            {
+                modificado.Validar();
+                DBContext.Usuarios.Update(modificado);
+                DBContext.SaveChanges();
+            }
         }
 
         public List<Usuario> ObtenerListado()
         {
-            throw new NotImplementedException();
+            return DBContext.Usuarios.ToList();
         }
     }
 }

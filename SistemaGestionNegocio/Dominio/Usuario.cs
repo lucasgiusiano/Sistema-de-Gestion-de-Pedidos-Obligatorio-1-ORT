@@ -82,6 +82,7 @@ namespace SistemaGestionNegocio.Dominio
                 return builder.ToString();
             }
         }
+
         public void Validar()
         {
             var error = new List<string>();

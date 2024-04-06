@@ -32,7 +32,7 @@ namespace SistemaGestionPedidos
             builder.Services.AddScoped <ICUAlta<Articulo>, CUAltaArticulo> ();
             builder.Services.AddScoped<ICUListadoOrdenadoArticulos, CUListadoOrdenadoArticulos>();
             builder.Services.AddScoped<ICUBuscarClientesPorMonto, CUBuscarClientesPorMonto>();
-            builder.Services.AddScoped<ICUBuscarClientesPorNombre, CUBuscarClientesPorNombre>();
+            builder.Services.AddScoped<ICUBuscarClientesPorRazonSocial, CUBuscarClientesPorRazonSocial>();
             builder.Services.AddScoped<ICUAlta<Pedido>, CUAltaPedido>();
             builder.Services.AddScoped<ICUAnularPedido, CUAnularPedido>();
             builder.Services.AddScoped<ICUListadoPedidosAnuladosXFecha, CUListadoPedidosAnuladosXFecha>();

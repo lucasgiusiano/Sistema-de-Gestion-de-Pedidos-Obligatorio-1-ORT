@@ -22,7 +22,16 @@ namespace SistemaGestionNegocio.Dominio
             Lineas = new List<Linea>();
         }
 
+        public void AnularPedido()
+        {
+            Anulado = true;
+        }
 
         public abstract double CalcularTotal();
+
+        public void Validar()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
