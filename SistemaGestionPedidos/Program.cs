@@ -24,15 +24,13 @@ namespace SistemaGestionPedidos
         {
             var builder = WebApplication.CreateBuilder(args);
 
-
-
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddScoped <ICUAlta<Articulo>, CUAltaArticulo> ();
             builder.Services.AddScoped<ICUListadoOrdenadoArticulos, CUListadoOrdenadoArticulos>();
             builder.Services.AddScoped<ICUBuscarClientesPorMonto, CUBuscarClientesPorMonto>();
-            builder.Services.AddScoped<ICUBuscarClientesPorRazonSocial, CUBuscarClientesPorRazonSocial>();
+            builder.Services.AddScoped<ICUBuscarClientePorRazonSocial, CUBuscarClientesPorRazonSocial>();
             builder.Services.AddScoped<ICUAlta<Pedido>, CUAltaPedido>();
             builder.Services.AddScoped<ICUAnularPedido, CUAnularPedido>();
             builder.Services.AddScoped<ICUListadoPedidosAnuladosXFecha, CUListadoPedidosAnuladosXFecha>();

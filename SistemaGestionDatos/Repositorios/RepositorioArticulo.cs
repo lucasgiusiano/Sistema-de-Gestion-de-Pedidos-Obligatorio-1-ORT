@@ -19,12 +19,17 @@ namespace SistemaGestionDatos.Repositorios
 
         public void Alta(Articulo nuevo)
         {
-            throw new NotImplementedException();
+            if (nuevo != null)
+            {
+                nuevo.Validar();
+                DBContext.Articulos.Add(nuevo);
+                DBContext.SaveChanges();
+            }
         }
 
         public List<Articulo> ListadoOrdenado()
         {
-            throw new NotImplementedException();
+            return DBContext.Articulos.OrderBy(a => a.Nombre).ToList();
         }
     }
 }

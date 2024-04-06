@@ -9,7 +9,7 @@ namespace SistemaGestionNegocio.InterfacesRepositorio
 {
     public interface IRepositorioCliente
     {
-        List<Cliente> BuscarPorRazonSocial(string razonSocial);
+        Cliente BuscarPorRazonSocial(string razonSocial);
         List<Cliente> BuscarPorMonto(double monto);
     }
 }

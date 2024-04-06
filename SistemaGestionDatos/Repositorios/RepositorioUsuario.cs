@@ -27,7 +27,6 @@ namespace SistemaGestionDatos.Repositorios
                 DBContext.Usuarios.Add(nuevo);
                 DBContext.SaveChanges();
             }
-
         }
 
         public void Baja(Guid id)

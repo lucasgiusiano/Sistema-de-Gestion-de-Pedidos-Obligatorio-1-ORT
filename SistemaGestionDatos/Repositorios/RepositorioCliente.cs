@@ -19,12 +19,14 @@ namespace SistemaGestionDatos.Repositorios
 
         public List<Cliente> BuscarPorMonto(double monto)
         {
-            throw new NotImplementedException();
+            //Selecciona de la tabla pedidos los que superan el monto solicitado y a partir de ella topa solo el atributo que contiene el cliente
+            //Por ultimo se asegura de que no haya clientes repetidos con .Distinct()
+            return DBContext.Pedidos.Where(p => p.PrecioFinal > monto).Select(p => p.Cliente).Distinct().ToList();
         }
 
-        public List<Cliente> BuscarPorRazonSocial(string razonSocial)
+        public Cliente BuscarPorRazonSocial(string razonSocial)
         {
-            throw new NotImplementedException();
+            return DBContext.Clientes.Where(c => c.RazonSocial == razonSocial).SingleOrDefault();
         }
     }
 }
