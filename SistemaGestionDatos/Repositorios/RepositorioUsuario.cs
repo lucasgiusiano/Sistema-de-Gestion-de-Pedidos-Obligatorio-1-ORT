@@ -63,15 +63,8 @@ namespace SistemaGestionDatos.Repositorios
 
         public Usuario BuscarXEmail(string email)
         {
-            Usuario buscado = DBContext.Usuarios.Where(u => u.Email == email).SingleOrDefault();
-            if (buscado != null)
-            {
-                return buscado;
-            }
-            else{
-                return null;
-            }
-
+            return DBContext.Usuarios.FirstOrDefault(u => u.Email == email);
         }
+
     }
 }
