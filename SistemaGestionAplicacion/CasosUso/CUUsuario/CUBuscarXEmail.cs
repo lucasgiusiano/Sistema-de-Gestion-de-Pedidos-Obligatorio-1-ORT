@@ -1,4 +1,5 @@
-﻿using SistemaGestionAplicacion.InterfacesCU.ICUGenericas;
+﻿using SistemaGestionAplicacion.InterfacesCU.ICUUsuario;
+using SistemaGestionNegocio.Dominio;
 using SistemaGestionNegocio.InterfacesRepositorio;
 using System;
 using System.Collections.Generic;
@@ -8,18 +9,18 @@ using System.Threading.Tasks;
 
 namespace SistemaGestionAplicacion.CasosUso.CUUsuario
 {
-    public class CUBajaUsuario : ICUBaja
+    public class CUBuscarXEmail : ICUBuscarXEmail
     {
         public IRepositorioUsuario Repo { get; set; }
 
-        public CUBajaUsuario(IRepositorioUsuario repo)
+        public CUBuscarXEmail(IRepositorioUsuario repo)
         {
             Repo = repo;
         }
 
-        public void Baja(Guid id)
+        public Usuario BuscarXEmail(string email)
         {
-            Repo.Baja(id);
+            Repo.BuscarXEmail(email);
         }
     }
 }

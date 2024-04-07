@@ -8,6 +8,6 @@ namespace SistemaGestionAplicacion.InterfacesCU.ICUGenericas
 {
     public interface ICUBuscar<T>
     {
-        T Buscar(int id);
+        T Buscar(Guid id);
     }
 }

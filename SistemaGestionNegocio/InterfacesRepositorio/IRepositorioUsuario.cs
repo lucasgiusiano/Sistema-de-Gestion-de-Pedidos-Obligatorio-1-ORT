@@ -9,6 +9,6 @@ namespace SistemaGestionNegocio.InterfacesRepositorio
 {
     public interface IRepositorioUsuario : IRepositorio<Usuario>
     {
-        
+        Usuario BuscarXEmail(string email);
     }
 }

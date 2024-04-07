@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SistemaGestionAplicacion.InterfacesCU.ICUPedido
+namespace SistemaGestionAplicacion.InterfacesCU.ICUUsuario
 {
-    public interface ICUListadoPedidosAnuladosXFecha
+    public interface ICUBuscarXEmail
     {
-        List<Pedido> ListadoFiltrado(DateTime fechaFiltro);
+        Usuario BuscarXEmail(string email);
     }
 }

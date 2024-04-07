@@ -12,9 +12,7 @@ using SistemaGestionAplicacion.InterfacesCU.ICUCliente;
 using SistemaGestionAplicacion.CasosUso.CUPedido;
 using SistemaGestionAplicacion.InterfacesCU.ICUPedido;
 using SistemaGestionAplicacion.CasosUso.CUUsuario;
-
-
-
+using SistemaGestionAplicacion.InterfacesCU.ICUUsuario;
 
 namespace SistemaGestionPedidos
 {
@@ -26,20 +24,25 @@ namespace SistemaGestionPedidos
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddSession();
 
             builder.Services.AddScoped <ICUAlta<Articulo>, CUAltaArticulo> ();
             builder.Services.AddScoped<ICUListadoOrdenadoArticulos, CUListadoOrdenadoArticulos>();
             builder.Services.AddScoped<ICUBuscarClientesPorMonto, CUBuscarClientesPorMonto>();
-            builder.Services.AddScoped<ICUBuscarClientePorRazonSocial, CUBuscarClientesPorRazonSocial>();
+            builder.Services.AddScoped<ICUBuscarClientePorRazonSocial, CUBuscarClientePorRazonSocial>();
             builder.Services.AddScoped<ICUAlta<Pedido>, CUAltaPedido>();
             builder.Services.AddScoped<ICUAnularPedido, CUAnularPedido>();
             builder.Services.AddScoped<ICUListadoPedidosAnuladosXFecha, CUListadoPedidosAnuladosXFecha>();
+
+            //Inyecciones de Usuario
             builder.Services.AddScoped<ICUAlta<Usuario>, CUAltaUsuario>();
             builder.Services.AddScoped<ICUBaja, CUBajaUsuario>();
             builder.Services.AddScoped<ICUBuscar<Usuario>, CUBuscarUsuario>();
             builder.Services.AddScoped<ICUListado<Usuario>, CUListadoUsuario>();
             builder.Services.AddScoped<ICUModificar<Usuario>, CUModificarUsuario>();
+            builder.Services.AddScoped<ICUBuscarXEmail, CUBuscarXEmail>();
 
+            //Inyecciones de Repositorios
             builder.Services.AddScoped<IRepositorioArticulo, RepositorioArticulo>();
             builder.Services.AddScoped<IRepositorioCliente, RepositorioCliente>();
             builder.Services.AddScoped<IRepositorioPedido, RepositorioPedido>();
@@ -64,6 +67,8 @@ namespace SistemaGestionPedidos
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.MapControllerRoute(
                 name: "default",

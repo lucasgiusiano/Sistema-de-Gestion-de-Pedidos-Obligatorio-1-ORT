@@ -1,13 +1,59 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SistemaGestionAplicacion.InterfacesCU.ICUGenericas;
+using SistemaGestionAplicacion.InterfacesCU.ICUUsuario;
+using SistemaGestionNegocio.Dominio;
+using SistemaGestionNegocio.ExcepcionesPropias;
+using System.Reflection.Metadata;
 
 namespace SistemaGestionPedidos.Controllers
 {
     public class UsuarioController : Controller
     {
+        public ICUAlta<Usuario> CUAlta { get; set; }
+        public ICUBaja CUBaja { get; set; }
+        public ICUListado<Usuario> CUListado { get; set; }
+        public ICUBuscar<Usuario> CUBuscar { get; set; }
+        public ICUBuscarXEmail CUBuscarXEmail { get; set; }
+        public ICUModificar<Usuario> CUModificar { get; set; }
+
+        public UsuarioController(ICUAlta<Usuario> cuAlta,  ICUBaja cuBaja, ICUListado<Usuario> cuListado, ICUBuscar<Usuario> cuBuscar , ICUBuscarXEmail cuBuscarXEmail , ICUModificar<Usuario> cuModificar)
+        {
+            CUAlta = cuAlta;
+            CUBaja = cuBaja;
+            CUListado = cuListado;
+            CUBuscar = cuBuscar;
+            CUBuscarXEmail = cuBuscarXEmail;
+            CUModificar = cuModificar;
+        }
+
         // GET: UsuarioController
         public ActionResult Index()
         {
+            return View();
+        }
+
+        // GET: UsuarioController
+        public ActionResult Login()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(string email, string password)
+        {
+            Usuario aValidar = new Usuario();
+            try
+            {
+                aValidar = CUBuscarXEmail.BuscarXEmail(email);
+                HttpContext.Session.SetString("EmailUsuarioLogueado", aValidar.Email) ;
+            }
+            catch (UsuarioValidationException e)
+            {
+                ViewBag.Error = e.Message;
+            }
             return View();
         }
 

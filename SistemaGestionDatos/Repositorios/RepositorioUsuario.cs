@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Infrastructure;
 using SistemaGestionNegocio.Dominio;
+using SistemaGestionNegocio.ExcepcionesPropias;
 using SistemaGestionNegocio.InterfacesRepositorio;
 using System;
 using System.Collections.Generic;
@@ -58,6 +59,19 @@ namespace SistemaGestionDatos.Repositorios
         public List<Usuario> ObtenerListado()
         {
             return DBContext.Usuarios.ToList();
+        }
+
+        public Usuario BuscarXEmail(string email)
+        {
+            Usuario buscado = DBContext.Usuarios.Where(u => u.Email == email).SingleOrDefault();
+            if (buscado != null)
+            {
+                return buscado;
+            }
+            else{
+                return null;
+            }
+
         }
     }
 }

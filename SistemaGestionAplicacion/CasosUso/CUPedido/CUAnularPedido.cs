@@ -17,7 +17,7 @@ namespace SistemaGestionAplicacion.CasosUso.CUPedido
             Repo = repo;
         }
 
-        public void Anular(int id)
+        public void Anular(Guid id)
         {
             Repo.Anular(id);
         }
