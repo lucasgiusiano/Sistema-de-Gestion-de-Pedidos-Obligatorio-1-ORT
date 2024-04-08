@@ -28,8 +28,8 @@ namespace SistemaGestionNegocio.Dominio
         [Required(ErrorMessage = "El campo Apellido es obligatorio.")]
         public string Apellido { get; set; }
 
-        private string ContraseniaHasheada { get; set; }
-        private string Contrasenia { get; set; }
+        public string ContraseniaHasheada { get; set; }
+        public string Contrasenia { get; set; }
         public bool Admin { get; set; }
 
         public Usuario()

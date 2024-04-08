@@ -20,7 +20,7 @@ namespace SistemaGestionAplicacion.CasosUso.CUUsuario
 
         public Usuario BuscarXEmail(string email)
         {
-          return  Repo.BuscarXEmail(email);
+            return Repo.BuscarXEmail(email);
         }
     }
 }
