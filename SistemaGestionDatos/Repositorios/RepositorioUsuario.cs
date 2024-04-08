@@ -39,7 +39,11 @@ namespace SistemaGestionDatos.Repositorios
                 DBContext.Usuarios.Remove(aEliminar);
                 DBContext.SaveChanges();
             }
-
+            else
+            {
+                throw new UsuarioValidationException("El usuario que se intenta eliminar no existe");
+            }
+            
         }
 
         public Usuario BuscarPorId(Guid id)

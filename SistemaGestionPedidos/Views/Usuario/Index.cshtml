@@ -7,7 +7,7 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-success" href="@Url.Action("Create", "Usuario")">Nuevo Usuario</a>
 </p>
 <table class="table">
     <thead>
@@ -55,9 +55,8 @@
                 @Html.DisplayFor(modelItem => item.Admin)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                <a class="btn btn-primary" href="@Url.Action("Edit", "Usuario", new {id = item.Id})">Editar</a>
+                <a class="btn btn-danger" href="@Url.Action("Delete", "Usuario", new {id = item.Id})">Eliminar</a>
             </td>
         </tr>
 }

@@ -64,7 +64,7 @@ namespace SistemaGestionPedidos.Controllers
                 {
                     HttpContext.Session.SetString("RolUsuarioLogueado", "User");
                 }
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index");
 
             }
             catch (UsuarioValidationException e)
@@ -96,14 +96,7 @@ namespace SistemaGestionPedidos.Controllers
             {
                 if (CUBuscarXEmail.BuscarXEmail(nuevo.Email) == null)
                 {
-                    Usuario nuevoU = new Usuario();
-                    nuevoU.Nombre = nuevo.Nombre;
-                    nuevoU.Apellido = nuevo.Apellido;
-                    nuevoU.SetContraseña(nuevo.Contrasenia);
-                    nuevoU.Email = nuevo.Email;
-                    nuevoU.Admin = nuevo.Admin;
-
-                    CUAlta.Alta(nuevoU);
+                    CUAlta.Alta(convertirAUsuario(nuevo));
 
                     return RedirectToAction("Index");
                 }
@@ -128,17 +121,7 @@ namespace SistemaGestionPedidos.Controllers
         {
             try
             {
-                Usuario Buscado = CUBuscar.Buscar(id);
-                UsuarioViewModel model = new UsuarioViewModel();
-
-                model.Id = Buscado.Id;
-                model.Nombre = Buscado.Nombre;
-                model.Apellido = Buscado.Apellido;
-                model.Email = Buscado.Email;
-                model.Contrasenia = Buscado.Contrasenia;
-                model.Admin = Buscado.Admin;
-
-				return View(model);
+				return View(convertirAViewModel(CUBuscar.Buscar(id)));
 			}
             catch (Exception e)
             {
@@ -154,15 +137,7 @@ namespace SistemaGestionPedidos.Controllers
         {
             try
             {
-				Usuario usuarioE = new Usuario();
-                usuarioE.Id = usuarioEditado.Id;
-				usuarioE.Nombre = usuarioEditado.Nombre;
-				usuarioE.Apellido = usuarioEditado.Apellido;
-				usuarioE.SetContraseña(usuarioEditado.Contrasenia);
-				usuarioE.Email = usuarioEditado.Email;
-				usuarioE.Admin = usuarioEditado.Admin;
-
-                CUModificar.Modificar(usuarioE);
+                CUModificar.Modificar(convertirAUsuario(usuarioEditado));
 
 				return RedirectToAction(nameof(Index));
             }
@@ -170,7 +145,7 @@ namespace SistemaGestionPedidos.Controllers
             {
 				ViewBag.Error = e.Message;
 			}
-            catch
+            catch(Exception)
             {
                 ViewBag.Error = "Ocurrió un error inesperado";
             }
@@ -178,24 +153,56 @@ namespace SistemaGestionPedidos.Controllers
 		}
 
         // GET: UsuarioController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(Guid id)
         {
-            return View();
+            return View(convertirAViewModel(CUBuscar.Buscar(id)));
         }
 
         // POST: UsuarioController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(UsuarioViewModel model)
         {
             try
             {
+                CUBaja.Baja(model.Id);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(UsuarioValidationException e)
             {
-                return View();
+                ViewBag.Error = e.Message;
             }
+            catch (Exception)
+            {
+                ViewBag.Error = "Ha ocurrido un error inesperado";
+            }
+            return View();
+        }
+
+        private UsuarioViewModel convertirAViewModel(Usuario usu)
+        {
+            UsuarioViewModel model = new UsuarioViewModel();
+            model.Id = usu.Id;
+            model.Nombre = usu.Nombre;
+            model.Apellido = usu.Apellido;
+            model.Email = usu.Email;
+            model.Contrasenia = usu.Contrasenia;
+            model.Admin = usu.Admin;
+
+            return model;
+        }
+
+        private Usuario convertirAUsuario(UsuarioViewModel model)
+        {
+            Usuario usu = new Usuario();
+            usu.Id = model.Id;
+            usu.Nombre = model.Nombre;
+            usu.Apellido = model.Apellido;
+            usu.SetContraseña(model.Contrasenia);
+            usu.Email = model.Email;
+            usu.Admin = model.Admin;
+
+            return usu;
         }
     }
 }

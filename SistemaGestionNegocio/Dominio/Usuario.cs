@@ -31,6 +31,7 @@ namespace SistemaGestionNegocio.Dominio
         [Display(Name = "Contraseña Hasheada")]
         public string ContraseniaHasheada { get; set; }
 
+        [Required(ErrorMessage = "El campo Contraseña es obligatorio.")]
         [Display(Name = "Contraseña")]
         public string Contrasenia { get; set; }
         public bool Admin { get; set; }
