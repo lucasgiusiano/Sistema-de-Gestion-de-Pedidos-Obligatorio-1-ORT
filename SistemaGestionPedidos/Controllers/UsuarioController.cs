@@ -36,13 +36,23 @@ namespace SistemaGestionPedidos.Controllers
         // GET: UsuarioController
         public ActionResult Index()
         {
-            return View(CUListado.ObtenerListado());
+            if (String.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuarioLogueado")))
+            {
+                return RedirectToAction("Login");
+            }
+            else
+            {
+                return View(CUListado.ObtenerListado());
+            }
         }
 
-        // GET: UsuarioController
-        public ActionResult Login()
+        public IActionResult Logout()
         {
 
+        }
+
+        public ActionResult Login()
+        {
             return View();
         }
 
@@ -84,7 +94,14 @@ namespace SistemaGestionPedidos.Controllers
         // GET: UsuarioController/Create
         public ActionResult Create()
         {
-            return View();
+            if (HttpContext.Session.GetString("RolUsuarioLogueado") == "Admin")
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         // POST: UsuarioController/Create
@@ -119,15 +136,22 @@ namespace SistemaGestionPedidos.Controllers
         // GET: UsuarioController/Edit/5
         public ActionResult Edit(Guid id)
         {
-            try
+            if (HttpContext.Session.GetString("RolUsuarioLogueado") == "Admin")
             {
-				return View(convertirAViewModel(CUBuscar.Buscar(id)));
-			}
-            catch (Exception e)
-            {
-                ViewBag.Error = "Ocurrio un error inesperado";
+                try
+                {
+                    return View(convertirAViewModel(CUBuscar.Buscar(id)));
+                }
+                catch (Exception e)
+                {
+                    ViewBag.Error = "Ocurrio un error inesperado";
+                }
+                return View();
             }
-            return View();
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         // POST: UsuarioController/Edit/5
@@ -155,7 +179,14 @@ namespace SistemaGestionPedidos.Controllers
         // GET: UsuarioController/Delete/5
         public ActionResult Delete(Guid id)
         {
-            return View(convertirAViewModel(CUBuscar.Buscar(id)));
+            if (HttpContext.Session.GetString("RolUsuarioLogueado") == "Admin")
+            {
+                return View(convertirAViewModel(CUBuscar.Buscar(id)));
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         // POST: UsuarioController/Delete/5
