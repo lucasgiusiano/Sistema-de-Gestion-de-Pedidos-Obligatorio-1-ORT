@@ -28,14 +28,16 @@ namespace SistemaGestionNegocio.Dominio
         [Required(ErrorMessage = "El campo Apellido es obligatorio.")]
         public string Apellido { get; set; }
 
+        [Display(Name = "Contraseña Hasheada")]
         public string ContraseniaHasheada { get; set; }
+
+        [Display(Name = "Contraseña")]
         public string Contrasenia { get; set; }
         public bool Admin { get; set; }
 
         public Usuario()
         {
-            Id = Guid.NewGuid();
-          
+            Id = Guid.NewGuid(); 
         }
 
         public void SetContraseña(string contrasenia)
@@ -46,7 +48,6 @@ namespace SistemaGestionNegocio.Dominio
                 throw new ArgumentException("La contraseña no cumple con los requisitos mínimos.");
             }
 
-            
             ContraseniaHasheada = EncriptarContrasenia(contrasenia);// Encripta la contraseña y almacenarla
             Contrasenia = contrasenia;
         }

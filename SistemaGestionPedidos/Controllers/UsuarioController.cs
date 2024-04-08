@@ -1,10 +1,14 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.Elfie.Diagnostics;
 using SistemaGestionAplicacion.InterfacesCU.ICUGenericas;
 using SistemaGestionAplicacion.InterfacesCU.ICUUsuario;
 using SistemaGestionNegocio.Dominio;
 using SistemaGestionNegocio.ExcepcionesPropias;
+using SistemaGestionPedidos.Models;
 using System.Reflection.Metadata;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace SistemaGestionPedidos.Controllers
 {
@@ -16,8 +20,9 @@ namespace SistemaGestionPedidos.Controllers
         public ICUBuscar<Usuario> CUBuscar { get; set; }
         public ICUBuscarXEmail CUBuscarXEmail { get; set; }
         public ICUModificar<Usuario> CUModificar { get; set; }
+        public ICUValidarLogin CUValidarLogin { get; set; }
 
-        public UsuarioController(ICUAlta<Usuario> cuAlta,  ICUBaja cuBaja, ICUListado<Usuario> cuListado, ICUBuscar<Usuario> cuBuscar , ICUBuscarXEmail cuBuscarXEmail , ICUModificar<Usuario> cuModificar)
+        public UsuarioController(ICUAlta<Usuario> cuAlta, ICUBaja cuBaja, ICUListado<Usuario> cuListado, ICUBuscar<Usuario> cuBuscar, ICUBuscarXEmail cuBuscarXEmail, ICUModificar<Usuario> cuModificar, ICUValidarLogin cuValidarLogin)
         {
             CUAlta = cuAlta;
             CUBaja = cuBaja;
@@ -25,12 +30,13 @@ namespace SistemaGestionPedidos.Controllers
             CUBuscar = cuBuscar;
             CUBuscarXEmail = cuBuscarXEmail;
             CUModificar = cuModificar;
+            CUValidarLogin = cuValidarLogin;
         }
 
         // GET: UsuarioController
         public ActionResult Index()
         {
-            return View();
+            return View(CUListado.ObtenerListado());
         }
 
         // GET: UsuarioController
@@ -44,11 +50,22 @@ namespace SistemaGestionPedidos.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(string email, string password)
         {
-            Usuario aValidar = new Usuario();
             try
             {
-                aValidar = CUBuscarXEmail.BuscarXEmail(email);
-                HttpContext.Session.SetString("EmailUsuarioLogueado", aValidar.Email) ;
+                Usuario aValidar = CUValidarLogin.ValidarLogin(email, password);
+
+                HttpContext.Session.SetString("IdUsuarioLogueado", aValidar.Id.ToString());
+                HttpContext.Session.SetString("EmailUsuarioLogueado", aValidar.Email);
+                if (aValidar.Admin)
+                {
+                    HttpContext.Session.SetString("RolUsuarioLogueado", "Admin");
+                }
+                else
+                {
+                    HttpContext.Session.SetString("RolUsuarioLogueado", "User");
+                }
+                return RedirectToAction("Index", "Home");
+
             }
             catch (UsuarioValidationException e)
             {
@@ -56,6 +73,7 @@ namespace SistemaGestionPedidos.Controllers
             }
             return View();
         }
+
 
         // GET: UsuarioController/Details/5
         public ActionResult Details(int id)
@@ -72,38 +90,92 @@ namespace SistemaGestionPedidos.Controllers
         // POST: UsuarioController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(UsuarioViewModel nuevo)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (CUBuscarXEmail.BuscarXEmail(nuevo.Email) == null)
+                {
+                    Usuario nuevoU = new Usuario();
+                    nuevoU.Nombre = nuevo.Nombre;
+                    nuevoU.Apellido = nuevo.Apellido;
+                    nuevoU.SetContraseña(nuevo.Contrasenia);
+                    nuevoU.Email = nuevo.Email;
+                    nuevoU.Admin = nuevo.Admin;
+
+                    CUAlta.Alta(nuevoU);
+
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    throw new UsuarioValidationException("Ya existe un usuario con el email proporcionado");
+                }
             }
-            catch
+            catch (UsuarioValidationException e)
             {
-                return View();
+                ViewBag.Error = e.Message;
             }
+            catch (Exception)
+            {
+                ViewBag.Error = "Ocurrió un error inesperado";
+            }
+            return View();
         }
 
         // GET: UsuarioController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(Guid id)
         {
+            try
+            {
+                Usuario Buscado = CUBuscar.Buscar(id);
+                UsuarioViewModel model = new UsuarioViewModel();
+
+                model.Id = Buscado.Id;
+                model.Nombre = Buscado.Nombre;
+                model.Apellido = Buscado.Apellido;
+                model.Email = Buscado.Email;
+                model.Contrasenia = Buscado.Contrasenia;
+                model.Admin = Buscado.Admin;
+
+				return View(model);
+			}
+            catch (Exception e)
+            {
+                ViewBag.Error = "Ocurrio un error inesperado";
+            }
             return View();
         }
 
         // POST: UsuarioController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult EditPost(UsuarioViewModel usuarioEditado)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+				Usuario usuarioE = new Usuario();
+                usuarioE.Id = usuarioEditado.Id;
+				usuarioE.Nombre = usuarioEditado.Nombre;
+				usuarioE.Apellido = usuarioEditado.Apellido;
+				usuarioE.SetContraseña(usuarioEditado.Contrasenia);
+				usuarioE.Email = usuarioEditado.Email;
+				usuarioE.Admin = usuarioEditado.Admin;
+
+                CUModificar.Modificar(usuarioE);
+
+				return RedirectToAction(nameof(Index));
             }
+            catch(UsuarioValidationException e)
+            {
+				ViewBag.Error = e.Message;
+			}
             catch
             {
-                return View();
+                ViewBag.Error = "Ocurrió un error inesperado";
             }
-        }
+			return View();
+		}
 
         // GET: UsuarioController/Delete/5
         public ActionResult Delete(int id)
