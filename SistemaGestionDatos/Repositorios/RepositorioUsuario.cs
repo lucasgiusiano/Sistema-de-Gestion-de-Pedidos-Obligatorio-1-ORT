@@ -5,6 +5,7 @@ using SistemaGestionNegocio.InterfacesRepositorio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -38,7 +39,11 @@ namespace SistemaGestionDatos.Repositorios
                 DBContext.Usuarios.Remove(aEliminar);
                 DBContext.SaveChanges();
             }
-
+            else
+            {
+                throw new UsuarioValidationException("El usuario que se intenta eliminar no existe");
+            }
+            
         }
 
         public Usuario BuscarPorId(Guid id)
@@ -66,5 +71,35 @@ namespace SistemaGestionDatos.Repositorios
             return DBContext.Usuarios.FirstOrDefault(u => u.Email == email);
         }
 
+        public Usuario ValidarLogin(string email, string contrasenia)
+        {
+            Usuario buscado = BuscarXEmail(email);
+            if (buscado != null && email == buscado.Email && Hashear(contrasenia) == buscado.ContraseniaHasheada)
+            {
+                return buscado;
+            }
+            else
+            {
+                throw new UsuarioValidationException("Credenciales Inválidas");
+            }
+
+        }
+
+        private string Hashear(string contrasenia)
+        {
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
+                // Generar un hash de la contraseña
+                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(contrasenia));
+
+                // Convertir bytes a string hexadecimal
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    builder.Append(bytes[i].ToString("x2"));
+                }
+                return builder.ToString();
+            }
+        }
     }
 }

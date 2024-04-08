@@ -41,6 +41,7 @@ namespace SistemaGestionPedidos
             builder.Services.AddScoped<ICUListado<Usuario>, CUListadoUsuario>();
             builder.Services.AddScoped<ICUModificar<Usuario>, CUModificarUsuario>();
             builder.Services.AddScoped<ICUBuscarXEmail, CUBuscarXEmail>();
+            builder.Services.AddScoped<ICUValidarLogin, CUValidarLogin>();
 
             //Inyecciones de Repositorios
             builder.Services.AddScoped<IRepositorioArticulo, RepositorioArticulo>();
