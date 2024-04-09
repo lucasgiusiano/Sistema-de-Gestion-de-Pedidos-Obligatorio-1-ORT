@@ -48,7 +48,8 @@ namespace SistemaGestionPedidos.Controllers
 
         public IActionResult Logout()
         {
-
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login");
         }
 
         public ActionResult Login()
@@ -74,7 +75,7 @@ namespace SistemaGestionPedidos.Controllers
                 {
                     HttpContext.Session.SetString("RolUsuarioLogueado", "User");
                 }
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
 
             }
             catch (UsuarioValidationException e)
