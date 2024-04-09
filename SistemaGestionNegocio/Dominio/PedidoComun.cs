@@ -16,8 +16,8 @@ namespace SistemaGestionNegocio.Dominio
             {
                 total += linea.CalcularSubtotal();
             }
-            // Aplica recargo si la distancia a la dirección de entrega supera los 100 km
-            if (Cliente.Direccion.DistanciaDeposito > 100)
+            // Aplica recargo si la distancia a la dirección de entrega del cliente supera los 100 km
+            if (Cliente.DistanciaDeposito > 100)
             {
                 total *= 1.05;
             }

@@ -26,6 +26,15 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
+                    @if(!String.IsNullOrEmpty(Context.Session.GetString("IdUsuarioLogueado")))
+                    {
+                        <ul class="navbar-nav flex-grow-1 d-flex justify-content-end">
+                            <li class="nav-item ">
+                                <a class="btn btn-danger" asp-area="" asp-controller="Usuario" asp-action="Logout">Cerrar Sesion</a>
+                            </li>
+                        </ul>
+                    }
+
                 </div>
             </div>
         </nav>

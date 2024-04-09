@@ -10,19 +10,19 @@ using System.Threading.Tasks;
 
 namespace SistemaGestionAplicacion.CasosUso.CUCliente
 {
-    public class CUBuscarClientesPorNombre : ICUBuscarClientesPorNombre
+    public class CUBuscarClientePorRazonSocial : ICUBuscarClientePorRazonSocial
     {
         public IRepositorioCliente Repo { get; set; }
 
-        public CUBuscarClientesPorNombre(IRepositorioCliente repo)
+        public CUBuscarClientePorRazonSocial(IRepositorioCliente repo)
         {
             Repo = repo;
         }
 
 
-        public List<Cliente> BuscarClientesPorNOA(string nombreOApellido)
+        public Cliente BuscarClientePorRazonSocial(string razonSocial)
         {
-            return Repo.BuscarPorNombreApellido(nombreOApellido);
+            return Repo.BuscarPorRazonSocial(razonSocial);
         }
     }
 }

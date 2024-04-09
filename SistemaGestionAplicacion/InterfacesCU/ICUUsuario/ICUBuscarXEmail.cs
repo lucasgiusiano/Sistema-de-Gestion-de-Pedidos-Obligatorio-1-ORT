@@ -5,11 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SistemaGestionNegocio.InterfacesRepositorio
+namespace SistemaGestionAplicacion.InterfacesCU.ICUUsuario
 {
-    public interface IRepositorioUsuario : IRepositorio<Usuario>
+    public interface ICUBuscarXEmail
     {
         Usuario BuscarXEmail(string email);
-        Usuario ValidarLogin(string email, string contrasenia);
     }
 }

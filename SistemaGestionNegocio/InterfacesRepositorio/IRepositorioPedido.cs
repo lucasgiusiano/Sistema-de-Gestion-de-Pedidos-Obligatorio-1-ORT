@@ -10,8 +10,8 @@ namespace SistemaGestionNegocio.InterfacesRepositorio
     public interface IRepositorioPedido
     {
         void Alta(Pedido nuevo);
-        void Anular(int id);
-        Pedido BuscarPorId(int id);
-        List<Pedido> Listado(DateTime fechaFiltro);
+        void Anular(Guid id);
+        Pedido BuscarPorId(Guid id);
+        List<Pedido> ListadoFiltrado(DateTime fechaFiltro);
     }
 }

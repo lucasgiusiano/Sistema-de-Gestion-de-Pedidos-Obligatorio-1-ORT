@@ -9,6 +9,6 @@ namespace SistemaGestionAplicacion.InterfacesCU.ICUPedido
 {
     public interface ICUListadoPedidosAnuladosXFecha
     {
-        List<Pedido> Listado(DateTime fechaFiltro);
+        List<Pedido> ListadoFiltrado(DateTime fechaFiltro);
     }
 }

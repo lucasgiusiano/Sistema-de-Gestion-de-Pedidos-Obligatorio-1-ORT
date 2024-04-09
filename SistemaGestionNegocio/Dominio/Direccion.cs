@@ -12,15 +12,11 @@ namespace SistemaGestionNegocio.Dominio
         public string Calle { get; set; }
         public int Numero { get; set; }
         public string Ciudad { get; set; }
-        public double DistanciaDeposito { get; set; }
 
-        public Direccion(string calle, int numero, string ciudad, double distanciaDeposito)
+        public Direccion()
         {
             Id = Guid.NewGuid();
-            Calle = calle;
-            Numero = numero;
-            Ciudad = ciudad;
-            DistanciaDeposito = distanciaDeposito;
+            
         }
     }
 }

@@ -8,6 +8,6 @@ namespace SistemaGestionAplicacion.InterfacesCU.ICUGenericas
 {
     public interface ICUBaja
     {
-        void Baja(int id);
+        void Baja(Guid id);
     }
 }

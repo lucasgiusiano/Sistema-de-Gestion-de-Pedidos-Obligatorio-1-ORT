@@ -1,4 +1,5 @@
-﻿using SistemaGestionAplicacion.InterfacesCU.ICUGenericas;
+﻿using SistemaGestionAplicacion.InterfacesCU.ICUUsuario;
+using SistemaGestionNegocio.Dominio;
 using SistemaGestionNegocio.InterfacesRepositorio;
 using System;
 using System.Collections.Generic;
@@ -8,18 +9,18 @@ using System.Threading.Tasks;
 
 namespace SistemaGestionAplicacion.CasosUso.CUUsuario
 {
-    public class CUBajaUsuario : ICUBaja
+    public class CUValidarLogin : ICUValidarLogin
     {
         public IRepositorioUsuario Repo { get; set; }
 
-        public CUBajaUsuario(IRepositorioUsuario repo)
+        public CUValidarLogin(IRepositorioUsuario repo)
         {
             Repo = repo;
         }
 
-        public void Baja(Guid id)
+        public Usuario ValidarLogin(string email, string contrasenia)
         {
-            Repo.Baja(id);
+            return Repo.ValidarLogin(email, contrasenia);
         }
     }
 }

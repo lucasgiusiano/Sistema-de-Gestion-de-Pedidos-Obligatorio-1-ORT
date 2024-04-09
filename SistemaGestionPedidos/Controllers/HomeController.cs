@@ -15,7 +15,14 @@ namespace SistemaGestionPedidos.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            if (HttpContext.Session.GetString("EmailUsuarioLogueado") != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login", "Usuario");
+            }
         }
 
         public IActionResult Privacy()
