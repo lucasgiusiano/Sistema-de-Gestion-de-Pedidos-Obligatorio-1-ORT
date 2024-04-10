@@ -26,8 +26,6 @@ namespace SistemaGestionPedidos
             builder.Services.AddControllersWithViews();
             builder.Services.AddSession();
 
-            builder.Services.AddScoped<ICUAlta<Articulo>, CUAltaArticulo> ();
-            builder.Services.AddScoped<ICUListadoOrdenadoArticulos, CUListadoOrdenadoArticulos>();
             builder.Services.AddScoped<ICUAlta<Pedido>, CUAltaPedido>();
             builder.Services.AddScoped<ICUAnularPedido, CUAnularPedido>();
             builder.Services.AddScoped<ICUListadoPedidosAnuladosXFecha, CUListadoPedidosAnuladosXFecha>();
@@ -40,6 +38,12 @@ namespace SistemaGestionPedidos
             builder.Services.AddScoped<ICUModificar<Usuario>, CUModificarUsuario>();
             builder.Services.AddScoped<ICUBuscarXEmail, CUBuscarXEmail>();
             builder.Services.AddScoped<ICUValidarLogin, CUValidarLogin>();
+
+            //Inyecciones de Articulo
+            builder.Services.AddScoped<ICUAlta<Articulo>, CUAltaArticulo>();
+            builder.Services.AddScoped<ICUListadoOrdenadoArticulos, CUListadoOrdenadoArticulos>();
+            builder.Services.AddScoped<ICUModificar<Articulo>, CUModificarArticulo>();
+            builder.Services.AddScoped<ICUBuscar<Articulo>, CUBuscarArticulo>();
 
             //Inyecciones de Cliente
             builder.Services.AddScoped<ICUBuscarClientePorRazonSocial, CUBuscarClientePorRazonSocial>();

@@ -4,13 +4,13 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1 class="text-center">Gestion de Usuarios</h1>
 
 <p>
     <a class="btn btn-success" href="@Url.Action("Create", "Usuario")">Nuevo Usuario</a>
 </p>
-<table class="table">
-    <thead>
+<table class="table" style="border-radius: 15px; overflow:hidden;  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);">
+    <thead class="bg-primary text-center text-light">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Email)
@@ -33,7 +33,7 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
+    <tbody class="text-center">
 @foreach (var item in Model) {
         <tr>
             <td>
@@ -51,7 +51,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Contrasenia)
             </td>
-            <td class="text-center">
+            <td>
                 @Html.DisplayFor(modelItem => item.Admin)
             </td>
             <td>

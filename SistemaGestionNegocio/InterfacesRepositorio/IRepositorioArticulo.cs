@@ -10,6 +10,8 @@ namespace SistemaGestionNegocio.InterfacesRepositorio
     public interface IRepositorioArticulo
     {
         void Alta(Articulo nuevo);
+        void Modificar(Articulo modificado);
+        Articulo BuscarPorId(Guid id);
         List<Articulo> ListadoOrdenado();
     }
 }

@@ -27,9 +27,26 @@ namespace SistemaGestionDatos.Repositorios
             }
         }
 
+        public void Modificar(Articulo modificado)
+        {
+            if (modificado != null)
+            {
+                modificado.Validar();
+                DBContext.Articulos.Update(modificado);
+                DBContext.SaveChanges();
+            }
+        }
+
+        public Articulo BuscarPorId(Guid id)
+        {
+            return DBContext.Articulos.Where(a => a.Id == id).SingleOrDefault();
+        }
+
         public List<Articulo> ListadoOrdenado()
         {
             return DBContext.Articulos.OrderBy(a => a.Nombre).ToList();
         }
+
+
     }
 }

@@ -1,20 +1,33 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using SistemaGestionAplicacion.InterfacesCU.ICUArticulo;
+using SistemaGestionAplicacion.InterfacesCU.ICUGenericas;
+using SistemaGestionNegocio.Dominio;
+using SistemaGestionNegocio.ExcepcionesPropias;
+using SistemaGestionPedidos.Models;
 
 namespace SistemaGestionPedidos.Controllers
 {
     public class ArticuloController : Controller
     {
+        public ICUAlta<Articulo> CUAlta { get; set; }
+        public ICUModificar<Articulo> CUModificar { get; set; }
+        public ICUBuscar<Articulo> CUBuscar { get; set; }
+        public ICUListadoOrdenadoArticulos CUListado { get; set; }
+
+        public ArticuloController(ICUAlta<Articulo> cuAlta, ICUListadoOrdenadoArticulos cuListado, ICUModificar<Articulo> cUModificar, ICUBuscar<Articulo> cUBuscar)
+        {
+            CUAlta = cuAlta;
+            CUListado = cuListado;
+            CUModificar = cUModificar;
+            CUBuscar = cUBuscar;
+        }
+
         // GET: ArticuloController
         public ActionResult Index()
         {
-            return View();
-        }
-
-        // GET: ArticuloController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
+            return View(CUListado.ListadoOrdenado());
         }
 
         // GET: ArticuloController/Create
@@ -26,58 +39,68 @@ namespace SistemaGestionPedidos.Controllers
         // POST: ArticuloController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(ArticuloViewModel nuevoA)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                CUAlta.Alta(convertirAArticulo(nuevoA));
+                return RedirectToAction("Index");
             }
-            catch
+            catch (ArticuloValidationException e)
             {
-                return View();
+                ViewBag.Error = e.Message;
             }
-        }
+            catch (Exception)
+            {
+				ViewBag.Error = "Ocurrió un error inesperado";
+			}
+			return View();
+		}
 
         // GET: ArticuloController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(Guid id)
         {
-            return View();
+            return View(convertirAViewModel(CUBuscar.Buscar(id)));
         }
 
         // POST: ArticuloController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(ArticuloViewModel model)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                CUModificar.Modificar(convertirAArticulo(model));
+                return RedirectToAction("Index");
             }
-            catch
+            catch (ArticuloValidationException e)
             {
-                return View();
+                ViewBag.Error = e.Message;
             }
-        }
-
-        // GET: ArticuloController/Delete/5
-        public ActionResult Delete(int id)
-        {
+            catch (Exception)
+            {
+                ViewBag.Error = "Ocurrió un error inesperado";
+            }
             return View();
         }
 
-        // POST: ArticuloController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        private Articulo convertirAArticulo(ArticuloViewModel model)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            Articulo articulo = new Articulo();
+
+            articulo.Id = model.Id;
+            articulo.Nombre = model.Nombre;
+            articulo.Descripcion = model.Descripcion;
+            articulo.CodigoProveedor = model.CodigoProveedor;
+            articulo.PrecioVenta = model.PrecioVenta;
+            articulo.Stock = model.Stock;
+
+            return articulo;
+        }
+
+        private ArticuloViewModel convertirAViewModel(Articulo articulo)
+        {
+            return new ArticuloViewModel(articulo.Id,articulo.Nombre,articulo.Descripcion,articulo.CodigoProveedor,articulo.PrecioVenta,articulo.Stock);
         }
     }
 }
