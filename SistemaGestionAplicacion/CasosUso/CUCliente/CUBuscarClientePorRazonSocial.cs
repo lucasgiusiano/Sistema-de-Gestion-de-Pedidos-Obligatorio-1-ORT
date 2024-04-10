@@ -20,9 +20,9 @@ namespace SistemaGestionAplicacion.CasosUso.CUCliente
         }
 
 
-        public Cliente BuscarClientePorRazonSocial(string razonSocial)
+        public Cliente BuscarClientePorRazonSocial(string textoBusqueda)
         {
-            return Repo.BuscarPorRazonSocial(razonSocial);
+            return Repo.BuscarPorRazonSocial(textoBusqueda);
         }
     }
 }

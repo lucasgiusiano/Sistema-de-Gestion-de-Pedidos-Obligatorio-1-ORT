@@ -1,4 +1,5 @@
-﻿using SistemaGestionNegocio.Dominio;
+﻿using Microsoft.EntityFrameworkCore;
+using SistemaGestionNegocio.Dominio;
 using SistemaGestionNegocio.InterfacesRepositorio;
 using System;
 using System.Collections.Generic;
@@ -19,8 +20,7 @@ namespace SistemaGestionDatos.Repositorios
 
         public List<Cliente> BuscarPorMonto(double monto)
         {
-            //Selecciona de la tabla pedidos los que superan el monto solicitado y a partir de ella topa solo el atributo que contiene el cliente
-            //Por ultimo se asegura de que no haya clientes repetidos con .Distinct()
+            
             return DBContext.Pedidos.Where(p => p.PrecioFinal > monto).Select(p => p.Cliente).Distinct().ToList();
         }
 
@@ -28,5 +28,16 @@ namespace SistemaGestionDatos.Repositorios
         {
             return DBContext.Clientes.Where(c => c.RazonSocial == razonSocial).SingleOrDefault();
         }
+        public List<Cliente> ObtenerTodosLosClientes()
+        {
+            return DBContext.Clientes.ToList();
+        }
+        public List<Cliente> ObtenerTodosLosClientesConDireccion()
+        {
+            return DBContext.Clientes
+                            .Include(c => c.Direccion)
+                            .ToList();
+        }
+
     }
 }

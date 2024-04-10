@@ -1,4 +1,5 @@
-﻿using SistemaGestionNegocio.Dominio;
+﻿using Microsoft.EntityFrameworkCore;
+using SistemaGestionNegocio.Dominio;
 using SistemaGestionNegocio.InterfacesRepositorio;
 using System;
 using System.Collections.Generic;
@@ -45,9 +46,13 @@ namespace SistemaGestionDatos.Repositorios
 
         public List<Pedido> ListadoFiltrado(DateTime fechaFiltro)
         {
-            //Devuelve hechos en la fecha filtrada que no hayan sido entregadas aún
-            //(Usa el valor de la fecha de entrega para saber si ya fue entregado o no si es != de DateTime.MinValue asume que se entregó)
+            
             return DBContext.Pedidos.Where(p => p.FechaPedido.Date == fechaFiltro.Date && p.FechaEntrega == DateTime.MinValue).ToList();
+        }
+        public IEnumerable<Pedido> ObtenerPedidosPorMonto(double monto)
+        {
+            
+            return DBContext.Pedidos.Where(p => p.CalcularTotal() > monto);
         }
     }
 }

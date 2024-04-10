@@ -26,10 +26,8 @@ namespace SistemaGestionPedidos
             builder.Services.AddControllersWithViews();
             builder.Services.AddSession();
 
-            builder.Services.AddScoped <ICUAlta<Articulo>, CUAltaArticulo> ();
+            builder.Services.AddScoped<ICUAlta<Articulo>, CUAltaArticulo> ();
             builder.Services.AddScoped<ICUListadoOrdenadoArticulos, CUListadoOrdenadoArticulos>();
-            builder.Services.AddScoped<ICUBuscarClientesPorMonto, CUBuscarClientesPorMonto>();
-            builder.Services.AddScoped<ICUBuscarClientePorRazonSocial, CUBuscarClientePorRazonSocial>();
             builder.Services.AddScoped<ICUAlta<Pedido>, CUAltaPedido>();
             builder.Services.AddScoped<ICUAnularPedido, CUAnularPedido>();
             builder.Services.AddScoped<ICUListadoPedidosAnuladosXFecha, CUListadoPedidosAnuladosXFecha>();
@@ -43,7 +41,13 @@ namespace SistemaGestionPedidos
             builder.Services.AddScoped<ICUBuscarXEmail, CUBuscarXEmail>();
             builder.Services.AddScoped<ICUValidarLogin, CUValidarLogin>();
 
+            //Inyecciones de Cliente
+            builder.Services.AddScoped<ICUBuscarClientePorRazonSocial, CUBuscarClientePorRazonSocial>();
+            builder.Services.AddScoped<ICUBuscarClientesPorMonto, CUBuscarClientesPorMonto>();
+            builder.Services.AddScoped<ICUObtenerTodosLosClientes, CUObtenerTodosLosClientes>();
+
             //Inyecciones de Repositorios
+            builder.Services.AddScoped<IRepositorioDireccion, RepositorioDireccion>();
             builder.Services.AddScoped<IRepositorioArticulo, RepositorioArticulo>();
             builder.Services.AddScoped<IRepositorioCliente, RepositorioCliente>();
             builder.Services.AddScoped<IRepositorioPedido, RepositorioPedido>();
