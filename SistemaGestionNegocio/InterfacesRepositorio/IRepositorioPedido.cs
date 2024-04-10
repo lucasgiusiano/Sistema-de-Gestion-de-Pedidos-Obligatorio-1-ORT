@@ -13,5 +13,6 @@ namespace SistemaGestionNegocio.InterfacesRepositorio
         void Anular(Guid id);
         Pedido BuscarPorId(Guid id);
         List<Pedido> ListadoFiltrado(DateTime fechaFiltro);
+        IEnumerable<Pedido> ObtenerPedidosPorMonto(double monto);
     }
 }

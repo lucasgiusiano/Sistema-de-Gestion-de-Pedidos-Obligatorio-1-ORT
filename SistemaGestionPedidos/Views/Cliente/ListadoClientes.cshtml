@@ -1,0 +1,88 @@
+﻿@model List<SistemaGestionPedidos.Models.ClienteViewModel>
+
+@if (ViewData["Mensaje"] != null)
+{
+    <div class="alert alert-info" role="alert">
+        @ViewData["Mensaje"]
+    </div>
+}
+
+<h1>Listado de Clientes</h1>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form action="@Url.Action("Buscar", "Cliente")" method="get" class="mb-4">
+                <div class="input-group">
+                    <input type="text" id="txtBusqueda" name="textoBusqueda" class="form-control" placeholder="Buscar por razón social">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-primary">Buscar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <form action="@Url.Action("BuscarPorMonto", "Cliente")" method="get">
+                <div class="input-group">
+                    <input type="number" id="txtMonto" name="monto" class="form-control" placeholder="Buscar por monto">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-primary">Buscar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-6 text-center">
+            <form action="@Url.Action("Index", "Cliente")" method="get">
+                <button type="submit" class="btn btn-secondary">Mostrar Todos los Clientes</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Razón Social</th>
+            <th>RUT</th>
+            <th>Calle</th>
+            <th>Número</th>
+            <th>Ciudad</th>
+            <th>Distancia desde el depósito</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var cliente in Model)
+            {
+                <tr>
+                    <td>@cliente.RazonSocial</td>
+                    <td>@cliente.Rut</td>
+                    <td>@cliente.Calle</td>
+                    <td>@cliente.Numero</td>
+                    <td>@cliente.Ciudad</td>
+                    <td>@cliente.DistanciaDeposito</td>
+                    <td>
+                        <a asp-controller="Cliente" asp-action="Details" asp-route-id="@cliente.Id">Detalles</a> |
+                        <a asp-controller="Cliente" asp-action="Edit" asp-route-id="@cliente.Id">Editar</a> |
+                        <a asp-controller="Cliente" asp-action="Delete" asp-route-id="@cliente.Id">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="7">No hay clientes disponibles</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
