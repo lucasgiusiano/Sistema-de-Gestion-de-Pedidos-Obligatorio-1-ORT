@@ -9,6 +9,6 @@ namespace SistemaGestionAplicacion.InterfacesCU.ICUCliente
 {
     public interface ICUBuscarClientePorRazonSocial
     {
-        Cliente BuscarClientePorRazonSocial(string nombreOApellido);
+        Cliente BuscarClientePorRazonSocial(string razonSocial);
     }
 }

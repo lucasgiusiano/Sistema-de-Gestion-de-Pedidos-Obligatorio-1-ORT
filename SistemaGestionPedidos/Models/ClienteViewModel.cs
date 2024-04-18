@@ -5,7 +5,7 @@ namespace SistemaGestionPedidos.Models
 {
     public class ClienteViewModel
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [Display(Name = "Razón Social")]
         public string RazonSocial { get; set; }

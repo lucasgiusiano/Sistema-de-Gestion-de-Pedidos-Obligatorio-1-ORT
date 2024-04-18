@@ -9,6 +9,16 @@ namespace SistemaGestionNegocio.Dominio
 {
     public class PedidoComun : Pedido
     {
+        public PedidoComun(DateTime fechaPedido, DateTime fechaEntrega, Cliente cliente, List<Linea> lineas, bool anulado, double precioFinal) : base(fechaPedido, fechaEntrega, cliente, lineas, anulado, precioFinal)
+        {
+
+        }
+
+        public PedidoComun()
+        {
+
+        }
+
         public override double CalcularTotal()
         {
             double total = 0;

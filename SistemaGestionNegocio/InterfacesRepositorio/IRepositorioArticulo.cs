@@ -11,7 +11,7 @@ namespace SistemaGestionNegocio.InterfacesRepositorio
     {
         void Alta(Articulo nuevo);
         void Modificar(Articulo modificado);
-        Articulo BuscarPorId(Guid id);
+        Articulo BuscarPorId(int id);
         List<Articulo> ListadoOrdenado();
     }
 }

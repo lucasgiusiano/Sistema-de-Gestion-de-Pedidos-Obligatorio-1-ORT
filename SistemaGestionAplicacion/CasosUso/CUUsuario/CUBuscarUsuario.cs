@@ -18,7 +18,7 @@ namespace SistemaGestionAplicacion.CasosUso.CUUsuario
             Repo = repo;
         }
 
-        public Usuario Buscar(Guid id)
+        public Usuario Buscar(int id)
         {
             return Repo.BuscarPorId(id);
         }

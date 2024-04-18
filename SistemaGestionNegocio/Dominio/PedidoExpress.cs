@@ -8,7 +8,18 @@ namespace SistemaGestionNegocio.Dominio
 {
     public class PedidoExpress : Pedido
     {
+
         public int PlazoMaximo { get; set; }
+
+
+        public PedidoExpress(DateTime fechaPedido, DateTime fechaEntrega, Cliente cliente, List<Linea> lineas, bool anulado, double precioFinal, int plazoMaximo) : base(fechaPedido, fechaEntrega, cliente, lineas, anulado, precioFinal)
+        {
+            plazoMaximo = PlazoMaximo;
+        }
+
+        public PedidoExpress()
+        {
+        }
 
         public override double CalcularTotal()
         {

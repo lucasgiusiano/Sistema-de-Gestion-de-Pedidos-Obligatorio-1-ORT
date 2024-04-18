@@ -5,7 +5,7 @@ namespace SistemaGestionPedidos.Models
 {
     public class ArticuloViewModel
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "El nombre del artículo es requerido.")]
         [StringLength(200, MinimumLength = 10, ErrorMessage = "El nombre del artículo debe tener entre 10 y 200 caracteres.")]
@@ -31,7 +31,6 @@ namespace SistemaGestionPedidos.Models
 
         public ArticuloViewModel(string nombre, string descripcion, string codigoProveedor, double precioVenta, int stock)
         {
-			Id = Guid.NewGuid();
             Nombre = nombre;
             Descripcion = descripcion;
             CodigoProveedor = codigoProveedor;
@@ -39,19 +38,8 @@ namespace SistemaGestionPedidos.Models
             Stock = stock;
 		}
 
-        public ArticuloViewModel(Guid id,string nombre, string descripcion, string codigoProveedor, double precioVenta, int stock)
-        {
-            Id = id;
-            Nombre = nombre;
-            Descripcion = descripcion;
-            CodigoProveedor = codigoProveedor;
-            PrecioVenta = precioVenta;
-            Stock = stock;
-        }
-
         public ArticuloViewModel()
         {
-            Id = Guid.NewGuid();
         }
     }
 }

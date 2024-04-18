@@ -6,7 +6,7 @@ namespace SistemaGestionPedidos.Models
 {
     public class PedidoViewModel
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public DateTime FechaPedido { get; set; }
         public DateTime FechaEntrega { get; set; }
         public ClienteViewModel Cliente { get; set; }

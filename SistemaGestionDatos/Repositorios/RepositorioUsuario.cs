@@ -31,7 +31,7 @@ namespace SistemaGestionDatos.Repositorios
             }
         }
 
-        public void Baja(Guid id)
+        public void Baja(int id)
         {
             Usuario aEliminar = DBContext.Usuarios.Find(id);
             if (aEliminar != null)
@@ -46,7 +46,7 @@ namespace SistemaGestionDatos.Repositorios
             
         }
 
-        public Usuario BuscarPorId(Guid id)
+        public Usuario BuscarPorId(int id)
         {
             return DBContext.Usuarios.Where(u => u.Id == id).SingleOrDefault();
         }

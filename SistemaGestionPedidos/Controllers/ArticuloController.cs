@@ -58,7 +58,7 @@ namespace SistemaGestionPedidos.Controllers
 		}
 
         // GET: ArticuloController/Edit/5
-        public ActionResult Edit(Guid id)
+        public ActionResult Edit(int id)
         {
             return View(convertirAViewModel(CUBuscar.Buscar(id)));
         }
@@ -86,21 +86,12 @@ namespace SistemaGestionPedidos.Controllers
 
         private Articulo convertirAArticulo(ArticuloViewModel model)
         {
-            Articulo articulo = new Articulo();
-
-            articulo.Id = model.Id;
-            articulo.Nombre = model.Nombre;
-            articulo.Descripcion = model.Descripcion;
-            articulo.CodigoProveedor = model.CodigoProveedor;
-            articulo.PrecioVenta = model.PrecioVenta;
-            articulo.Stock = model.Stock;
-
-            return articulo;
+            return new Articulo(model.Nombre, model.Descripcion, model.CodigoProveedor, model.PrecioVenta, model.Stock);
         }
 
         private ArticuloViewModel convertirAViewModel(Articulo articulo)
         {
-            return new ArticuloViewModel(articulo.Id,articulo.Nombre,articulo.Descripcion,articulo.CodigoProveedor,articulo.PrecioVenta,articulo.Stock);
+            return new ArticuloViewModel(articulo.Nombre,articulo.Descripcion,articulo.CodigoProveedor,articulo.PrecioVenta,articulo.Stock);
         }
     }
 }

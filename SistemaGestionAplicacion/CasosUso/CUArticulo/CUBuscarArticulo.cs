@@ -18,7 +18,7 @@ namespace SistemaGestionAplicacion.CasosUso.CUArticulo
             Repo = repo;
         }
 
-        public Articulo Buscar(Guid id)
+        public Articulo Buscar(int id)
         {
             return Repo.BuscarPorId(id);
         }

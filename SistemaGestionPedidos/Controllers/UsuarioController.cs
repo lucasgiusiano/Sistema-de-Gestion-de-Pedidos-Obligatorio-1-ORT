@@ -135,7 +135,7 @@ namespace SistemaGestionPedidos.Controllers
         }
 
         // GET: UsuarioController/Edit/5
-        public ActionResult Edit(Guid id)
+        public ActionResult Edit(int id)
         {
             if (HttpContext.Session.GetString("RolUsuarioLogueado") == "Admin")
             {
@@ -178,7 +178,7 @@ namespace SistemaGestionPedidos.Controllers
 		}
 
         // GET: UsuarioController/Delete/5
-        public ActionResult Delete(Guid id)
+        public ActionResult Delete(int id)
         {
             if (HttpContext.Session.GetString("RolUsuarioLogueado") == "Admin")
             {
@@ -226,15 +226,10 @@ namespace SistemaGestionPedidos.Controllers
 
         private Usuario convertirAUsuario(UsuarioViewModel model)
         {
-            Usuario usu = new Usuario();
-            usu.Id = model.Id;
-            usu.Nombre = model.Nombre;
-            usu.Apellido = model.Apellido;
-            usu.SetContraseña(model.Contrasenia);
-            usu.Email = model.Email;
-            usu.Admin = model.Admin;
+            Usuario usuario = new Usuario(model.Email, model.Nombre, model.Apellido, model.Admin);
+            usuario.SetContraseña(model.Contrasenia);
 
-            return usu;
+            return usuario;
         }
     }
 }

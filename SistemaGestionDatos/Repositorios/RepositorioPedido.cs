@@ -28,7 +28,7 @@ namespace SistemaGestionDatos.Repositorios
             }
         }
 
-        public void Anular(Guid id)
+        public void Anular(int id)
         {
             Pedido aAnular = BuscarPorId(id);
             if (aAnular != null)
@@ -39,7 +39,7 @@ namespace SistemaGestionDatos.Repositorios
             }
         }
 
-        public Pedido BuscarPorId(Guid id)
+        public Pedido BuscarPorId(int id)
         {
             return DBContext.Pedidos.Where(p => p.Id == id).SingleOrDefault();
         }

@@ -8,7 +8,7 @@ namespace SistemaGestionNegocio.Dominio
 {
     public abstract class Pedido 
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public DateTime FechaPedido { get; set; }
         public DateTime FechaEntrega { get; set; }
         public Cliente Cliente { get; set; }
@@ -16,9 +16,19 @@ namespace SistemaGestionNegocio.Dominio
         public bool Anulado { get; set; }
         public double PrecioFinal { get; set; }
 
+        protected Pedido(DateTime fechaPedido, DateTime fechaEntrega, Cliente cliente, List<Linea> lineas, bool anulado, double precioFinal)
+        {
+            FechaPedido = fechaPedido;
+            FechaEntrega = fechaEntrega;
+            Cliente = cliente;
+            Lineas = lineas;
+            Anulado = false;
+            PrecioFinal = precioFinal;
+        }
+
         public Pedido()
         {
-            Id = Guid.NewGuid();
+            Anulado = false;
             Lineas = new List<Linea>();
         }
 

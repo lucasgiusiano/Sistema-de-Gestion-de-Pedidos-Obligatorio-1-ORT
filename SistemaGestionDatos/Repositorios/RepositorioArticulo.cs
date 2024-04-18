@@ -37,7 +37,7 @@ namespace SistemaGestionDatos.Repositorios
             }
         }
 
-        public Articulo BuscarPorId(Guid id)
+        public Articulo BuscarPorId(int id)
         {
             return DBContext.Articulos.Where(a => a.Id == id).SingleOrDefault();
         }

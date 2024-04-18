@@ -8,14 +8,20 @@ namespace SistemaGestionNegocio.Dominio
 {
     public class Linea
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public Articulo Articulo { get; set; }
         public int Cantidad { get; set; }
         public double PrecioUnitario { get; set; }
 
+        public Linea(Articulo articulo, int cantidad, double precioUnitario)
+        {
+            Articulo = articulo;
+            Cantidad = cantidad;
+            PrecioUnitario = precioUnitario;
+        }
+
         public Linea()
         {
-            Id = Guid.NewGuid();
         }
 
         public double CalcularSubtotal()

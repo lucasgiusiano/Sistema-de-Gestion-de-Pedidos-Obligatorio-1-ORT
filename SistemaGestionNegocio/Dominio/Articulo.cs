@@ -10,16 +10,24 @@ namespace SistemaGestionNegocio.Dominio
 {
     public class Articulo: IValidable
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
         public string CodigoProveedor { get; set; }
         public double PrecioVenta { get; set; }
         public int Stock { get; set; }
 
+        public Articulo(string nombre, string descripcion, string codigoProveedor, double precioVenta, int stock)
+        {
+            Nombre = nombre;
+            Descripcion = descripcion;
+            CodigoProveedor = codigoProveedor;
+            PrecioVenta = precioVenta;
+            Stock = stock;
+        }
+
         public Articulo()
         {
-            Id = Guid.NewGuid();
             
         }
 
