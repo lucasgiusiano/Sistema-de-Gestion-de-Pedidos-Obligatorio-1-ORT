@@ -5,6 +5,7 @@ using SistemaGestionAplicacion.InterfacesCU.ICUArticulo;
 using SistemaGestionAplicacion.InterfacesCU.ICUGenericas;
 using SistemaGestionNegocio.Dominio;
 using SistemaGestionNegocio.ExcepcionesPropias;
+using SistemaGestionNegocio.VOs;
 using SistemaGestionPedidos.Models;
 
 namespace SistemaGestionPedidos.Controllers
@@ -86,12 +87,12 @@ namespace SistemaGestionPedidos.Controllers
 
         private Articulo convertirAArticulo(ArticuloViewModel model)
         {
-            return new Articulo(model.Nombre, model.Descripcion, model.CodigoProveedor, model.PrecioVenta, model.Stock);
+            return new Articulo(new NombreArticulo(model.Nombre), new DescripcionArticulo(model.Descripcion), new CodigoProveedorArticulo(model.CodigoProveedor), new PrecioVentaArticulo(model.PrecioVenta),  new StockArticulo(model.Stock));
         }
 
         private ArticuloViewModel convertirAViewModel(Articulo articulo)
         {
-            return new ArticuloViewModel(articulo.Nombre,articulo.Descripcion,articulo.CodigoProveedor,articulo.PrecioVenta,articulo.Stock);
+            return new ArticuloViewModel(articulo.Nombre.Valor,articulo.Descripcion.Valor,articulo.CodigoProveedor.Valor,articulo.PrecioVenta.Valor,articulo.Stock.Valor);
         }
     }
 }
