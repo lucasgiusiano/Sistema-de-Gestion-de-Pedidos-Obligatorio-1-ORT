@@ -36,7 +36,7 @@ namespace SistemaGestionNegocio.Dominio
         public string Contrasenia { get; set; }
         public bool Admin { get; set; }
 
-        public Usuario(string email, string nombre, string apellido, string contraseniaHasheada, string contrasenia, bool admin)
+        public Usuario(string email, string nombre, string apellido, bool admin)
         {
             Email = email;
             Nombre = nombre;
