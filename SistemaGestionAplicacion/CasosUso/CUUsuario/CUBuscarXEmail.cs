@@ -1,4 +1,4 @@
-﻿using DTOs.DTOs_de_Cliente;
+﻿using DTOs.DTOs_Usuario;
 using SistemaGestionAplicacion.InterfacesCU.ICUUsuario;
 using SistemaGestionNegocio.Dominio;
 using SistemaGestionNegocio.InterfacesRepositorio;

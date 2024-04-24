@@ -1,4 +1,4 @@
-﻿using DTOs.DTOs_de_Cliente;
+﻿using DTOs.DTOs_Usuario;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Elfie.Diagnostics;
@@ -158,7 +158,7 @@ namespace SistemaGestionPedidos.Controllers
         // POST: UsuarioController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditPost(UsuarioViewModel usuarioEditado)
+        public ActionResult Edit(UsuarioViewModel usuarioEditado)
         {
             try
             {

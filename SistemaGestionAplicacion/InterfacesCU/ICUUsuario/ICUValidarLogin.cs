@@ -1,4 +1,4 @@
-﻿using DTOs.DTOs_de_Cliente;
+﻿using DTOs.DTOs_Usuario;
 using SistemaGestionNegocio.Dominio;
 using System;
 using System.Collections.Generic;

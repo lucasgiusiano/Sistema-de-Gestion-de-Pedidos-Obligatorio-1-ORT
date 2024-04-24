@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SistemaGestionNegocio.Dominio.Usuario>
+﻿@model IEnumerable<DTOs.DTOs_Usuario.DTOAltaUsuario>
 
 @{
     ViewData["Title"] = "Index";
@@ -22,9 +22,6 @@
                 @Html.DisplayNameFor(model => model.Apellido)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ContraseniaHasheada)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Contrasenia)
             </th>
             <th>
@@ -44,9 +41,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Apellido)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContraseniaHasheada)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Contrasenia)

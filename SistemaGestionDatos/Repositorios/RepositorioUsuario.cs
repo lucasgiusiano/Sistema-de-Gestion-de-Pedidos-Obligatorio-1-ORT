@@ -86,6 +86,7 @@ namespace SistemaGestionDatos.Repositorios
         public Usuario ValidarLogin(string email, string contrasenia)
         {
             Usuario buscado = BuscarXEmail(email);
+
             if (buscado != null && email == buscado.Email && Hashear(contrasenia) == buscado.ContraseniaHasheada)
             {
                 return buscado;

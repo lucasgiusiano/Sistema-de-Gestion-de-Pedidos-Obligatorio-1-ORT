@@ -13,7 +13,7 @@ using SistemaGestionAplicacion.CasosUso.CUPedido;
 using SistemaGestionAplicacion.InterfacesCU.ICUPedido;
 using SistemaGestionAplicacion.CasosUso.CUUsuario;
 using SistemaGestionAplicacion.InterfacesCU.ICUUsuario;
-using DTOs.DTOs_de_Cliente;
+using DTOs.DTOs_Usuario;
 
 namespace SistemaGestionPedidos
 {
