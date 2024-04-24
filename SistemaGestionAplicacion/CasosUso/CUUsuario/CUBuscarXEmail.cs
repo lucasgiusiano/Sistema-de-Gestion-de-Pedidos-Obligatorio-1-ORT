@@ -1,4 +1,5 @@
-﻿using SistemaGestionAplicacion.InterfacesCU.ICUUsuario;
+﻿using DTOs.DTOs_de_Cliente;
+using SistemaGestionAplicacion.InterfacesCU.ICUUsuario;
 using SistemaGestionNegocio.Dominio;
 using SistemaGestionNegocio.InterfacesRepositorio;
 using System;
@@ -18,9 +19,9 @@ namespace SistemaGestionAplicacion.CasosUso.CUUsuario
             Repo = repo;
         }
 
-        public Usuario BuscarXEmail(string email)
+        public DTOAltaUsuario BuscarXEmail(string email)
         {
-            return Repo.BuscarXEmail(email);
+            return MapperUsuario.toDTOAltaUsuario(Repo.BuscarXEmail(email));
         }
     }
 }

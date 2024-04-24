@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DTOs.DTOs_de_Cliente;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Elfie.Diagnostics;
 using SistemaGestionAplicacion.InterfacesCU.ICUGenericas;
@@ -14,15 +15,15 @@ namespace SistemaGestionPedidos.Controllers
 {
     public class UsuarioController : Controller
     {
-        public ICUAlta<Usuario> CUAlta { get; set; }
+        public ICUAlta<DTOAltaUsuario> CUAlta { get; set; }
         public ICUBaja CUBaja { get; set; }
-        public ICUListado<Usuario> CUListado { get; set; }
-        public ICUBuscar<Usuario> CUBuscar { get; set; }
+        public ICUListado<DTOAltaUsuario> CUListado { get; set; }
+        public ICUBuscar<DTOAltaUsuario> CUBuscar { get; set; }
         public ICUBuscarXEmail CUBuscarXEmail { get; set; }
-        public ICUModificar<Usuario> CUModificar { get; set; }
+        public ICUModificar<DTOAltaUsuario> CUModificar { get; set; }
         public ICUValidarLogin CUValidarLogin { get; set; }
 
-        public UsuarioController(ICUAlta<Usuario> cuAlta, ICUBaja cuBaja, ICUListado<Usuario> cuListado, ICUBuscar<Usuario> cuBuscar, ICUBuscarXEmail cuBuscarXEmail, ICUModificar<Usuario> cuModificar, ICUValidarLogin cuValidarLogin)
+        public UsuarioController(ICUAlta<DTOAltaUsuario> cuAlta, ICUBaja cuBaja, ICUListado<DTOAltaUsuario> cuListado, ICUBuscar<DTOAltaUsuario> cuBuscar, ICUBuscarXEmail cuBuscarXEmail, ICUModificar<DTOAltaUsuario> cuModificar, ICUValidarLogin cuValidarLogin)
         {
             CUAlta = cuAlta;
             CUBaja = cuBaja;
@@ -63,11 +64,17 @@ namespace SistemaGestionPedidos.Controllers
         {
             try
             {
-                Usuario aValidar = CUValidarLogin.ValidarLogin(email, password);
+                DTOLoginUsuario loginU = new DTOLoginUsuario()
+                {
+                    Email = email,
+                    Contra = password
+                };
+
+                DTOLoginUsuario aValidar = CUValidarLogin.ValidarLogin(loginU);
 
                 HttpContext.Session.SetString("IdUsuarioLogueado", aValidar.Id.ToString());
                 HttpContext.Session.SetString("EmailUsuarioLogueado", aValidar.Email);
-                if (aValidar.Admin)
+                if (aValidar.AdminRol)
                 {
                     HttpContext.Session.SetString("RolUsuarioLogueado", "Admin");
                 }
@@ -112,16 +119,9 @@ namespace SistemaGestionPedidos.Controllers
         {
             try
             {
-                if (CUBuscarXEmail.BuscarXEmail(nuevo.Email) == null)
-                {
-                    CUAlta.Alta(convertirAUsuario(nuevo));
+                CUAlta.Alta(convertirADTO(nuevo));
 
-                    return RedirectToAction("Index");
-                }
-                else
-                {
-                    throw new UsuarioValidationException("Ya existe un usuario con el email proporcionado");
-                }
+                return RedirectToAction("Index");
             }
             catch (UsuarioValidationException e)
             {
@@ -162,20 +162,20 @@ namespace SistemaGestionPedidos.Controllers
         {
             try
             {
-                CUModificar.Modificar(convertirAUsuario(usuarioEditado));
+                CUModificar.Modificar(convertirADTO(usuarioEditado));
 
-				return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
             }
-            catch(UsuarioValidationException e)
+            catch (UsuarioValidationException e)
             {
-				ViewBag.Error = e.Message;
-			}
-            catch(Exception)
+                ViewBag.Error = e.Message;
+            }
+            catch (Exception)
             {
                 ViewBag.Error = "Ocurrió un error inesperado";
             }
-			return View();
-		}
+            return View();
+        }
 
         // GET: UsuarioController/Delete/5
         public ActionResult Delete(int id)
@@ -200,7 +200,7 @@ namespace SistemaGestionPedidos.Controllers
                 CUBaja.Baja(model.Id);
                 return RedirectToAction(nameof(Index));
             }
-            catch(UsuarioValidationException e)
+            catch (UsuarioValidationException e)
             {
                 ViewBag.Error = e.Message;
             }
@@ -211,7 +211,7 @@ namespace SistemaGestionPedidos.Controllers
             return View();
         }
 
-        private UsuarioViewModel convertirAViewModel(Usuario usu)
+        private UsuarioViewModel convertirAViewModel(DTOAltaUsuario usu)
         {
             UsuarioViewModel model = new UsuarioViewModel();
             model.Id = usu.Id;
@@ -224,10 +224,9 @@ namespace SistemaGestionPedidos.Controllers
             return model;
         }
 
-        private Usuario convertirAUsuario(UsuarioViewModel model)
+        private DTOAltaUsuario convertirADTO(UsuarioViewModel model)
         {
-            Usuario usuario = new Usuario(model.Email, model.Nombre, model.Apellido, model.Admin);
-            usuario.SetContraseña(model.Contrasenia);
+            DTOAltaUsuario usuario = new DTOAltaUsuario(model.Email, model.Nombre, model.Apellido, model.Contrasenia, model.Admin);
 
             return usuario;
         }

@@ -25,9 +25,21 @@ namespace SistemaGestionDatos.Repositorios
         {
             if (nuevo != null)
             {
-                nuevo.Validar();
-                DBContext.Usuarios.Add(nuevo);
-                DBContext.SaveChanges();
+                if (BuscarXEmail(nuevo.Email) == null)
+                {
+                    nuevo.Validar();
+                    DBContext.Usuarios.Add(nuevo);
+                    DBContext.SaveChanges();
+                }
+                else
+                {
+                    throw new UsuarioValidationException("Correo Inválido");
+                }
+
+            }
+            else
+            {
+                throw new UsuarioValidationException("Usuario inválido");
             }
         }
 

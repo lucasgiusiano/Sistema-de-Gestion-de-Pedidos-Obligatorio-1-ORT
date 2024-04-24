@@ -13,6 +13,7 @@ using SistemaGestionAplicacion.CasosUso.CUPedido;
 using SistemaGestionAplicacion.InterfacesCU.ICUPedido;
 using SistemaGestionAplicacion.CasosUso.CUUsuario;
 using SistemaGestionAplicacion.InterfacesCU.ICUUsuario;
+using DTOs.DTOs_de_Cliente;
 
 namespace SistemaGestionPedidos
 {
@@ -31,11 +32,11 @@ namespace SistemaGestionPedidos
             builder.Services.AddScoped<ICUListadoPedidosAnuladosXFecha, CUListadoPedidosAnuladosXFecha>();
 
             //Inyecciones de Usuario
-            builder.Services.AddScoped<ICUAlta<Usuario>, CUAltaUsuario>();
+            builder.Services.AddScoped<ICUAlta<DTOAltaUsuario>, CUAltaUsuario>();
             builder.Services.AddScoped<ICUBaja, CUBajaUsuario>();
-            builder.Services.AddScoped<ICUBuscar<Usuario>, CUBuscarUsuario>();
-            builder.Services.AddScoped<ICUListado<Usuario>, CUListadoUsuario>();
-            builder.Services.AddScoped<ICUModificar<Usuario>, CUModificarUsuario>();
+            builder.Services.AddScoped<ICUBuscar<DTOAltaUsuario>, CUBuscarUsuario>();
+            builder.Services.AddScoped<ICUListado<DTOAltaUsuario>, CUListadoUsuario>();
+            builder.Services.AddScoped<ICUModificar<DTOAltaUsuario>, CUModificarUsuario>();
             builder.Services.AddScoped<ICUBuscarXEmail, CUBuscarXEmail>();
             builder.Services.AddScoped<ICUValidarLogin, CUValidarLogin>();
 

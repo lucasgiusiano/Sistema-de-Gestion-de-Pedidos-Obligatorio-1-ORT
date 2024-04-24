@@ -1,4 +1,5 @@
-﻿using SistemaGestionNegocio.Dominio;
+﻿using DTOs.DTOs_de_Cliente;
+using SistemaGestionNegocio.Dominio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace SistemaGestionAplicacion.InterfacesCU.ICUUsuario
 {
     public interface ICUValidarLogin
     {
-        Usuario ValidarLogin(string email, string contrasenia);
+        DTOLoginUsuario ValidarLogin(DTOLoginUsuario dTOLoginUsuario);
     }
 }

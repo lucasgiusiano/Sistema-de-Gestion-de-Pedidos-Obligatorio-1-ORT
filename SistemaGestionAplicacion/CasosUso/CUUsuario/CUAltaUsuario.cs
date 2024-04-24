@@ -1,4 +1,5 @@
-﻿using SistemaGestionAplicacion.InterfacesCU.ICUGenericas;
+﻿using DTOs.DTOs_de_Cliente;
+using SistemaGestionAplicacion.InterfacesCU.ICUGenericas;
 using SistemaGestionNegocio.Dominio;
 using SistemaGestionNegocio.InterfacesRepositorio;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SistemaGestionAplicacion.CasosUso.CUUsuario
 {
-    public class CUAltaUsuario : ICUAlta<Usuario>
+    public class CUAltaUsuario : ICUAlta<DTOAltaUsuario>
     {
         public IRepositorioUsuario Repo { get; set; }
 
@@ -18,9 +19,9 @@ namespace SistemaGestionAplicacion.CasosUso.CUUsuario
             Repo = repo;
         }
 
-        public void Alta(Usuario nuevo)
+        public void Alta(DTOAltaUsuario nuevo)
         {
-            Repo.Alta(nuevo);
+            Repo.Alta(MapperUsuario.DTOAltaUsuarioToUsuario(nuevo));
         }
     }
 }

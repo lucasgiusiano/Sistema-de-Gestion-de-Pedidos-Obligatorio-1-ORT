@@ -1,4 +1,5 @@
-﻿using SistemaGestionAplicacion.InterfacesCU.ICUUsuario;
+﻿using DTOs.DTOs_de_Cliente;
+using SistemaGestionAplicacion.InterfacesCU.ICUUsuario;
 using SistemaGestionNegocio.Dominio;
 using SistemaGestionNegocio.InterfacesRepositorio;
 using System;
@@ -18,9 +19,9 @@ namespace SistemaGestionAplicacion.CasosUso.CUUsuario
             Repo = repo;
         }
 
-        public Usuario ValidarLogin(string email, string contrasenia)
+        public DTOLoginUsuario ValidarLogin(DTOLoginUsuario dTOLoginUsuario)
         {
-            return Repo.ValidarLogin(email, contrasenia);
+            return MapperUsuario.toDTOLoginUsuario(Repo.ValidarLogin(dTOLoginUsuario.Email, dTOLoginUsuario.Contra));
         }
     }
 }
