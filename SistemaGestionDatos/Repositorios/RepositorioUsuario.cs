@@ -25,9 +25,21 @@ namespace SistemaGestionDatos.Repositorios
         {
             if (nuevo != null)
             {
-                nuevo.Validar();
-                DBContext.Usuarios.Add(nuevo);
-                DBContext.SaveChanges();
+                if (BuscarXEmail(nuevo.Email) == null)
+                {
+                    nuevo.Validar();
+                    DBContext.Usuarios.Add(nuevo);
+                    DBContext.SaveChanges();
+                }
+                else
+                {
+                    throw new UsuarioValidationException("Correo Inválido");
+                }
+
+            }
+            else
+            {
+                throw new UsuarioValidationException("Usuario inválido");
             }
         }
 
@@ -74,6 +86,7 @@ namespace SistemaGestionDatos.Repositorios
         public Usuario ValidarLogin(string email, string contrasenia)
         {
             Usuario buscado = BuscarXEmail(email);
+
             if (buscado != null && email == buscado.Email && Hashear(contrasenia) == buscado.ContraseniaHasheada)
             {
                 return buscado;

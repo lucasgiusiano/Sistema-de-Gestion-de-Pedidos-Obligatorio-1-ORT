@@ -1,4 +1,5 @@
-﻿using SistemaGestionAplicacion.InterfacesCU.ICUGenericas;
+﻿using DTOs.DTOs_Articulo;
+using SistemaGestionAplicacion.InterfacesCU.ICUGenericas;
 using SistemaGestionNegocio.Dominio;
 using SistemaGestionNegocio.InterfacesRepositorio;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SistemaGestionAplicacion.CasosUso.CUArticulo
 {
-    public class CUAltaArticulo : ICUAlta<Articulo>
+    public class CUAltaArticulo : ICUAlta<DTOAltaArticulo>
     {
         public IRepositorioArticulo Repo { get; set; }
 
@@ -18,9 +19,9 @@ namespace SistemaGestionAplicacion.CasosUso.CUArticulo
             Repo = repo;
         }
 
-        public void Alta(Articulo nuevo)
+        public void Alta(DTOAltaArticulo nuevo)
         {
-            Repo.Alta(nuevo);
+            Repo.Alta(MapperArticulo.DTOArticuloToArticulo(nuevo));
         }
     }
 }

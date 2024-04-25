@@ -13,6 +13,8 @@ using SistemaGestionAplicacion.CasosUso.CUPedido;
 using SistemaGestionAplicacion.InterfacesCU.ICUPedido;
 using SistemaGestionAplicacion.CasosUso.CUUsuario;
 using SistemaGestionAplicacion.InterfacesCU.ICUUsuario;
+using DTOs.DTOs_Usuario;
+using DTOs.DTOs_Articulo;
 
 namespace SistemaGestionPedidos
 {
@@ -31,19 +33,19 @@ namespace SistemaGestionPedidos
             builder.Services.AddScoped<ICUListadoPedidosAnuladosXFecha, CUListadoPedidosAnuladosXFecha>();
 
             //Inyecciones de Usuario
-            builder.Services.AddScoped<ICUAlta<Usuario>, CUAltaUsuario>();
+            builder.Services.AddScoped<ICUAlta<DTOAltaUsuario>, CUAltaUsuario>();
             builder.Services.AddScoped<ICUBaja, CUBajaUsuario>();
-            builder.Services.AddScoped<ICUBuscar<Usuario>, CUBuscarUsuario>();
-            builder.Services.AddScoped<ICUListado<Usuario>, CUListadoUsuario>();
-            builder.Services.AddScoped<ICUModificar<Usuario>, CUModificarUsuario>();
+            builder.Services.AddScoped<ICUBuscar<DTOAltaUsuario>, CUBuscarUsuario>();
+            builder.Services.AddScoped<ICUListado<DTOAltaUsuario>, CUListadoUsuario>();
+            builder.Services.AddScoped<ICUModificar<DTOAltaUsuario>, CUModificarUsuario>();
             builder.Services.AddScoped<ICUBuscarXEmail, CUBuscarXEmail>();
             builder.Services.AddScoped<ICUValidarLogin, CUValidarLogin>();
 
             //Inyecciones de Articulo
-            builder.Services.AddScoped<ICUAlta<Articulo>, CUAltaArticulo>();
+            builder.Services.AddScoped<ICUAlta<DTOAltaArticulo>, CUAltaArticulo>();
             builder.Services.AddScoped<ICUListadoOrdenadoArticulos, CUListadoOrdenadoArticulos>();
-            builder.Services.AddScoped<ICUModificar<Articulo>, CUModificarArticulo>();
-            builder.Services.AddScoped<ICUBuscar<Articulo>, CUBuscarArticulo>();
+            builder.Services.AddScoped<ICUModificar<DTOAltaArticulo>, CUModificarArticulo>();
+            builder.Services.AddScoped<ICUBuscar<DTOAltaArticulo>, CUBuscarArticulo>();
 
             //Inyecciones de Cliente
             builder.Services.AddScoped<ICUBuscarClientePorRazonSocial, CUBuscarClientePorRazonSocial>();

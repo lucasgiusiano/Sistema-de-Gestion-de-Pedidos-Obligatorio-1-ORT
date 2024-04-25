@@ -24,27 +24,11 @@ namespace SistemaGestionDatos.Migrations
 
             modelBuilder.Entity("SistemaGestionNegocio.Dominio.Articulo", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CodigoProveedor")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Descripcion")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("PrecioVenta")
-                        .HasColumnType("float");
-
-                    b.Property<int>("Stock")
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.HasKey("Id");
 
@@ -53,12 +37,14 @@ namespace SistemaGestionDatos.Migrations
 
             modelBuilder.Entity("SistemaGestionNegocio.Dominio.Cliente", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
 
-                    b.Property<Guid>("DireccionId")
-                        .HasColumnType("uniqueidentifier");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("DireccionId")
+                        .HasColumnType("int");
 
                     b.Property<double>("DistanciaDeposito")
                         .HasColumnType("float");
@@ -80,9 +66,11 @@ namespace SistemaGestionDatos.Migrations
 
             modelBuilder.Entity("SistemaGestionNegocio.Dominio.Direccion", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Calle")
                         .IsRequired()
@@ -102,18 +90,20 @@ namespace SistemaGestionDatos.Migrations
 
             modelBuilder.Entity("SistemaGestionNegocio.Dominio.Linea", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
 
-                    b.Property<Guid>("ArticuloId")
-                        .HasColumnType("uniqueidentifier");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ArticuloId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Cantidad")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("PedidoId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("PedidoId")
+                        .HasColumnType("int");
 
                     b.Property<double>("PrecioUnitario")
                         .HasColumnType("float");
@@ -129,15 +119,17 @@ namespace SistemaGestionDatos.Migrations
 
             modelBuilder.Entity("SistemaGestionNegocio.Dominio.Pedido", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Anulado")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("ClienteId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("ClienteId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
@@ -166,9 +158,11 @@ namespace SistemaGestionDatos.Migrations
 
             modelBuilder.Entity("SistemaGestionNegocio.Dominio.Usuario", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Admin")
                         .HasColumnType("bit");
@@ -213,6 +207,107 @@ namespace SistemaGestionDatos.Migrations
                         .HasColumnType("int");
 
                     b.HasDiscriminator().HasValue("PedidoExpress");
+                });
+
+            modelBuilder.Entity("SistemaGestionNegocio.Dominio.Articulo", b =>
+                {
+                    b.OwnsOne("SistemaGestionNegocio.VOs.CodigoProveedorArticulo", "CodigoProveedor", b1 =>
+                        {
+                            b1.Property<int>("ArticuloId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Valor")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("ArticuloId");
+
+                            b1.ToTable("Articulos");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ArticuloId");
+                        });
+
+                    b.OwnsOne("SistemaGestionNegocio.VOs.DescripcionArticulo", "Descripcion", b1 =>
+                        {
+                            b1.Property<int>("ArticuloId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Valor")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("ArticuloId");
+
+                            b1.ToTable("Articulos");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ArticuloId");
+                        });
+
+                    b.OwnsOne("SistemaGestionNegocio.VOs.NombreArticulo", "Nombre", b1 =>
+                        {
+                            b1.Property<int>("ArticuloId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Valor")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("ArticuloId");
+
+                            b1.ToTable("Articulos");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ArticuloId");
+                        });
+
+                    b.OwnsOne("SistemaGestionNegocio.VOs.PrecioVentaArticulo", "PrecioVenta", b1 =>
+                        {
+                            b1.Property<int>("ArticuloId")
+                                .HasColumnType("int");
+
+                            b1.Property<double>("Valor")
+                                .HasColumnType("float");
+
+                            b1.HasKey("ArticuloId");
+
+                            b1.ToTable("Articulos");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ArticuloId");
+                        });
+
+                    b.OwnsOne("SistemaGestionNegocio.VOs.StockArticulo", "Stock", b1 =>
+                        {
+                            b1.Property<int>("ArticuloId")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("Valor")
+                                .HasColumnType("int");
+
+                            b1.HasKey("ArticuloId");
+
+                            b1.ToTable("Articulos");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ArticuloId");
+                        });
+
+                    b.Navigation("CodigoProveedor")
+                        .IsRequired();
+
+                    b.Navigation("Descripcion")
+                        .IsRequired();
+
+                    b.Navigation("Nombre")
+                        .IsRequired();
+
+                    b.Navigation("PrecioVenta")
+                        .IsRequired();
+
+                    b.Navigation("Stock")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SistemaGestionNegocio.Dominio.Cliente", b =>

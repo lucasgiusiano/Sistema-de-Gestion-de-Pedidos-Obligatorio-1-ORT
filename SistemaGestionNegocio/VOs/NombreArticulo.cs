@@ -9,7 +9,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SistemaGestionNegocio.VOs
 {
-    
+    [Owned]
     public class NombreArticulo
     {
         public string Valor { get; init; }

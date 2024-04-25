@@ -20,3 +20,10 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.fondo {
+    background-image: url("../img/fondo.png");
+    background-position: center;
+    height: 83.5vh;
+    width: 100%
+}

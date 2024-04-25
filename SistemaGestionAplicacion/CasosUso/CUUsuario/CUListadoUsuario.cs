@@ -1,4 +1,5 @@
-﻿using SistemaGestionAplicacion.InterfacesCU.ICUGenericas;
+﻿using DTOs.DTOs_Usuario;
+using SistemaGestionAplicacion.InterfacesCU.ICUGenericas;
 using SistemaGestionNegocio.Dominio;
 using SistemaGestionNegocio.InterfacesRepositorio;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SistemaGestionAplicacion.CasosUso.CUUsuario
 {
-    public class CUListadoUsuario : ICUListado<Usuario>
+    public class CUListadoUsuario : ICUListado<DTOAltaUsuario>
     {
         public IRepositorioUsuario Repo { get; set; }
 
@@ -18,9 +19,9 @@ namespace SistemaGestionAplicacion.CasosUso.CUUsuario
             Repo = repo;
         }
 
-        public List<Usuario> ObtenerListado()
+        public List<DTOAltaUsuario> ObtenerListado()
         {
-            return Repo.ObtenerListado();
+            return MapperUsuario.toListaDTOAltaUsuario(Repo.ObtenerListado());
         }
     }
 }
