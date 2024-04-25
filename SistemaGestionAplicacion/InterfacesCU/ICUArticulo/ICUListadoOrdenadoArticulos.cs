@@ -1,4 +1,5 @@
-﻿using SistemaGestionNegocio.Dominio;
+﻿using DTOs.DTOs_Articulo;
+using SistemaGestionNegocio.Dominio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace SistemaGestionAplicacion.InterfacesCU.ICUArticulo
 {
     public interface ICUListadoOrdenadoArticulos
     {
-        List<Articulo> ListadoOrdenado();
+        List<DTOAltaArticulo> ListadoOrdenado();
     }
 }

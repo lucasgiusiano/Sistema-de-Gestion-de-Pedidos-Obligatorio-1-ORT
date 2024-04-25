@@ -1,4 +1,5 @@
 ﻿using SistemaGestionNegocio.Dominio;
+using SistemaGestionNegocio.ExcepcionesPropias;
 using SistemaGestionNegocio.InterfacesRepositorio;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,10 @@ namespace SistemaGestionDatos.Repositorios
                 DBContext.Articulos.Update(modificado);
                 DBContext.SaveChanges();
             }
+            else
+            {
+                throw new ArticuloValidationException("No se ha podido modificar el Articulo");
+            }
         }
 
         public Articulo BuscarPorId(int id)
@@ -44,7 +49,7 @@ namespace SistemaGestionDatos.Repositorios
 
         public List<Articulo> ListadoOrdenado()
         {
-            return DBContext.Articulos.OrderBy(a => a.Nombre).ToList();
+            return DBContext.Articulos.OrderBy(a => a.Nombre.Valor).ToList();
         }
 
 

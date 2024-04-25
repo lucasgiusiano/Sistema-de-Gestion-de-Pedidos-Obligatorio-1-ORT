@@ -14,6 +14,7 @@ using SistemaGestionAplicacion.InterfacesCU.ICUPedido;
 using SistemaGestionAplicacion.CasosUso.CUUsuario;
 using SistemaGestionAplicacion.InterfacesCU.ICUUsuario;
 using DTOs.DTOs_Usuario;
+using DTOs.DTOs_Articulo;
 
 namespace SistemaGestionPedidos
 {
@@ -41,10 +42,10 @@ namespace SistemaGestionPedidos
             builder.Services.AddScoped<ICUValidarLogin, CUValidarLogin>();
 
             //Inyecciones de Articulo
-            builder.Services.AddScoped<ICUAlta<Articulo>, CUAltaArticulo>();
+            builder.Services.AddScoped<ICUAlta<DTOAltaArticulo>, CUAltaArticulo>();
             builder.Services.AddScoped<ICUListadoOrdenadoArticulos, CUListadoOrdenadoArticulos>();
-            builder.Services.AddScoped<ICUModificar<Articulo>, CUModificarArticulo>();
-            builder.Services.AddScoped<ICUBuscar<Articulo>, CUBuscarArticulo>();
+            builder.Services.AddScoped<ICUModificar<DTOAltaArticulo>, CUModificarArticulo>();
+            builder.Services.AddScoped<ICUBuscar<DTOAltaArticulo>, CUBuscarArticulo>();
 
             //Inyecciones de Cliente
             builder.Services.AddScoped<ICUBuscarClientePorRazonSocial, CUBuscarClientePorRazonSocial>();

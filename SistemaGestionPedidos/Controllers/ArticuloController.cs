@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DTOs.DTOs_Articulo;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using SistemaGestionAplicacion.InterfacesCU.ICUArticulo;
 using SistemaGestionAplicacion.InterfacesCU.ICUGenericas;
-using SistemaGestionNegocio.Dominio;
 using SistemaGestionNegocio.ExcepcionesPropias;
 using SistemaGestionNegocio.VOs;
 using SistemaGestionPedidos.Models;
@@ -12,12 +12,12 @@ namespace SistemaGestionPedidos.Controllers
 {
     public class ArticuloController : Controller
     {
-        public ICUAlta<Articulo> CUAlta { get; set; }
-        public ICUModificar<Articulo> CUModificar { get; set; }
-        public ICUBuscar<Articulo> CUBuscar { get; set; }
+        public ICUAlta<DTOAltaArticulo> CUAlta { get; set; }
+        public ICUModificar<DTOAltaArticulo> CUModificar { get; set; }
+        public ICUBuscar<DTOAltaArticulo> CUBuscar { get; set; }
         public ICUListadoOrdenadoArticulos CUListado { get; set; }
 
-        public ArticuloController(ICUAlta<Articulo> cuAlta, ICUListadoOrdenadoArticulos cuListado, ICUModificar<Articulo> cUModificar, ICUBuscar<Articulo> cUBuscar)
+        public ArticuloController(ICUAlta<DTOAltaArticulo> cuAlta, ICUListadoOrdenadoArticulos cuListado, ICUModificar<DTOAltaArticulo> cUModificar, ICUBuscar<DTOAltaArticulo> cUBuscar)
         {
             CUAlta = cuAlta;
             CUListado = cuListado;
@@ -44,7 +44,7 @@ namespace SistemaGestionPedidos.Controllers
         {
             try
             {
-                CUAlta.Alta(convertirAArticulo(nuevoA));
+                CUAlta.Alta(convertirADTO(nuevoA));
                 return RedirectToAction("Index");
             }
             catch (ArticuloValidationException e)
@@ -71,7 +71,7 @@ namespace SistemaGestionPedidos.Controllers
         {
             try
             {
-                CUModificar.Modificar(convertirAArticulo(model));
+                CUModificar.Modificar(convertirADTO(model));
                 return RedirectToAction("Index");
             }
             catch (ArticuloValidationException e)
@@ -85,14 +85,14 @@ namespace SistemaGestionPedidos.Controllers
             return View();
         }
 
-        private Articulo convertirAArticulo(ArticuloViewModel model)
+        private DTOAltaArticulo convertirADTO(ArticuloViewModel model)
         {
-            return new Articulo(new NombreArticulo(model.Nombre), new DescripcionArticulo(model.Descripcion), new CodigoProveedorArticulo(model.CodigoProveedor), new PrecioVentaArticulo(model.PrecioVenta),  new StockArticulo(model.Stock));
+            return new DTOAltaArticulo(model.Id, model.Nombre, model.Descripcion, model.CodigoProveedor, model.PrecioVenta,  model.Stock);
         }
 
-        private ArticuloViewModel convertirAViewModel(Articulo articulo)
+        private ArticuloViewModel convertirAViewModel(DTOAltaArticulo dto)
         {
-            return new ArticuloViewModel(articulo.Nombre.Valor,articulo.Descripcion.Valor,articulo.CodigoProveedor.Valor,articulo.PrecioVenta.Valor,articulo.Stock.Valor);
+            return new ArticuloViewModel(dto.Nombre, dto.Descripcion, dto.CodigoProveedor, dto.PrecioVenta, dto.Stock);
         }
     }
 }

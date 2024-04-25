@@ -18,7 +18,17 @@ namespace SistemaGestionNegocio.Dominio
         public PrecioVentaArticulo PrecioVenta { get; set; }
         public StockArticulo Stock { get; set; }
 
-        public Articulo(NombreArticulo nombre, DescripcionArticulo descripcion, CodigoProveedorArticulo codigoProveedor, PrecioVentaArticulo precioVenta, StockArticulo stock)
+		public Articulo(int id,NombreArticulo nombre, DescripcionArticulo descripcion, CodigoProveedorArticulo codigoProveedor, PrecioVentaArticulo precioVenta, StockArticulo stock)
+		{
+            Id = id;
+			Nombre = nombre;
+			Descripcion = descripcion;
+			CodigoProveedor = codigoProveedor;
+			PrecioVenta = precioVenta;
+			Stock = stock;
+		}
+
+		public Articulo(NombreArticulo nombre, DescripcionArticulo descripcion, CodigoProveedorArticulo codigoProveedor, PrecioVentaArticulo precioVenta, StockArticulo stock)
         {
             Nombre = nombre;
             Descripcion = descripcion;
