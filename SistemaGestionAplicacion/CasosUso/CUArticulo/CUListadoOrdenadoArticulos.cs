@@ -1,4 +1,5 @@
-﻿using SistemaGestionAplicacion.InterfacesCU.ICUArticulo;
+﻿using DTOs.DTOs_Articulo;
+using SistemaGestionAplicacion.InterfacesCU.ICUArticulo;
 using SistemaGestionNegocio.Dominio;
 using SistemaGestionNegocio.InterfacesRepositorio;
 using System;
@@ -18,9 +19,9 @@ namespace SistemaGestionAplicacion.CasosUso.CUArticulo
             Repo = repo;
         }
 
-        public List<Articulo> ListadoOrdenado()
+        public List<DTOAltaArticulo> ListadoOrdenado()
         {
-            return Repo.ListadoOrdenado();
+            return MapperArticulo.toListaDTOAltaArticulo(Repo.ListadoOrdenado());
         }
     }
 }

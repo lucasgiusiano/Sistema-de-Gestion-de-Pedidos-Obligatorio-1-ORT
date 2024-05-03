@@ -1,4 +1,5 @@
-﻿using SistemaGestionAplicacion.InterfacesCU.ICUGenericas;
+﻿using DTOs.DTOs_Usuario;
+using SistemaGestionAplicacion.InterfacesCU.ICUGenericas;
 using SistemaGestionNegocio.Dominio;
 using SistemaGestionNegocio.InterfacesRepositorio;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SistemaGestionAplicacion.CasosUso.CUUsuario
 {
-    public class CUBuscarUsuario : ICUBuscar<Usuario>
+    public class CUBuscarUsuario : ICUBuscar<DTOAltaUsuario>
     {
         public IRepositorioUsuario Repo { get; set; }
 
@@ -18,9 +19,9 @@ namespace SistemaGestionAplicacion.CasosUso.CUUsuario
             Repo = repo;
         }
 
-        public Usuario Buscar(Guid id)
+        public DTOAltaUsuario Buscar(int id)
         {
-            return Repo.BuscarPorId(id);
+            return MapperUsuario.toDTOAltaUsuario(Repo.BuscarPorId(id));
         }
     }
 }

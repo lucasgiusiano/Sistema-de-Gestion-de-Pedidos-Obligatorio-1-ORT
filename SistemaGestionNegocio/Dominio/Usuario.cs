@@ -14,7 +14,7 @@ namespace SistemaGestionNegocio.Dominio
 {
     public class Usuario: IValidable
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "El campo Email es obligatorio.")]
         [EmailAddress(ErrorMessage = "El campo Email debe ser una dirección de correo electrónico válida.")]
@@ -36,9 +36,16 @@ namespace SistemaGestionNegocio.Dominio
         public string Contrasenia { get; set; }
         public bool Admin { get; set; }
 
+        public Usuario(string email, string nombre, string apellido, bool admin)
+        {
+            Email = email;
+            Nombre = nombre;
+            Apellido = apellido;
+            Admin = admin;
+        }
+
         public Usuario()
         {
-            Id = Guid.NewGuid(); 
         }
 
         public void SetContraseña(string contrasenia)

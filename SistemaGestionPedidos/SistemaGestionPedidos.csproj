@@ -21,4 +21,9 @@
     <ProjectReference Include="..\SistemaGestionNegocio\SistemaGestionNegocio.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Pedido\" />
+    <Folder Include="wwwroot\img\" />
+  </ItemGroup>
+
 </Project>

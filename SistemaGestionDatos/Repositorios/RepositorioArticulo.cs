@@ -1,4 +1,5 @@
 ﻿using SistemaGestionNegocio.Dominio;
+using SistemaGestionNegocio.ExcepcionesPropias;
 using SistemaGestionNegocio.InterfacesRepositorio;
 using System;
 using System.Collections.Generic;
@@ -21,15 +22,39 @@ namespace SistemaGestionDatos.Repositorios
         {
             if (nuevo != null)
             {
-                nuevo.Validar();
                 DBContext.Articulos.Add(nuevo);
                 DBContext.SaveChanges();
             }
+            else
+            {
+                throw new ArgumentNullException(nameof(nuevo), "El artículo proporcionado es nulo.");
+            }
+        }
+
+        public void Modificar(Articulo modificado)
+        {
+            if (modificado != null)
+            {
+                modificado.Validar();
+                DBContext.Articulos.Update(modificado);
+                DBContext.SaveChanges();
+            }
+            else
+            {
+                throw new ArticuloValidationException("No se ha podido modificar el Articulo");
+            }
+        }
+
+        public Articulo BuscarPorId(int id)
+        {
+            return DBContext.Articulos.Where(a => a.Id == id).SingleOrDefault();
         }
 
         public List<Articulo> ListadoOrdenado()
         {
-            return DBContext.Articulos.OrderBy(a => a.Nombre).ToList();
+            return DBContext.Articulos.OrderBy(a => a.Nombre.Valor).ToList();
         }
+
+
     }
 }

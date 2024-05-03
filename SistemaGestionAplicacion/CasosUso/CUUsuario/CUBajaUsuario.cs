@@ -17,7 +17,7 @@ namespace SistemaGestionAplicacion.CasosUso.CUUsuario
             Repo = repo;
         }
 
-        public void Baja(Guid id)
+        public void Baja(int id)
         {
             Repo.Baja(id);
         }

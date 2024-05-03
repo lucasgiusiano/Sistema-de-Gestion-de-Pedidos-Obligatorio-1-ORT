@@ -1,4 +1,5 @@
-﻿using SistemaGestionNegocio.Dominio;
+﻿using DTOs.DTOs_Usuario;
+using SistemaGestionNegocio.Dominio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace SistemaGestionAplicacion.InterfacesCU.ICUUsuario
 {
     public interface ICUBuscarXEmail
     {
-        Usuario BuscarXEmail(string email);
+        DTOAltaUsuario BuscarXEmail(string email);
     }
 }

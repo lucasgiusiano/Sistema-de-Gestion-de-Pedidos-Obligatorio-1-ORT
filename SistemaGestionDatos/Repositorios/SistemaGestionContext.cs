@@ -13,7 +13,7 @@ namespace SistemaGestionDatos.Repositorios
         public DbSet<PedidoComun> PedidosComunes { get; set; }
         public DbSet<PedidoExpress> PedidosExpress { get; set; }
         public DbSet<Direccion> Direcciones { get; set; }
-
+        public DbSet<Configuracion> Configuraciones { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

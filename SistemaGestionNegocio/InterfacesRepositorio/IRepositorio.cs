@@ -9,9 +9,9 @@ namespace SistemaGestionNegocio.InterfacesRepositorio
     public interface IRepositorio<T>
     {
         void Alta(T nuevo);
-        void Baja(Guid id);
+        void Baja(int id);
         void Modificar(T modificado);
         List<T> ObtenerListado();
-        T BuscarPorId(Guid id);
+        T BuscarPorId(int id);
     }
 }

@@ -10,15 +10,23 @@ namespace SistemaGestionNegocio.Dominio
 {
     public class Cliente: IValidable
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string RazonSocial { get; set; }
         public string Rut { get; set; }
         public Direccion Direccion { get; set; }
         public double DistanciaDeposito { get; set; }
 
+        public Cliente(string razonSocial, string rut, Direccion direccion, double distanciaDeposito)
+        {
+            RazonSocial = razonSocial;
+            Rut = rut;
+            Direccion = direccion;
+            DistanciaDeposito = distanciaDeposito;
+        }
+
         public Cliente()
         {
-            Id = Guid.NewGuid(); 
+
         }
 
         public void Validar()

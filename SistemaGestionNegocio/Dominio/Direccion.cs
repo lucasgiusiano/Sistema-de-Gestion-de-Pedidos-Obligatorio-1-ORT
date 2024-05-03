@@ -8,14 +8,20 @@ namespace SistemaGestionNegocio.Dominio
 {
     public class Direccion
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string Calle { get; set; }
         public int Numero { get; set; }
         public string Ciudad { get; set; }
 
+        public Direccion(string calle, int numero, string ciudad)
+        {
+            Calle = calle;
+            Numero = numero;
+            Ciudad = ciudad;
+        }
+
         public Direccion()
         {
-            Id = Guid.NewGuid();
             
         }
     }

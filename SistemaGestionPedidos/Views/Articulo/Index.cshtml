@@ -1,0 +1,58 @@
+﻿@model IEnumerable<DTOs.DTOs_Articulo.DTOAltaArticulo>
+
+@{
+	ViewData["Title"] = "Index";
+}
+
+<h1 class="text-center">Gestion de Articulos</h1>
+
+<p>
+	<a class="btn btn-success" href="@Url.Action("Create", "Articulo")">Nuevo Articulo</a>
+</p>
+<table class="table" style="border-radius: 15px; overflow:hidden;  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);">
+	<thead class="bg-primary">
+		<tr class="text-center text-light">
+			<th>
+				@Html.DisplayNameFor(model => model.Nombre)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Descripcion)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.CodigoProveedor)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.PrecioVenta)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Stock)
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody class="text-center">
+			@foreach (var item in Model)
+			{
+			<tr >
+				<td>
+						@Html.DisplayFor(modelItem => item.Nombre)
+				</td>
+				<td>
+						@Html.DisplayFor(modelItem => item.Descripcion)
+				</td>
+				<td>
+						@Html.DisplayFor(modelItem => item.CodigoProveedor)
+				</td>
+				<td>
+						@Html.DisplayFor(modelItem => item.PrecioVenta)
+				</td>
+				<td>
+						@Html.DisplayFor(modelItem => item.Stock)
+				</td>
+				<td>
+					<a class="btn btn-primary" href="@Url.Action("Edit", "Articulo", new {id = item.Id})">Editar</a>
+				</td>
+			</tr>
+			}
+	</tbody>
+</table>

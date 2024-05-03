@@ -8,6 +8,6 @@ namespace SistemaGestionAplicacion.InterfacesCU.ICUPedido
 {
     public interface ICUAnularPedido
     {
-        void Anular(Guid id);
+        void Anular(int id);
     }
 }
