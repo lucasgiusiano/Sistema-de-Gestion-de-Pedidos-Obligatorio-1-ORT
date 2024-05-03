@@ -31,7 +31,7 @@ namespace DTOs.DTOs_Articulo
 		{
 			Nombre = nombre;
 			Descripcion = descripcion;
-			CodigoProveedor = codigoProveedor;
+			CodigoProveedor = codigoProveedor; 
 			PrecioVenta = precioVenta;
 			Stock = stock;
 		}

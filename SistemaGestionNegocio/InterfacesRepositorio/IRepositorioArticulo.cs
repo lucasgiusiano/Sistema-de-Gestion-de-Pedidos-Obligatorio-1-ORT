@@ -13,5 +13,6 @@ namespace SistemaGestionNegocio.InterfacesRepositorio
         void Modificar(Articulo modificado);
         Articulo BuscarPorId(int id);
         List<Articulo> ListadoOrdenado();
+        
     }
 }

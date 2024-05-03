@@ -16,9 +16,11 @@ namespace SistemaGestionNegocio.Dominio
         public DescripcionArticulo Descripcion { get; set; }
         public CodigoProveedorArticulo CodigoProveedor { get; set; }
         public PrecioVentaArticulo PrecioVenta { get; set; }
-        public StockArticulo Stock { get; set; }
+        public StockArticulo Stock { get; private set; }
 
-		public Articulo(int id,NombreArticulo nombre, DescripcionArticulo descripcion, CodigoProveedorArticulo codigoProveedor, PrecioVentaArticulo precioVenta, StockArticulo stock)
+       
+
+        public Articulo(int id,NombreArticulo nombre, DescripcionArticulo descripcion, CodigoProveedorArticulo codigoProveedor, PrecioVentaArticulo precioVenta, StockArticulo stock)
 		{
             Id = id;
 			Nombre = nombre;
@@ -27,8 +29,9 @@ namespace SistemaGestionNegocio.Dominio
 			PrecioVenta = precioVenta;
 			Stock = stock;
 		}
+        
 
-		public Articulo(NombreArticulo nombre, DescripcionArticulo descripcion, CodigoProveedorArticulo codigoProveedor, PrecioVentaArticulo precioVenta, StockArticulo stock)
+        public Articulo(NombreArticulo nombre, DescripcionArticulo descripcion, CodigoProveedorArticulo codigoProveedor, PrecioVentaArticulo precioVenta, StockArticulo stock)
         {
             Nombre = nombre;
             Descripcion = descripcion;
@@ -36,6 +39,24 @@ namespace SistemaGestionNegocio.Dominio
             PrecioVenta = precioVenta;
             Stock = stock;
         }
+        public bool VerificarStockSuficiente(int cantidad)
+        {
+            return Stock.Valor >= cantidad;
+        }
+
+        public void ReducirStock(int cantidad)
+        {
+            if (VerificarStockSuficiente(cantidad))
+            {
+                // Crear un nuevo objeto StockArticulo con el stock reducido
+                Stock = new StockArticulo(Stock.Valor - cantidad);
+            }
+            else
+            {
+                throw new StockInsuficienteException($"No hay suficiente stock disponible para el artículo {Nombre}");
+            }
+        }
+
 
         public Articulo()
         {
@@ -44,6 +65,7 @@ namespace SistemaGestionNegocio.Dominio
 
         public void Validar()
         {
+            // a este metodo no llegaria si ya no es valido, porque romperia a nivel de validacion en el view model por las anotaciones
         }
     }
 }

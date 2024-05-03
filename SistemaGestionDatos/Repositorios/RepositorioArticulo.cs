@@ -22,9 +22,12 @@ namespace SistemaGestionDatos.Repositorios
         {
             if (nuevo != null)
             {
-                nuevo.Validar();
                 DBContext.Articulos.Add(nuevo);
                 DBContext.SaveChanges();
+            }
+            else
+            {
+                throw new ArgumentNullException(nameof(nuevo), "El artículo proporcionado es nulo.");
             }
         }
 

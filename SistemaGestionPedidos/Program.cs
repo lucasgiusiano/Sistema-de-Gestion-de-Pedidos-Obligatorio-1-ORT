@@ -15,6 +15,7 @@ using SistemaGestionAplicacion.CasosUso.CUUsuario;
 using SistemaGestionAplicacion.InterfacesCU.ICUUsuario;
 using DTOs.DTOs_Usuario;
 using DTOs.DTOs_Articulo;
+using DTOs.DTOs_Pedido;
 
 namespace SistemaGestionPedidos
 {
@@ -28,7 +29,7 @@ namespace SistemaGestionPedidos
             builder.Services.AddControllersWithViews();
             builder.Services.AddSession();
 
-            builder.Services.AddScoped<ICUAlta<Pedido>, CUAltaPedido>();
+            builder.Services.AddScoped<ICUAltaPedido, CUAltaPedido>();
             builder.Services.AddScoped<ICUAnularPedido, CUAnularPedido>();
             builder.Services.AddScoped<ICUListadoPedidosAnuladosXFecha, CUListadoPedidosAnuladosXFecha>();
 
@@ -58,7 +59,7 @@ namespace SistemaGestionPedidos
             builder.Services.AddScoped<IRepositorioCliente, RepositorioCliente>();
             builder.Services.AddScoped<IRepositorioPedido, RepositorioPedido>();
             builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
-
+            builder.Services.AddScoped<IRepositorioConfiguracion, RepositorioConfiguracion>();
 
             builder.Services.AddDbContext<SistemaGestionContext>();
 

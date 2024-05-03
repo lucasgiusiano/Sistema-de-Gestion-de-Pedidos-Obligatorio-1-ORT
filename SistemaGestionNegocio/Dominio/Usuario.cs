@@ -44,14 +44,6 @@ namespace SistemaGestionNegocio.Dominio
             Admin = admin;
         }
 
-        public Usuario(string email, string nombre, string apellido, bool admin)
-        {
-            Email = email;
-            Nombre = nombre;
-            Apellido = apellido;
-            Admin = admin;
-        }
-
         public Usuario()
         {
         }

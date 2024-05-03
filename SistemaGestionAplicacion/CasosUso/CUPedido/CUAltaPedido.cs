@@ -1,4 +1,6 @@
-﻿using SistemaGestionAplicacion.InterfacesCU.ICUGenericas;
+﻿using DTOs.DTOs_Pedido;
+using SistemaGestionAplicacion.InterfacesCU.ICUGenericas;
+using SistemaGestionAplicacion.InterfacesCU.ICUPedido;
 using SistemaGestionNegocio.Dominio;
 using SistemaGestionNegocio.InterfacesRepositorio;
 using System;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace SistemaGestionAplicacion.CasosUso.CUPedido
 {
-    public class CUAltaPedido : ICUAlta<Pedido>
+    public class CUAltaPedido : ICUAltaPedido
     {
         public IRepositorioPedido Repo { get; set; }
 
@@ -18,9 +20,10 @@ namespace SistemaGestionAplicacion.CasosUso.CUPedido
             Repo = repo;
         }
 
-        public void Alta(Pedido nuevo)
+        public async Task Alta(DTOAltaPedido nuevo)
         {
-            Repo.Alta(nuevo);
+
+           
         }
     }
 }

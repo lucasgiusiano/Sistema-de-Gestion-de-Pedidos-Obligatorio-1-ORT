@@ -82,12 +82,11 @@ namespace SistemaGestionDatos.Repositorios
         {
             return DBContext.Usuarios.FirstOrDefault(u => u.Email == email);
         }
-
         public Usuario ValidarLogin(string email, string contrasenia)
         {
             Usuario buscado = BuscarXEmail(email);
 
-            if (buscado != null && email == buscado.Email && Hashear(contrasenia) == buscado.ContraseniaHasheada)
+            if (buscado != null && CompararHash(contrasenia, buscado.ContraseniaHasheada))
             {
                 return buscado;
             }
@@ -95,8 +94,18 @@ namespace SistemaGestionDatos.Repositorios
             {
                 throw new UsuarioValidationException("Credenciales Inválidas");
             }
-
         }
+
+        private bool CompararHash(string contrasenia, string hashAlmacenado)
+        {
+            // Generar el hash de la contraseña ingresada
+            string hashIngresado = Hashear(contrasenia);
+
+            // Comparar el hash ingresado con el hash almacenado de forma insensible a mayúsculas y minúsculas
+            return string.Equals(hashIngresado, hashAlmacenado, StringComparison.OrdinalIgnoreCase);
+        }
+
+
 
         private string Hashear(string contrasenia)
         {
@@ -114,5 +123,6 @@ namespace SistemaGestionDatos.Repositorios
                 return builder.ToString();
             }
         }
+
     }
 }

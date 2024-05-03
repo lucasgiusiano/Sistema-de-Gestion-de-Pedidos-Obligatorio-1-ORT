@@ -20,7 +20,7 @@ namespace SistemaGestionDatos.Repositorios
 
         public List<Cliente> BuscarPorMonto(double monto)
         {
-            
+
             return DBContext.Pedidos.Where(p => p.PrecioFinal > monto).Select(p => p.Cliente).Distinct().ToList();
         }
 
@@ -37,6 +37,10 @@ namespace SistemaGestionDatos.Repositorios
             return DBContext.Clientes
                             .Include(c => c.Direccion)
                             .ToList();
+        }
+        public Cliente BuscarClientePorId(int idCliente)
+        {
+            return DBContext.Clientes.Where(c => c.Id == idCliente).SingleOrDefault();
         }
 
     }

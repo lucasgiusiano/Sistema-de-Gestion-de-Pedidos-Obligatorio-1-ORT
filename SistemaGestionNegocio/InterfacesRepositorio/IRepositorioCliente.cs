@@ -10,6 +10,7 @@ namespace SistemaGestionNegocio.InterfacesRepositorio
     public interface IRepositorioCliente
     {
         public Cliente BuscarPorRazonSocial(string razonSocial);
+        public Cliente BuscarClientePorId(int idCliente);
         List<Cliente> BuscarPorMonto(double monto);
         List<Cliente> ObtenerTodosLosClientes();
         List<Cliente> ObtenerTodosLosClientesConDireccion();

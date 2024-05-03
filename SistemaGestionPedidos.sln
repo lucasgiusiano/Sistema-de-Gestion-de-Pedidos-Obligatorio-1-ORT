@@ -22,7 +22,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemaGestionDatos", "Sist
 		{51470786-9A57-4556-94D0-AEB59BD43894} = {51470786-9A57-4556-94D0-AEB59BD43894}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DTOs", "DTOs\DTOs.csproj", "{F5EBE637-FF20-44E2-8A6A-DB8A997EB693}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTOs", "DTOs\DTOs.csproj", "{F5EBE637-FF20-44E2-8A6A-DB8A997EB693}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaGestionAPI", "SistemaGestionAPI\SistemaGestionAPI.csproj", "{09F9C243-9DB4-4C89-A1A1-2ECEF5945376}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +52,10 @@ Global
 		{F5EBE637-FF20-44E2-8A6A-DB8A997EB693}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5EBE637-FF20-44E2-8A6A-DB8A997EB693}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5EBE637-FF20-44E2-8A6A-DB8A997EB693}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09F9C243-9DB4-4C89-A1A1-2ECEF5945376}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09F9C243-9DB4-4C89-A1A1-2ECEF5945376}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09F9C243-9DB4-4C89-A1A1-2ECEF5945376}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09F9C243-9DB4-4C89-A1A1-2ECEF5945376}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

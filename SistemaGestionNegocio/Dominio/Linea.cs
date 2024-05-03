@@ -9,10 +9,11 @@ namespace SistemaGestionNegocio.Dominio
     public class Linea
     {
         public int Id { get; set; }
-        public Articulo Articulo { get; set; }
+        
         public int Cantidad { get; set; }
         public double PrecioUnitario { get; set; }
-
+        public int ArticuloId { get; set; }
+        public virtual Articulo Articulo { get; set; }
         public Linea(Articulo articulo, int cantidad, double precioUnitario)
         {
             Articulo = articulo;

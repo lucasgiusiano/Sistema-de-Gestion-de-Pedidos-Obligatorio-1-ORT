@@ -21,7 +21,10 @@ namespace SistemaGestionAplicacion.CasosUso.CUArticulo
 
         public void Alta(DTOAltaArticulo nuevo)
         {
-            Repo.Alta(MapperArticulo.DTOArticuloToArticulo(nuevo));
+            Articulo art = MapperArticulo.DTOArticuloToArticulo(nuevo);
+            //Las validaciones deben de hacerse siempre a nivel de CU (a nivel del servicio) y no a nivel del repositorio
+            art.Validar();  
+            Repo.Alta(art);
         }
     }
 }
