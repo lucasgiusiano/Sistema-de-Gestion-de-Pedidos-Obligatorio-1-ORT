@@ -10,7 +10,7 @@ namespace SistemaGestionAPI.Controllers
 	[ApiController]
 	public class ArticuloController : ControllerBase
 	{
-		private readonly ICUListadoOrdenadoArticulos CUListado;
+		public ICUListadoOrdenadoArticulos CUListado { get; set; }
 
 		public ArticuloController(ICUListadoOrdenadoArticulos cUListado)
 		{
@@ -20,7 +20,7 @@ namespace SistemaGestionAPI.Controllers
 
 		// GET: api/<ArticuloController>
 		[HttpGet]
-		public ActionResult<IEnumerable<DTOAltaArticulo>> GetListadoOrdenadoDeArticulos()
+		public IActionResult Get()
 		{
 			try
 			{
@@ -28,7 +28,7 @@ namespace SistemaGestionAPI.Controllers
 			}
 			catch (Exception ex)
 			{
-				return StatusCode(StatusCodes.Status500InternalServerError, $"Error al cargar los articulos: {ex.Message}");
+				return StatusCode(500, $"Error : {ex.Message}");
 			}
 			
 		}
