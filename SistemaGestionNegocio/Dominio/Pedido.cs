@@ -21,6 +21,11 @@ namespace SistemaGestionNegocio.Dominio
             Lineas = lineas;
         }
 
+        public Pedido()
+        {
+
+        }
+
         // Repositorio de configuraciones
         private readonly IRepositorioConfiguracion _repositorioConfiguracion;
 
@@ -51,6 +56,11 @@ namespace SistemaGestionNegocio.Dominio
         {
             PlazoMaximoExpress = repositorioConfiguracion.ObtenerPlazoMaximoExpress();
             _iva = repositorioConfiguracion.ObtenerIVA();
+        }
+
+        public PedidoExpress() : base()
+        {
+
         }
 
         public override double CalcularTotal()
@@ -85,10 +95,14 @@ namespace SistemaGestionNegocio.Dominio
     {
         private readonly double _iva;
 
-        public PedidoComun(List<Linea> lineas, IRepositorioConfiguracion repositorioConfiguracion)
-            : base(lineas)
+        public PedidoComun(List<Linea> lineas, IRepositorioConfiguracion repositorioConfiguracion) : base(lineas)
         {
             _iva = repositorioConfiguracion.ObtenerIVA();
+        }
+
+        public PedidoComun() : base()
+        {
+
         }
 
         public override double CalcularTotal()
