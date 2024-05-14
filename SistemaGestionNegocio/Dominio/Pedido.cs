@@ -2,6 +2,7 @@
 using SistemaGestionNegocio.InterfacesRepositorio;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SistemaGestionNegocio.Dominio
 {
@@ -14,31 +15,10 @@ namespace SistemaGestionNegocio.Dominio
         public List<Linea> Lineas { get; set; }
         public bool Anulado { get; set; }
         public double PrecioFinal { get; set; }
-        public Configuracion Configuracion { get; set; }
-
-        protected Pedido(List<Linea> lineas)
-        {
-            Lineas = lineas;
-        }
-
-        public Pedido()
-        {
-
-        }
-
-        // Repositorio de configuraciones
-        private readonly IRepositorioConfiguracion _repositorioConfiguracion;
-
-        protected Pedido(IRepositorioConfiguracion repositorioConfiguracion)
-        {
-            _repositorioConfiguracion = repositorioConfiguracion;
-        }
-
-        public abstract double CalcularTotal();
+        public abstract double CalcularTotal(double iva);
 
         public virtual void Validar()
         {
-            // Validaciones comunes a todos los tipos de pedido
             if (FechaEntrega < FechaPedido.AddDays(7))
             {
                 throw new InvalidOperationException("La fecha de entrega prometida no puede ser menor a una semana (7 dìas).");
@@ -48,37 +28,29 @@ namespace SistemaGestionNegocio.Dominio
 
     public class PedidoExpress : Pedido
     {
-        public double PlazoMaximoExpress { get; }
-        private readonly double _iva;
+        [NotMapped]
+        public int PlazoMaximoExpress { get; set; }
 
-        public PedidoExpress(List<Linea> lineas, IRepositorioConfiguracion repositorioConfiguracion)
-            : base(lineas)
-        {
-            PlazoMaximoExpress = repositorioConfiguracion.ObtenerPlazoMaximoExpress();
-            _iva = repositorioConfiguracion.ObtenerIVA();
-        }
-
-        public PedidoExpress() : base()
-        {
-
-        }
-
-        public override double CalcularTotal()
+        public override double CalcularTotal(double iva)
         {
             double precioTotal = Lineas.Sum(linea => linea.Cantidad * linea.PrecioUnitario);
 
+            double factorMultiplicidad = 1.1;
             // Aplicar recargo por ser express
-            precioTotal *= 1.1; // Recargo del 10%
-            if (FechaEntrega.Date == DateTime.Now)
+            // Verificar si la entrega es en el mismo día
+            if (FechaEntrega.Date == DateTime.Today)
             {
-                precioTotal *= 1.15; // Recargo adicional del 15% si la entrega es el mismo día
+                factorMultiplicidad = 1.15;
             }
 
+            precioTotal = precioTotal * factorMultiplicidad;
+            
             // Aplicar IVA
-            precioTotal *= (1 + _iva / 100);
+            precioTotal *= (precioTotal * (iva/ 100));
 
             return precioTotal;
         }
+
 
         public override void Validar()
         {
@@ -93,19 +65,22 @@ namespace SistemaGestionNegocio.Dominio
 
     public class PedidoComun : Pedido
     {
-        private readonly double _iva;
-
-        public PedidoComun(List<Linea> lineas, IRepositorioConfiguracion repositorioConfiguracion) : base(lineas)
-        {
-            _iva = repositorioConfiguracion.ObtenerIVA();
-        }
-
         public PedidoComun() : base()
         {
 
         }
 
-        public override double CalcularTotal()
+        public override void Validar()
+        {
+            base.Validar();
+
+            if ((FechaEntrega - FechaPedido).TotalDays < 7)
+            {
+                throw new InvalidOperationException($"La fecha de entrega prometida no puede ser inferior a una semana para un pedido comun.");
+            }
+        }
+
+        public override double CalcularTotal(double iva)
         {
             double precioTotal = Lineas.Sum(linea => linea.Cantidad * linea.PrecioUnitario);
 
@@ -116,7 +91,7 @@ namespace SistemaGestionNegocio.Dominio
             }
 
             // Aplicar IVA
-            precioTotal *= (1 + _iva / 100);
+            precioTotal *= (precioTotal * (iva / 100));
 
             return precioTotal;
         }

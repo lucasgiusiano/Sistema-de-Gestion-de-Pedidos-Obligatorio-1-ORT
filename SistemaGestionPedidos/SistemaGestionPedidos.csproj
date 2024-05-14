@@ -22,7 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Pedido\" />
     <Folder Include="wwwroot\img\" />
   </ItemGroup>
 
