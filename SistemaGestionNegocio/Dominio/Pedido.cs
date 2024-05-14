@@ -1,5 +1,4 @@
 ﻿using SistemaGestionNegocio.InterfacesDominio;
-using SistemaGestionNegocio.InterfacesRepositorio;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;

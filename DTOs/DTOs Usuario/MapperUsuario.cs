@@ -12,6 +12,7 @@ namespace DTOs.DTOs_Usuario
         public static Usuario DTOAltaUsuarioToUsuario(DTOAltaUsuario nuevo)
         {
             Usuario usuario = new Usuario(nuevo.Email, nuevo.Nombre, nuevo.Apellido, nuevo.Admin);
+            usuario.Id = nuevo.Id;
             usuario.SetContraseña(nuevo.Contrasenia);
 
             return usuario;

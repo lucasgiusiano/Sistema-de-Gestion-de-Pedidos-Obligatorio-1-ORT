@@ -22,12 +22,19 @@ namespace SistemaGestionDatos.Repositorios
         {
             if (nuevo != null)
             {
-                DBContext.Articulos.Add(nuevo);
-                DBContext.SaveChanges();
+                if (!DBContext.Articulos.Any(a => a.Nombre.Valor == nuevo.Nombre.Valor))
+                {
+                    DBContext.Articulos.Add(nuevo);
+                    DBContext.SaveChanges();
+                }
+                else
+                {
+                    throw new ArticuloValidationException("Ya existe un articulo con ese nombre");
+                }
             }
             else
             {
-                throw new ArgumentNullException(nameof(nuevo), "El artículo proporcionado es nulo.");
+                throw new ArticuloValidationException("El artículo proporcionado es nulo.");
             }
         }
 
@@ -35,13 +42,20 @@ namespace SistemaGestionDatos.Repositorios
         {
             if (modificado != null)
             {
-                modificado.Validar();
-                DBContext.Articulos.Update(modificado);
-                DBContext.SaveChanges();
+                if (!DBContext.Articulos.Any(a => a.Nombre.Valor == modificado.Nombre.Valor))
+                {
+                    modificado.Validar();
+                    DBContext.Articulos.Update(modificado);
+                    DBContext.SaveChanges();
+                }
+                else
+                {
+                    throw new ArticuloValidationException("Ya existe un articulo con ese nombre");
+                }
             }
             else
             {
-                throw new ArticuloValidationException("No se ha podido modificar el Articulo");
+                throw new ArticuloValidationException("Ha ocurrido un error al modificar el articulo (Articulo nulo)");
             }
         }
 

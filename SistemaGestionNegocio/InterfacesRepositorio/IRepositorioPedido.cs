@@ -13,7 +13,6 @@ namespace SistemaGestionNegocio.InterfacesRepositorio
         Pedido BuscarPorId(int id);
         List<Pedido> ListarPedidosAnulados();
         List<Pedido> ListarPedidosNoEntregadosPorFecha(DateTime fecha);
-
         IEnumerable<Pedido> ObtenerPedidosPorMonto(double monto);
     }
 }

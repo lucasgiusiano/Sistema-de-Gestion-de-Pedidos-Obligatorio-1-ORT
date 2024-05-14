@@ -22,19 +22,34 @@ namespace SistemaGestionPedidos.Controllers
         // GET: PedidoController
         public ActionResult Index()
         {
-            return View();
+                return View("~/Views/Pedido/ListarPedidos.cshtml");
+            
         }
 
         // GET: PedidoController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            if (String.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuarioLogueado")))
+            {
+                return RedirectToAction("Login", "Usuario");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         // GET: PedidoController/Create
         public ActionResult Create()
         {
-            return View();
+            if (String.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuarioLogueado")))
+            {
+                return RedirectToAction("Login", "Usuario");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         // POST: PedidoController/Create
@@ -55,7 +70,14 @@ namespace SistemaGestionPedidos.Controllers
         // GET: PedidoController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            if (String.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuarioLogueado")))
+            {
+                return RedirectToAction("Login", "Usuario");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         // POST: PedidoController/Edit/5
@@ -76,7 +98,14 @@ namespace SistemaGestionPedidos.Controllers
         // GET: PedidoController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            if (String.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuarioLogueado")))
+            {
+                return RedirectToAction("Login", "Usuario");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         // POST: PedidoController/Delete/5

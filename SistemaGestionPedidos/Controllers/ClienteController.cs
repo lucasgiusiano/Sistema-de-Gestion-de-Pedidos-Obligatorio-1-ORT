@@ -24,71 +24,85 @@ namespace SistemaGestionPedidos.Controllers
 
         public ActionResult Buscar(string textoBusqueda)
         {
-            var cliente = _buscarClientePorRazonSocial.BuscarClientePorRazonSocial(textoBusqueda);
-
-            if (cliente != null)
+            if (String.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuarioLogueado")))
             {
-                
-                var clientesConDireccion = _obtenerTodosLosClientes.ObtenerTodosLosClientesConDireccion();
-
-                
-                var clienteConDireccion = clientesConDireccion.FirstOrDefault(c => c.Id == cliente.Id);
-
-                if (clienteConDireccion != null)
-                {
-                    ClienteViewModel clienteViewModel = new ClienteViewModel
-                    {
-                        Id = clienteConDireccion.Id,
-                        RazonSocial = clienteConDireccion.RazonSocial ?? "",
-                        Rut = clienteConDireccion.Rut ?? "",
-                        DistanciaDeposito = clienteConDireccion.DistanciaDeposito
-                    };
-
-                    if (clienteConDireccion.Direccion != null)
-                    {
-                        clienteViewModel.Calle = clienteConDireccion.Direccion.Calle ?? "";
-                        clienteViewModel.Numero = clienteConDireccion.Direccion.Numero;
-                        clienteViewModel.Ciudad = clienteConDireccion.Direccion.Ciudad ?? "";
-                    }
-                    else
-                    {
-                        
-                        clienteViewModel.Calle = "";
-                        clienteViewModel.Numero = 0;
-                        clienteViewModel.Ciudad = "";
-                    }
-
-                    return View("ListadoClientes", new List<ClienteViewModel> { clienteViewModel });
-                }
+                return RedirectToAction("Login", "Usuario");
             }
+            else
+            {
+                var cliente = _buscarClientePorRazonSocial.BuscarClientePorRazonSocial(textoBusqueda);
 
-            
-            ViewData["Mensaje"] = "No se encontró ningún cliente con la razón social proporcionada.";
-            return View("ListadoClientes");
+                if (cliente != null)
+                {
+
+                    var clientesConDireccion = _obtenerTodosLosClientes.ObtenerTodosLosClientesConDireccion();
+
+
+                    var clienteConDireccion = clientesConDireccion.FirstOrDefault(c => c.Id == cliente.Id);
+
+                    if (clienteConDireccion != null)
+                    {
+                        ClienteViewModel clienteViewModel = new ClienteViewModel
+                        {
+                            Id = clienteConDireccion.Id,
+                            RazonSocial = clienteConDireccion.RazonSocial ?? "",
+                            Rut = clienteConDireccion.Rut ?? "",
+                            DistanciaDeposito = clienteConDireccion.DistanciaDeposito
+                        };
+
+                        if (clienteConDireccion.Direccion != null)
+                        {
+                            clienteViewModel.Calle = clienteConDireccion.Direccion.Calle ?? "";
+                            clienteViewModel.Numero = clienteConDireccion.Direccion.Numero;
+                            clienteViewModel.Ciudad = clienteConDireccion.Direccion.Ciudad ?? "";
+                        }
+                        else
+                        {
+
+                            clienteViewModel.Calle = "";
+                            clienteViewModel.Numero = 0;
+                            clienteViewModel.Ciudad = "";
+                        }
+
+                        return View("ListadoClientes", new List<ClienteViewModel> { clienteViewModel });
+                    }
+                }
+
+
+                ViewData["Mensaje"] = "No se encontró ningún cliente con la razón social proporcionada.";
+                return View("ListadoClientes");
+            }
         }
 
 
         public ActionResult BuscarPorMonto(double monto)
         {
-            var clientesQueSuperanMonto = _buscarClientesPorMonto.BuscarClientes(monto);
-            if (!clientesQueSuperanMonto.Any())
+            if (String.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuarioLogueado")))
             {
-                ViewData["Mensaje"] = "No se encontraron clientes cuyos pedidos superen el monto especificado.";
+                return RedirectToAction("Login", "Usuario");
             }
-            var clientesViewModel = new List<ClienteViewModel>();
-            foreach (var cliente in clientesQueSuperanMonto)
+            else
             {
-                
-                var clienteConDireccion = _obtenerTodosLosClientes.ObtenerTodosLosClientesConDireccion()
-                                                .FirstOrDefault(c => c.Id == cliente.Id);
-
-                if (clienteConDireccion != null)
+                var clientesQueSuperanMonto = _buscarClientesPorMonto.BuscarClientes(monto);
+                if (!clientesQueSuperanMonto.Any())
                 {
-                    ClienteViewModel clienteViewModel = MapClienteToViewModel(clienteConDireccion);
-                    clientesViewModel.Add(clienteViewModel);
+                    ViewData["Mensaje"] = "No se encontraron clientes cuyos pedidos superen el monto especificado.";
                 }
+                var clientesViewModel = new List<ClienteViewModel>();
+                foreach (var cliente in clientesQueSuperanMonto)
+                {
+
+                    var clienteConDireccion = _obtenerTodosLosClientes.ObtenerTodosLosClientesConDireccion()
+                                                    .FirstOrDefault(c => c.Id == cliente.Id);
+
+                    if (clienteConDireccion != null)
+                    {
+                        ClienteViewModel clienteViewModel = MapClienteToViewModel(clienteConDireccion);
+                        clientesViewModel.Add(clienteViewModel);
+                    }
+                }
+                return View("ListadoClientes", clientesViewModel);
             }
-            return View("ListadoClientes", clientesViewModel);
         }
 
 
@@ -121,33 +135,54 @@ namespace SistemaGestionPedidos.Controllers
 
         public ActionResult Index()
         {
-            var clientes = _obtenerTodosLosClientes.ObtenerTodosLosClientesConDireccion(); 
-
-            var clientesViewModel = clientes.Select(c => new ClienteViewModel
+            if (String.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuarioLogueado")))
             {
-                Id = c.Id,
-                RazonSocial = c.RazonSocial ?? "",
-                Rut = c.Rut ?? "",
-                Calle = c.Direccion.Calle,
-                Numero = c.Direccion.Numero,
-                Ciudad = c.Direccion.Ciudad,
-                DistanciaDeposito = c.DistanciaDeposito
-            }).ToList();
+                return RedirectToAction("Login", "Usuario");
+            }
+            else
+            {
+                var clientes = _obtenerTodosLosClientes.ObtenerTodosLosClientesConDireccion();
 
-            return View("ListadoClientes", clientesViewModel);
+                var clientesViewModel = clientes.Select(c => new ClienteViewModel
+                {
+                    Id = c.Id,
+                    RazonSocial = c.RazonSocial ?? "",
+                    Rut = c.Rut ?? "",
+                    Calle = c.Direccion.Calle,
+                    Numero = c.Direccion.Numero,
+                    Ciudad = c.Direccion.Ciudad,
+                    DistanciaDeposito = c.DistanciaDeposito
+                }).ToList();
+
+                return View("ListadoClientes", clientesViewModel);
+            }
         }
 
 
         // GET: ClienteController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            if (String.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuarioLogueado")))
+            {
+                return RedirectToAction("Login", "Usuario");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         // GET: ClienteController/Create
         public ActionResult Create()
-        {
-            return View();
+		{
+            if (String.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuarioLogueado")))
+            {
+                return RedirectToAction("Login", "Usuario");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         // POST: ClienteController/Create
@@ -168,7 +203,14 @@ namespace SistemaGestionPedidos.Controllers
         // GET: ClienteController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            if (String.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuarioLogueado")))
+            {
+                return RedirectToAction("Login", "Usuario");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         // POST: ClienteController/Edit/5
@@ -189,7 +231,14 @@ namespace SistemaGestionPedidos.Controllers
         // GET: ClienteController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            if (String.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuarioLogueado")))
+            {
+                return RedirectToAction("Login", "Usuario");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         // POST: ClienteController/Delete/5
@@ -197,13 +246,20 @@ namespace SistemaGestionPedidos.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
-            try
+            if (String.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuarioLogueado")))
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Login", "Usuario");
             }
-            catch
+            else
             {
-                return View();
+                try
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                catch
+                {
+                    return View();
+                }
             }
         }
     }

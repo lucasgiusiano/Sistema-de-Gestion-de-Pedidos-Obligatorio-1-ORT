@@ -28,13 +28,27 @@ namespace SistemaGestionPedidos.Controllers
         // GET: ArticuloController
         public ActionResult Index()
         {
-            return View(CUListado.ListadoOrdenado());
+            if (String.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuarioLogueado")))
+            {
+				return RedirectToAction("Login", "Usuario");
+			}
+            else
+            {
+                return View(CUListado.ListadoOrdenado());
+            }
         }
 
         // GET: ArticuloController/Create
         public ActionResult Create()
         {
-            return View();
+            if (String.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuarioLogueado")))
+            {
+				return RedirectToAction("Login", "Usuario");
+			}
+            else
+            {
+                return View();
+            }
         }
 
         // POST: ArticuloController/Create
@@ -42,26 +56,40 @@ namespace SistemaGestionPedidos.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(ArticuloViewModel nuevoA)
         {
-            try
+            if (String.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuarioLogueado")))
             {
-                CUAlta.Alta(convertirADTO(nuevoA));
-                return RedirectToAction("Index");
-            }
-            catch (ArticuloValidationException e)
-            {
-                ViewBag.Error = e.Message;
-            }
-            catch (Exception)
-            {
-				ViewBag.Error = "Ocurrió un error inesperado";
+				return RedirectToAction("Login", "Usuario");
 			}
-			return View();
+            else
+            {
+                try
+                {
+                    CUAlta.Alta(convertirADTO(nuevoA));
+                    return RedirectToAction("Index");
+                }
+                catch (ArticuloValidationException e)
+                {
+                    ViewBag.Error = e.Message;
+                }
+                catch (Exception)
+                {
+                    ViewBag.Error = "Ocurrió un error inesperado";
+                }
+                return View();
+            }
 		}
 
         // GET: ArticuloController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View(convertirAViewModel(CUBuscar.Buscar(id)));
+            if (String.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuarioLogueado")))
+            {
+				return RedirectToAction("Login", "Usuario");
+			}
+            else
+            {
+                return View(convertirAViewModel(CUBuscar.Buscar(id)));
+            }
         }
 
         // POST: ArticuloController/Edit/5
@@ -69,20 +97,27 @@ namespace SistemaGestionPedidos.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(ArticuloViewModel model)
         {
-            try
+            if (String.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuarioLogueado")))
             {
-                CUModificar.Modificar(convertirADTO(model));
-                return RedirectToAction("Index");
-            }
-            catch (ArticuloValidationException e)
+				return RedirectToAction("Login", "Usuario");
+			}
+            else
             {
-                ViewBag.Error = e.Message;
+                try
+                {
+                    CUModificar.Modificar(convertirADTO(model));
+                    return RedirectToAction("Index");
+                }
+                catch (ArticuloValidationException e)
+                {
+                    ViewBag.Error = e.Message;
+                }
+                catch (Exception)
+                {
+                    ViewBag.Error = "Ocurrió un error inesperado";
+                }
+                return View();
             }
-            catch (Exception)
-            {
-                ViewBag.Error = "Ocurrió un error inesperado";
-            }
-            return View();
         }
 
         private DTOAltaArticulo convertirADTO(ArticuloViewModel model)

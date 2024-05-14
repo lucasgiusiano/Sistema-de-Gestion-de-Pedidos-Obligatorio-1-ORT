@@ -15,13 +15,13 @@ namespace SistemaGestionPedidos.Controllers
 
         public IActionResult Index()
         {
-            if (HttpContext.Session.GetString("EmailUsuarioLogueado") != null)
-            {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Login", "Usuario");
+			if (String.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuarioLogueado")))
+			{
+				return RedirectToAction("Login", "Usuario");
+			}
+			else
+			{
+				return View();
             }
         }
 

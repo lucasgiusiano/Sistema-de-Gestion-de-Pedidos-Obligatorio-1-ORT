@@ -47,7 +47,7 @@ namespace SistemaGestionPedidos.Controllers
             }
         }
 
-        public IActionResult Logout()
+        public ActionResult Logout()
         {
             HttpContext.Session.Clear();
             return RedirectToAction("Login");
@@ -96,19 +96,33 @@ namespace SistemaGestionPedidos.Controllers
         // GET: UsuarioController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            if (String.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuarioLogueado")))
+            {
+                return RedirectToAction("Login");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         // GET: UsuarioController/Create
         public ActionResult Create()
         {
-            if (HttpContext.Session.GetString("RolUsuarioLogueado") == "Admin")
+            if (String.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuarioLogueado")))
             {
-                return View();
+                return RedirectToAction("Login");
             }
             else
             {
-                return RedirectToAction("Index");
+                if (HttpContext.Session.GetString("RolUsuarioLogueado") == "Admin")
+                {
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
             }
         }
 
@@ -137,21 +151,28 @@ namespace SistemaGestionPedidos.Controllers
         // GET: UsuarioController/Edit/5
         public ActionResult Edit(int id)
         {
-            if (HttpContext.Session.GetString("RolUsuarioLogueado") == "Admin")
+            if (String.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuarioLogueado")))
             {
-                try
-                {
-                    return View(convertirAViewModel(CUBuscar.Buscar(id)));
-                }
-                catch (Exception e)
-                {
-                    ViewBag.Error = "Ocurrio un error inesperado";
-                }
-                return View();
+                return RedirectToAction("Login");
             }
             else
             {
-                return RedirectToAction("Index");
+                if (HttpContext.Session.GetString("RolUsuarioLogueado") == "Admin")
+                {
+                    try
+                    {
+                        return View(convertirAViewModel(CUBuscar.Buscar(id)));
+                    }
+                    catch (Exception e)
+                    {
+                        ViewBag.Error = "Ocurrio un error inesperado";
+                    }
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
             }
         }
 
@@ -180,13 +201,20 @@ namespace SistemaGestionPedidos.Controllers
         // GET: UsuarioController/Delete/5
         public ActionResult Delete(int id)
         {
-            if (HttpContext.Session.GetString("RolUsuarioLogueado") == "Admin")
+            if (String.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuarioLogueado")))
             {
-                return View(convertirAViewModel(CUBuscar.Buscar(id)));
+                return RedirectToAction("Login");
             }
             else
             {
-                return RedirectToAction("Index");
+                if (HttpContext.Session.GetString("RolUsuarioLogueado") == "Admin")
+                {
+                    return View(convertirAViewModel(CUBuscar.Buscar(id)));
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
             }
         }
 
@@ -226,7 +254,15 @@ namespace SistemaGestionPedidos.Controllers
 
         private DTOAltaUsuario convertirADTO(UsuarioViewModel model)
         {
-            DTOAltaUsuario usuario = new DTOAltaUsuario(model.Email, model.Nombre, model.Apellido, model.Contrasenia, model.Admin);
+            DTOAltaUsuario usuario;
+            if (model.Id == null || model.Id == 0)
+            {
+                usuario = new DTOAltaUsuario(model.Email, model.Nombre, model.Apellido, model.Contrasenia, model.Admin);
+            }
+            else
+            {
+                usuario = new DTOAltaUsuario(model.Id, model.Email, model.Nombre, model.Apellido, model.Contrasenia, model.Admin);
+            }
 
             return usuario;
         }
