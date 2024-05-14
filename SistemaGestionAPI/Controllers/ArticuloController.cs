@@ -17,7 +17,6 @@ namespace SistemaGestionAPI.Controllers
 			CUListado = cUListado;
 		}
 
-
 		// GET: api/<ArticuloController>
 		[HttpGet]
 		public IActionResult Get()

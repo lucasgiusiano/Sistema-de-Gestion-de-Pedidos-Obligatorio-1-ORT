@@ -14,6 +14,7 @@ namespace SistemaGestionNegocio.Dominio
         public double PrecioUnitario { get; set; }
         public int ArticuloId { get; set; }
         public virtual Articulo Articulo { get; set; }
+
         public Linea(Articulo articulo, int cantidad, double precioUnitario)
         {
             Articulo = articulo;

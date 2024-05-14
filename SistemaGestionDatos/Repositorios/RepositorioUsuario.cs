@@ -82,6 +82,7 @@ namespace SistemaGestionDatos.Repositorios
         {
             return DBContext.Usuarios.FirstOrDefault(u => u.Email == email);
         }
+
         public Usuario ValidarLogin(string email, string contrasenia)
         {
             Usuario buscado = BuscarXEmail(email);
