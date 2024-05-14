@@ -22,8 +22,14 @@ namespace SistemaGestionPedidos.Controllers
         // GET: PedidoController
         public ActionResult Index()
         {
-                return View("~/Views/Pedido/ListarPedidos.cshtml");
-            
+            if (String.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuarioLogueado")))
+            {
+                return RedirectToAction("Login","Usuario");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         // GET: PedidoController/Details/5
