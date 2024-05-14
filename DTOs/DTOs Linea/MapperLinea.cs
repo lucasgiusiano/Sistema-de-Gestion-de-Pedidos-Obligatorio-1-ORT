@@ -20,7 +20,7 @@ namespace DTOs.DTOs_Linea
             {
                 ArticuloId = linea.Articulo.Id,
                 Cantidad = linea.Cantidad,
-                PrecioUnitario = linea.PrecioUnitario
+                
             };
         }
 
@@ -42,7 +42,8 @@ namespace DTOs.DTOs_Linea
             {
                 Articulo = articulo,
                 Cantidad = dtoLinea.Cantidad,
-                PrecioUnitario = dtoLinea.PrecioUnitario
+                PrecioUnitario = articulo.PrecioVenta.Valor,
+               
             };
         }
     }
