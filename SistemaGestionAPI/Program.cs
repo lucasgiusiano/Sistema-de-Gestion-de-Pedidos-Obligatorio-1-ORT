@@ -1,4 +1,5 @@
 using DTOs.DTOs_Articulo;
+using DTOs.DTOs_Linea;
 using DTOs.DTOs_Pedido;
 using DTOs.DTOs_Usuario;
 using SistemaGestionAplicacion.CasosUso.CUArticulo;
@@ -21,7 +22,11 @@ builder.Services.AddControllers();
 
 builder.Services.AddScoped<ICUAltaPedido, CUAltaPedido>();
 builder.Services.AddScoped<ICUAnularPedido, CUAnularPedido>();
-builder.Services.AddScoped<ICUListadoPedidosAnuladosXFecha, CUListadoPedidosAnuladosXFecha>();
+builder.Services.AddScoped<ICUListarPedidos, CUListarPedidos>();
+builder.Services.AddScoped<MapperPedido>();
+builder.Services.AddScoped<MapperLinea>();
+
+
 
 //Inyecciones de Usuario
 builder.Services.AddScoped<ICUAlta<DTOAltaUsuario>, CUAltaUsuario>();
@@ -49,7 +54,7 @@ builder.Services.AddScoped<IRepositorioArticulo, RepositorioArticulo>();
 builder.Services.AddScoped<IRepositorioCliente, RepositorioCliente>();
 builder.Services.AddScoped<IRepositorioPedido, RepositorioPedido>();
 builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
-
+builder.Services.AddScoped<IRepositorioConfiguracion, RepositorioConfiguracion>();
 
 builder.Services.AddDbContext<SistemaGestionContext>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

@@ -18,80 +18,17 @@ namespace SistemaGestionDatos.Repositorios
 
         public void Alta(Pedido pedido)
         {
-            ValidarYCrearPedido(pedido);
-        }
-
-        private void ValidarYCrearPedido(Pedido pedido)
-        {
             if (pedido == null)
             {
                 throw new ArgumentNullException(nameof(pedido), "El pedido proporcionado es nulo.");
             }
-
-            ValidarCliente(pedido.Cliente);
-            ValidarLineasPedido(pedido.Lineas);
-            AsignarFechaPedido(pedido);
-            VerificarStock(pedido);
-            CalcularPrecioFinal(pedido);
-
+            pedido.Validar();
             DBContext.Pedidos.Add(pedido);
             DBContext.SaveChanges();
         }
 
-        private void ValidarCliente(Cliente cliente)
-        {
-            if (cliente == null || !DBContext.Clientes.Any(c => c.Id == cliente.Id))
-            {
-                throw new Exception("El cliente no existe.");
-            }
-        }
-        private void ValidarLineasPedido(List<Linea> lineasPedido)
-        {
-            if (lineasPedido == null || lineasPedido.Count == 0)
-            {
-                throw new Exception("El pedido debe contener al menos una línea de pedido.");
-            }
 
-            foreach (var linea in lineasPedido)
-            {
-                if (linea == null || linea.Articulo == null)
-                {
-                    throw new Exception("Una línea de pedido o su artículo asociado es nulo.");
-                }
-
-                var articulo = DBContext.Articulos.FirstOrDefault(a => a.Id == linea.Articulo.Id);
-                if (articulo == null)
-                {
-                    throw new Exception($"El artículo con ID {linea.Articulo.Id} no existe en la base de datos.");
-                }
-
-                if (linea.Cantidad <= 0)
-                {
-                    throw new Exception("La cantidad de artículo en una línea de pedido debe ser mayor que cero.");
-                }
-            }
-        }
-
-        private void AsignarFechaPedido(Pedido pedido)
-        {
-            pedido.FechaPedido = DateTime.Now;
-        }
-
-        private void VerificarStock(Pedido pedido)
-        {
-            foreach (var linea in pedido.Lineas)
-            {
-                if (!DBContext.Articulos.Any(a => a.Id == linea.Articulo.Id && a.Stock.Valor >= linea.Cantidad))
-                {
-                    throw new Exception("No hay suficiente stock para uno o más artículos del pedido.");
-                }
-            }
-        }
-
-        private void CalcularPrecioFinal(Pedido pedido)
-        {
-            pedido.PrecioFinal = pedido.CalcularTotal();
-        }
+       
 
         public void AnularPedido(DateTime fechaEmision)
         {
@@ -122,19 +59,38 @@ namespace SistemaGestionDatos.Repositorios
 
         public Pedido BuscarPorId(int id)
         {
-            return DBContext.Pedidos.SingleOrDefault(p => p.Id == id);
+            return DBContext.Pedidos.AsNoTracking()
+                                    .FirstOrDefault(p => p.Id == id);
         }
 
-        public List<Pedido> ListadoFiltrado(DateTime fechaFiltro)
+        public List<Pedido> ListarPedidosAnulados()
         {
             return DBContext.Pedidos
-                .Where(p => p.FechaPedido.Date == fechaFiltro.Date && p.FechaEntrega == DateTime.MinValue)
+                .AsNoTracking()
+                .Include(p => p.Lineas)
+                .Include(p => p.Cliente)
+                .ThenInclude(c => c.Direccion)
+                .Where(p => p.Anulado == true)
+                .OrderByDescending(p => p.FechaPedido)
                 .ToList();
         }
 
+        public List<Pedido> ListarPedidosNoEntregadosPorFecha(DateTime fecha)
+        {
+            return DBContext.Pedidos
+               .AsNoTracking()
+               .Include(p => p.Lineas)
+               .Include(p => p.Cliente)
+               .ThenInclude(c => c.Direccion)
+               .Where(p => p.FechaPedido.Date == fecha.Date && p.FechaEntrega > DateTime.Now)
+               .ToList();
+        }
+
+
         public IEnumerable<Pedido> ObtenerPedidosPorMonto(double monto)
         {
-            return DBContext.Pedidos.Where(p => p.CalcularTotal() > monto);
+            return null;
+            //return DBContext.Pedidos.Where(p => p.CalcularTotal() > monto);
         }
 
       

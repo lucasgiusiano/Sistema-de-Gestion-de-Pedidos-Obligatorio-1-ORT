@@ -16,6 +16,7 @@ using SistemaGestionAplicacion.InterfacesCU.ICUUsuario;
 using DTOs.DTOs_Usuario;
 using DTOs.DTOs_Articulo;
 using DTOs.DTOs_Pedido;
+using DTOs.DTOs_Linea;
 
 namespace SistemaGestionPedidos
 {
@@ -29,9 +30,12 @@ namespace SistemaGestionPedidos
             builder.Services.AddControllersWithViews();
             builder.Services.AddSession();
 
+            //Inyecciones de Pedido
             builder.Services.AddScoped<ICUAltaPedido, CUAltaPedido>();
             builder.Services.AddScoped<ICUAnularPedido, CUAnularPedido>();
-            builder.Services.AddScoped<ICUListadoPedidosAnuladosXFecha, CUListadoPedidosAnuladosXFecha>();
+            builder.Services.AddScoped<ICUListarPedidos, CUListarPedidos>();
+            builder.Services.AddScoped<MapperPedido>();
+            builder.Services.AddScoped<MapperLinea>();
 
             //Inyecciones de Usuario
             builder.Services.AddScoped<ICUAlta<DTOAltaUsuario>, CUAltaUsuario>();

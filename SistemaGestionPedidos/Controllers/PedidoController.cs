@@ -1,10 +1,24 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SistemaGestionAplicacion.InterfacesCU.ICUPedido;
 
 namespace SistemaGestionPedidos.Controllers
 {
     public class PedidoController : Controller
     {
+        private readonly ICUAltaPedido _cUAltaPedido;
+        private readonly ICUAnularPedido _anularPedido;
+        private readonly ICUListarPedidos _cuListarPedidos;
+
+        public PedidoController(ICUAltaPedido cUAltaPedido, ICUAnularPedido cUAnularPedido, ICUListarPedidos cuListarPedidos)
+        {
+            _cUAltaPedido = cUAltaPedido;
+            _anularPedido = cUAnularPedido;
+            _cuListarPedidos = cuListarPedidos;
+        }
+
+
+
         // GET: PedidoController
         public ActionResult Index()
         {
