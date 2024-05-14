@@ -11,7 +11,9 @@ namespace SistemaGestionNegocio.InterfacesRepositorio
         List<Pedido> ObtenerPedidosAnulados();
         void Anular(int id);
         Pedido BuscarPorId(int id);
-        List<Pedido> ListadoFiltrado(DateTime fechaFiltro);
+        List<Pedido> ListarPedidosAnulados();
+        List<Pedido> ListarPedidosNoEntregadosPorFecha(DateTime fecha);
+
         IEnumerable<Pedido> ObtenerPedidosPorMonto(double monto);
     }
 }
