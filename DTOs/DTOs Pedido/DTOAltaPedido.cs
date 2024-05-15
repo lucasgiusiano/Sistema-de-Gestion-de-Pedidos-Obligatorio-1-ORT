@@ -23,7 +23,7 @@ namespace DTOs.DTOs_Pedido
         [MinLength(1, ErrorMessage = "La lista de líneas debe contener al menos un elemento.")]
         public List<DTOLinea> Lineas { get; set; }
 
-
+ 
     }
 
 }

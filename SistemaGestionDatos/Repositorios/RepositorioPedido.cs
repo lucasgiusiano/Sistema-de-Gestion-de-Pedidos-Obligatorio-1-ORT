@@ -64,6 +64,9 @@ namespace SistemaGestionDatos.Repositorios
         public Pedido BuscarPorId(int id)
         {
             return DBContext.Pedidos.AsNoTracking()
+                                        .Include(p => p.Lineas)
+                                        .Include(p => p.Cliente)
+                                        .ThenInclude(c => c.Direccion)
                                     .FirstOrDefault(p => p.Id == id);
         }
 

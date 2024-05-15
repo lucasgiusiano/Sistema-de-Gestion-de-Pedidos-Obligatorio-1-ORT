@@ -23,6 +23,7 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<ICUAltaPedido, CUAltaPedido>();
 builder.Services.AddScoped<ICUAnularPedido, CUAnularPedido>();
 builder.Services.AddScoped<ICUListarPedidos, CUListarPedidos>();
+builder.Services.AddScoped<ICUBuscarPedido, CUBuscarPedido>();
 builder.Services.AddScoped<MapperPedido>();
 builder.Services.AddScoped<MapperLinea>();
 

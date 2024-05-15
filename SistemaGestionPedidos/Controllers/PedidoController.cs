@@ -62,11 +62,15 @@ namespace SistemaGestionPedidos.Controllers
                 {
                     try
                     {
-                        var result = await _cUAltaPedido.Alta(nuevoPedido); // Espera a que la tarea se complete
+                        var result = await _cUAltaPedido.Alta(nuevoPedido); 
                         if (result != null)
                         {
-                            TempData["SuccessMessage"] = "Pedido creado correctamente.";
-                            ViewBag.PrecioFinal = result.PrecioFinal;
+                            return RedirectToAction("DetallesPedido", "Pedido", result); 
+                        }
+                        else
+                        {
+                            ViewBag.Error = "El resultado de la creación del pedido es nulo.";
+                            
                         }
 
                         return RedirectToAction("Create", "Pedido");
@@ -82,6 +86,15 @@ namespace SistemaGestionPedidos.Controllers
                 }
                 return View();
             }
+        }
+        public ActionResult DetallesPedido(DTOPedido pedido)
+        {
+            if (pedido == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            TempData["SuccessMessage"] = "Pedido creado correctamente.";
+            return View(pedido);
         }
 
 
