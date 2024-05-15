@@ -19,10 +19,7 @@ namespace SistemaGestionNegocio.Dominio
 
         public virtual void Validar()
         {
-            if (FechaEntrega < FechaPedido.AddDays(7))
-            {
-                throw new InvalidOperationException("La fecha de entrega prometida no puede ser menor a una semana (7 dìas).");
-            }
+          
         }
     }
 
@@ -46,7 +43,7 @@ namespace SistemaGestionNegocio.Dominio
             precioTotal = precioTotal * factorMultiplicidad;
             
             // Aplicar IVA
-            precioTotal *= (precioTotal * (iva/ 100));
+            precioTotal += (precioTotal * (iva/ 100));
 
             return precioTotal;
         }
@@ -91,7 +88,7 @@ namespace SistemaGestionNegocio.Dominio
             }
 
             // Aplicar IVA
-            precioTotal *= (precioTotal * (iva / 100));
+            precioTotal += (precioTotal * (iva / 100));
 
             return precioTotal;
         }

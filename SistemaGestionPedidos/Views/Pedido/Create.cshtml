@@ -1,0 +1,98 @@
+﻿@model DTOs.DTOs_Pedido.DTOAltaPedido
+
+@{
+    ViewData["Title"] = "Crear Pedido";
+    var precioFinal = ViewData["PrecioFinal"];
+}
+
+@if (!String.IsNullOrEmpty(ViewBag.Error))
+{
+    <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center justify-content-between mx-auto" role="alert" style="max-width: 500px; margin-top: 20px;">
+        <div class="mx-3">
+            @ViewBag.Error
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show d-flex align-items-center justify-content-between mx-auto" role="alert" style="max-width: 500px; margin-top: 20px;">
+        <div class="mx-3">
+            @TempData["SuccessMessage"]
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h2 class="text-center">Crear Pedido</h2>
+        </div>
+        <div class="card-body">
+            <form asp-action="Create" method="post">
+                <div class="form-group mb-3">
+                    <label for="FechaEntrega">Fecha de Entrega:</label>
+                    <input type="datetime-local" asp-for="FechaEntrega" class="form-control" id="FechaEntrega" />
+                    <span asp-validation-for="FechaEntrega" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="ClienteId">ID del Cliente:</label>
+                    <input type="number" asp-for="ClienteId" class="form-control" id="ClienteId" />
+                    <span asp-validation-for="ClienteId" class="text-danger"></span>
+                </div>
+
+                <button id="agregarLineaBtn" type="button" class="btn btn-secondary mb-3">Agregar línea de pedido</button>
+
+                <div id="lineasContainer">
+                    <!-- Aca se agregarán dinámicamente las nuevas líneas de pedido -->
+                </div>
+
+                <button type="submit" class="btn btn-success">Guardar Pedido</button>
+                <a asp-action="Index" class="btn btn-secondary">Volver</a> 
+            </form>
+            <div class="form-group">
+                <label>Precio Final con Impuestos:</label>
+                <input type="text" class="form-control" value="@precioFinal" readonly />
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Función para agregar una nueva línea de pedido
+        function agregarLineaPedido() {
+            // Obtener el contenedor de las líneas de pedido
+            var lineasContainer = document.getElementById("lineasContainer");
+
+            // Crear un nuevo div para la nueva línea de pedido
+            var nuevaLineaDiv = document.createElement("div");
+            nuevaLineaDiv.className = "linea-pedido form-group mb-3";
+
+            // Agregar campos de entrada para el ID del artículo y la cantidad
+            nuevaLineaDiv.innerHTML = `
+                        <div class="input-group mb-2">
+                            <input type="text" name="nuevoPedido.Lineas[${lineasContainer.children.length}].ArticuloId" placeholder="ID del artículo" class="form-control me-2">
+                            <input type="number" name="nuevoPedido.Lineas[${lineasContainer.children.length}].Cantidad" placeholder="Cantidad" class="form-control me-2">
+                            <button type="button" onclick="eliminarLineaPedido(this)" class="btn btn-danger">Eliminar</button>
+                        </div>
+                    `;
+
+            // Agregar la nueva línea de pedido al contenedor
+            lineasContainer.appendChild(nuevaLineaDiv);
+        }
+
+        // Función para eliminar una línea de pedido
+        function eliminarLineaPedido(button) {
+            // Obtener el div padre de este botón y eliminarlo
+            button.closest('.linea-pedido').remove();
+        }
+
+        // Asignar el evento click al botón "Agregar línea de pedido"
+        document.getElementById("agregarLineaBtn").addEventListener("click", agregarLineaPedido);
+
+
+    </script>
+}

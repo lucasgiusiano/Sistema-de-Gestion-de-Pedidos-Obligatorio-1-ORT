@@ -14,12 +14,14 @@ namespace SistemaGestionPedidos.Controllers
         private readonly ICUBuscarClientePorRazonSocial _buscarClientePorRazonSocial;
         private readonly ICUObtenerTodosLosClientes _obtenerTodosLosClientes;
         private readonly ICUBuscarClientesPorMonto _buscarClientesPorMonto;
+        private readonly ICUObtenerTodosLosClientesConDireccion _obtenerClientesPorDirec;
 
-        public ClienteController(ICUBuscarClientePorRazonSocial buscarClientePorRazonSocial, ICUObtenerTodosLosClientes obtenerTodosLosClientes, ICUBuscarClientesPorMonto buscarClientesPorMonto)
+        public ClienteController(ICUBuscarClientePorRazonSocial buscarClientePorRazonSocial, ICUObtenerTodosLosClientes obtenerTodosLosClientes, ICUBuscarClientesPorMonto buscarClientesPorMonto, ICUObtenerTodosLosClientesConDireccion obtenerTodosLosClientesConDireccion)
         {
             _buscarClientePorRazonSocial = buscarClientePorRazonSocial;
             _obtenerTodosLosClientes = obtenerTodosLosClientes;
             _buscarClientesPorMonto = buscarClientesPorMonto;
+            _obtenerClientesPorDirec = obtenerTodosLosClientesConDireccion;
         }
 
         public ActionResult Buscar(string textoBusqueda)
@@ -35,7 +37,7 @@ namespace SistemaGestionPedidos.Controllers
                 if (cliente != null)
                 {
 
-                    var clientesConDireccion = _obtenerTodosLosClientes.ObtenerTodosLosClientesConDireccion();
+                    var clientesConDireccion = _obtenerClientesPorDirec.ObtenerTodosLosClientesConDireccion();
 
 
                     var clienteConDireccion = clientesConDireccion.FirstOrDefault(c => c.Id == cliente.Id);
@@ -92,7 +94,7 @@ namespace SistemaGestionPedidos.Controllers
                 foreach (var cliente in clientesQueSuperanMonto)
                 {
 
-                    var clienteConDireccion = _obtenerTodosLosClientes.ObtenerTodosLosClientesConDireccion()
+                    var clienteConDireccion = _obtenerClientesPorDirec.ObtenerTodosLosClientesConDireccion()
                                                     .FirstOrDefault(c => c.Id == cliente.Id);
 
                     if (clienteConDireccion != null)
@@ -141,7 +143,7 @@ namespace SistemaGestionPedidos.Controllers
             }
             else
             {
-                var clientes = _obtenerTodosLosClientes.ObtenerTodosLosClientesConDireccion();
+                var clientes = _obtenerClientesPorDirec.ObtenerTodosLosClientesConDireccion();
 
                 var clientesViewModel = clientes.Select(c => new ClienteViewModel
                 {

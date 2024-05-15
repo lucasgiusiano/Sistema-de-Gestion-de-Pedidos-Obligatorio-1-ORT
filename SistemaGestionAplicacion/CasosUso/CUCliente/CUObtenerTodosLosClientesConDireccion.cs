@@ -9,20 +9,17 @@ using System.Threading.Tasks;
 
 namespace SistemaGestionAplicacion.CasosUso.CUCliente
 {
-    public class CUObtenerTodosLosClientes : ICUObtenerTodosLosClientes
+    public class CUObtenerTodosLosClientesConDireccion : ICUObtenerTodosLosClientesConDireccion
     {
         private readonly IRepositorioCliente _repo;
 
-        public CUObtenerTodosLosClientes(IRepositorioCliente repo)
+        public CUObtenerTodosLosClientesConDireccion(IRepositorioCliente repo)
         {
             _repo = repo;
         }
-
-        public List<Cliente> ObtenerTodosLosClientes()
+        public List<Cliente> ObtenerTodosLosClientesConDireccion()
         {
-            return _repo.ObtenerTodosLosClientes();
+            return _repo.ObtenerTodosLosClientesConDireccion();
         }
-       
     }
 }
-
