@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using SistemaGestionNegocio.Dominio;
 using SistemaGestionNegocio.ExcepcionesPropias;
@@ -14,6 +15,7 @@ namespace SistemaGestionDatos.Repositorios
     public class RepositorioConfiguracion: IRepositorioConfiguracion
     {
         public SistemaGestionContext DBContext { get; set; }
+
         public RepositorioConfiguracion(SistemaGestionContext ctx)
         {
             DBContext = ctx;
