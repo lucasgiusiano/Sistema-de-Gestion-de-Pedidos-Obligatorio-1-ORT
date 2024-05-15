@@ -50,7 +50,7 @@ namespace SistemaGestionPedidos.Controllers
         // POST: Pedido/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(DTOAltaPedido nuevoPedido)
+        public async Task<ActionResult> Create(DTOAltaPedido nuevoPedido)
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuarioLogueado")))
             {
@@ -62,8 +62,13 @@ namespace SistemaGestionPedidos.Controllers
                 {
                     try
                     {
-                        _cUAltaPedido.Alta(nuevoPedido);
-                        TempData["SuccessMessage"] = "Pedido creado correctamente.";
+                        var result = await _cUAltaPedido.Alta(nuevoPedido); // Espera a que la tarea se complete
+                        if (result != null)
+                        {
+                            TempData["SuccessMessage"] = "Pedido creado correctamente.";
+                            ViewBag.PrecioFinal = result.PrecioFinal;
+                        }
+
                         return RedirectToAction("Create", "Pedido");
                     }
                     catch (PedidoValidationException e)
@@ -78,6 +83,8 @@ namespace SistemaGestionPedidos.Controllers
                 return View();
             }
         }
+
+
         public ActionResult ListarPedidos()
         {
             if (String.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuarioLogueado")))

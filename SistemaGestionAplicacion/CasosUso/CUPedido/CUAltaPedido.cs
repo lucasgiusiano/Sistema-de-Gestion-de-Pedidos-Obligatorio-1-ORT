@@ -19,17 +19,20 @@ namespace SistemaGestionAplicacion.CasosUso.CUPedido
         private readonly IRepositorioArticulo _repoArticulo;
         private readonly IRepositorioCliente _repoCliente;
         private readonly IRepositorioConfiguracion _repositorioConfiguracion;
+        private readonly MapperPedido _mapper;
 
 
-        public CUAltaPedido(IRepositorioPedido repoPedido, IRepositorioArticulo repoArticulo, IRepositorioCliente repoCliente, IRepositorioConfiguracion repoConfig)
+
+        public CUAltaPedido(IRepositorioPedido repoPedido, IRepositorioArticulo repoArticulo, IRepositorioCliente repoCliente, IRepositorioConfiguracion repoConfig, MapperPedido mapper)
         {
             _repoPedido = repoPedido;
             _repoArticulo = repoArticulo;
             _repoCliente = repoCliente;
             _repositorioConfiguracion = repoConfig;
+            _mapper = mapper;
         }
 
-        public async Task Alta(DTOAltaPedido nuevoPedido)
+        public async Task<DTOPedido> Alta(DTOAltaPedido nuevoPedido)
         {
             var cliente = ValidarYObtenerCliente(nuevoPedido.ClienteId);
 
@@ -41,7 +44,9 @@ namespace SistemaGestionAplicacion.CasosUso.CUPedido
 
             CalcularPrecioFinal(pedido);
 
-            _repoPedido.Alta(pedido);
+            var pedidoAgregado = _repoPedido.Alta(pedido);
+
+            return _mapper.ToDTOPedidoConInfoBasica(pedidoAgregado);
         }
 
         private Cliente ValidarYObtenerCliente(int clienteId)

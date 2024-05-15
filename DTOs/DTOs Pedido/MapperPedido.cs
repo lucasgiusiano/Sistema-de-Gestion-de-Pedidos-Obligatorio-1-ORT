@@ -111,7 +111,17 @@ namespace DTOs.DTOs_Pedido
                 PrecioFinal = pedido.PrecioFinal
             };
         }
-
+        public DTOPedido ToDTOPedidoConInfoBasica(Pedido pedido)
+        {
+            return new DTOPedido
+            {
+                Id = pedido.Id,
+                FechaPedido = pedido.FechaPedido,
+                FechaEntrega = pedido.FechaEntrega,
+                Anulado = pedido.Anulado,
+                PrecioFinal = pedido.PrecioFinal
+            };
+        }
 
     }
 }

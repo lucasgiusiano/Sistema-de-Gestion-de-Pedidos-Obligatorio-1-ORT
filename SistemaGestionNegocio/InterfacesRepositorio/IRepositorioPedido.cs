@@ -6,7 +6,7 @@ namespace SistemaGestionNegocio.InterfacesRepositorio
 {
     public interface IRepositorioPedido
     {
-        void Alta(Pedido pedido);
+        Pedido Alta(Pedido pedido);
         void AnularPedido(DateTime fechaEmision);
         List<Pedido> ObtenerPedidosAnulados();
         void Anular(int id);

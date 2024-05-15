@@ -16,19 +16,23 @@ namespace SistemaGestionDatos.Repositorios
             DBContext = ctx;
         }
 
-        public void Alta(Pedido pedido)
+        public Pedido Alta(Pedido pedido)
         {
             if (pedido == null)
             {
                 throw new ArgumentNullException(nameof(pedido), "El pedido proporcionado es nulo.");
             }
+
             pedido.Validar();
             DBContext.Pedidos.Add(pedido);
             DBContext.SaveChanges();
+
+            return pedido; // devuelvo el pedido creado
         }
 
 
-       
+
+
 
         public void AnularPedido(DateTime fechaEmision)
         {
