@@ -4,10 +4,25 @@
     ViewData["Title"] = "Index";
 }
 
+@if (!String.IsNullOrEmpty(ViewBag.Error))
+{
+    <div class="alert alert-danger d-flex align-items-center justify-content-between mx-auto" role="alert" style="position: fixed; top: 10%; left: 50%; transform: translate(-50%, -50%);">
+        <div class="mx-3">
+            @ViewBag.Error
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
 <h1 class="text-center">Gestion de Usuarios</h1>
 
 <p>
-    <a class="btn btn-success" href="@Url.Action("Create", "Usuario")">Nuevo Usuario</a>
+    <a class="btn btn-success" href="@Url.Action("Index", "Home")">Volver</a>
+    @if (Context.Session.GetString("RolUsuarioLogueado") == "Admin")
+    {
+        <a class="btn btn-success" href="@Url.Action("Create", "Usuario")">Nuevo Usuario</a>
+    }
+    
 </p>
 <table class="table" style="border-radius: 15px; overflow:hidden;  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);">
     <thead class="bg-primary text-center text-light">
@@ -49,8 +64,11 @@
                 @Html.DisplayFor(modelItem => item.Admin)
             </td>
             <td>
-                <a class="btn btn-primary" href="@Url.Action("Edit", "Usuario", new {id = item.Id})">Editar</a>
-                <a class="btn btn-danger" href="@Url.Action("Delete", "Usuario", new {id = item.Id})">Eliminar</a>
+                @if (Context.Session.GetString("RolUsuarioLogueado") == "Admin")
+                {
+                    <a class="btn btn-primary" href="@Url.Action("Edit", "Usuario", new {id = item.Id})">Editar</a>
+                    <a class="btn btn-danger" href="@Url.Action("Delete", "Usuario", new {id = item.Id})">Eliminar</a>
+                }
             </td>
         </tr>
 }

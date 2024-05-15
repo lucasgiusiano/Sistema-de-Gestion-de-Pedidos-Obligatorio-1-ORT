@@ -121,6 +121,7 @@ namespace SistemaGestionPedidos.Controllers
                 }
                 else
                 {
+                    ViewBag.Error = "Debe contar con rol de administrador para realizar esa acción";
                     return RedirectToAction("Index");
                 }
             }
@@ -131,21 +132,29 @@ namespace SistemaGestionPedidos.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(UsuarioViewModel nuevo)
         {
-            try
+            if (HttpContext.Session.GetString("RolUsuarioLogueado") == "Admin")
             {
-                CUAlta.Alta(convertirADTO(nuevo));
+                try
+                {
+                    CUAlta.Alta(convertirADTO(nuevo));
 
+                    return RedirectToAction("Index");
+                }
+                catch (UsuarioValidationException e)
+                {
+                    ViewBag.Error = e.Message;
+                }
+                catch (Exception)
+                {
+                    ViewBag.Error = "Ocurrió un error inesperado";
+                }
+                return View();
+            }
+            else
+            {
+                ViewBag.Error = "Debe contar con rol de administrador para realizar esa acción";
                 return RedirectToAction("Index");
             }
-            catch (UsuarioValidationException e)
-            {
-                ViewBag.Error = e.Message;
-            }
-            catch (Exception)
-            {
-                ViewBag.Error = "Ocurrió un error inesperado";
-            }
-            return View();
         }
 
         // GET: UsuarioController/Edit/5
@@ -163,7 +172,7 @@ namespace SistemaGestionPedidos.Controllers
                     {
                         return View(convertirAViewModel(CUBuscar.Buscar(id)));
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                         ViewBag.Error = "Ocurrio un error inesperado";
                     }
@@ -181,21 +190,29 @@ namespace SistemaGestionPedidos.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(UsuarioViewModel usuarioEditado)
         {
-            try
+            if (HttpContext.Session.GetString("RolUsuarioLogueado") == "Admin")
             {
-                CUModificar.Modificar(convertirADTO(usuarioEditado));
+                try
+                {
+                    CUModificar.Modificar(convertirADTO(usuarioEditado));
 
-                return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (UsuarioValidationException e)
+                {
+                    ViewBag.Error = e.Message;
+                }
+                catch (Exception)
+                {
+                    ViewBag.Error = "Ocurrió un error inesperado";
+                }
+                return View();
             }
-            catch (UsuarioValidationException e)
+            else
             {
-                ViewBag.Error = e.Message;
+                ViewBag.Error = "Debe contar con rol de administrador para realizar esa acción";
+                return RedirectToAction("Index");
             }
-            catch (Exception)
-            {
-                ViewBag.Error = "Ocurrió un error inesperado";
-            }
-            return View();
         }
 
         // GET: UsuarioController/Delete/5
@@ -209,7 +226,16 @@ namespace SistemaGestionPedidos.Controllers
             {
                 if (HttpContext.Session.GetString("RolUsuarioLogueado") == "Admin")
                 {
-                    return View(convertirAViewModel(CUBuscar.Buscar(id)));
+                    try
+                    {
+                        return View(convertirAViewModel(CUBuscar.Buscar(id)));
+                    }
+                    catch (Exception)
+                    {
+                        ViewBag.Error = "Ocurrio un error inesperado";
+                        return View();
+                    }
+                    
                 }
                 else
                 {
@@ -223,20 +249,28 @@ namespace SistemaGestionPedidos.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(UsuarioViewModel model)
         {
-            try
+            if (HttpContext.Session.GetString("RolUsuarioLogueado") == "Admin")
             {
-                CUBaja.Baja(model.Id);
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    CUBaja.Baja(model.Id);
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (UsuarioValidationException e)
+                {
+                    ViewBag.Error = e.Message;
+                }
+                catch (Exception)
+                {
+                    ViewBag.Error = "Ha ocurrido un error inesperado";
+                }
+                return View();
             }
-            catch (UsuarioValidationException e)
+            else
             {
-                ViewBag.Error = e.Message;
+                ViewBag.Error = "Debe contar con rol de administrador para realizar esa acción";
+                return RedirectToAction("Index");
             }
-            catch (Exception)
-            {
-                ViewBag.Error = "Ha ocurrido un error inesperado";
-            }
-            return View();
         }
 
         private UsuarioViewModel convertirAViewModel(DTOAltaUsuario usu)
@@ -255,7 +289,7 @@ namespace SistemaGestionPedidos.Controllers
         private DTOAltaUsuario convertirADTO(UsuarioViewModel model)
         {
             DTOAltaUsuario usuario;
-            if (model.Id == null || model.Id == 0)
+            if (model.Id == 0)
             {
                 usuario = new DTOAltaUsuario(model.Email, model.Nombre, model.Apellido, model.Contrasenia, model.Admin);
             }
