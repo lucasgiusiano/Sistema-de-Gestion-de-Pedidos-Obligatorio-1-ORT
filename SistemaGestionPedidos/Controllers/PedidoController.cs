@@ -12,13 +12,13 @@ namespace SistemaGestionPedidos.Controllers
     {
         private readonly ICUAltaPedido _cUAltaPedido;
         private readonly ICUAnularPedido _anularPedido;
-        private readonly ICUListarPedidos _cuListarPedidos;
+        private readonly ICUListarPedidosNoEntregadosPorFecha _cuListarPedidosNoEntregadosPorFecha;
 
-        public PedidoController(ICUAltaPedido cUAltaPedido, ICUAnularPedido cUAnularPedido, ICUListarPedidos cuListarPedidos)
+        public PedidoController(ICUAltaPedido cUAltaPedido, ICUAnularPedido cUAnularPedido, ICUListarPedidosNoEntregadosPorFecha cuListarPedidosNoEntregadosPorFecha)
         {
             _cUAltaPedido = cUAltaPedido;
             _anularPedido = cUAnularPedido;
-            _cuListarPedidos = cuListarPedidos;
+            _cuListarPedidosNoEntregadosPorFecha = cuListarPedidosNoEntregadosPorFecha;
 
         }
 
@@ -120,7 +120,7 @@ namespace SistemaGestionPedidos.Controllers
             }
             else
             {
-                var pedidos = _cuListarPedidos.ListarPedidosNoEntregadosPorFecha(FechaPedido);
+                var pedidos = _cuListarPedidosNoEntregadosPorFecha.ListarPedidosNoEntregadosPorFecha(FechaPedido);
                 return View("ListarPedidos", pedidos);
             }
         }
