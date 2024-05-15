@@ -44,7 +44,7 @@
                                     <td>
                                         <form asp-action="AnularPedido" method="post" onsubmit="return confirm('¿Está seguro de que desea anular este pedido?');">
                                             <input type="hidden" name="id" value="@pedido.Id" />
-                                            @if(!pedido.Anulado) 
+                                            @if (!pedido.Anulado) 
                                             {
                                                 <button type="submit" class="btn btn-danger">Anular</button>
                                             }
