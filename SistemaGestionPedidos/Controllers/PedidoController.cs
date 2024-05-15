@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DTOs.DTOs_Pedido;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SistemaGestionAplicacion.CasosUso.CUPedido;
 using SistemaGestionAplicacion.InterfacesCU.ICUPedido;
+using SistemaGestionNegocio.Dominio;
+using SistemaGestionNegocio.ExcepcionesPropias;
 
 namespace SistemaGestionPedidos.Controllers
 {
@@ -15,11 +19,9 @@ namespace SistemaGestionPedidos.Controllers
             _cUAltaPedido = cUAltaPedido;
             _anularPedido = cUAnularPedido;
             _cuListarPedidos = cuListarPedidos;
+
         }
 
-
-
-        // GET: PedidoController
         public ActionResult Index()
         {
             if (String.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuarioLogueado")))
@@ -32,20 +34,6 @@ namespace SistemaGestionPedidos.Controllers
             }
         }
 
-        // GET: PedidoController/Details/5
-        public ActionResult Details(int id)
-        {
-            if (String.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuarioLogueado")))
-            {
-                return RedirectToAction("Login", "Usuario");
-            }
-            else
-            {
-                return View();
-            }
-        }
-
-        // GET: PedidoController/Create
         public ActionResult Create()
         {
             if (String.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuarioLogueado")))
@@ -58,18 +46,86 @@ namespace SistemaGestionPedidos.Controllers
             }
         }
 
-        // POST: PedidoController/Create
+
+        // POST: Pedido/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(DTOAltaPedido nuevoPedido)
         {
-            try
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuarioLogueado")))
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Login", "Usuario");
             }
-            catch
+            else
             {
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        _cUAltaPedido.Alta(nuevoPedido);
+                        TempData["SuccessMessage"] = "Pedido creado correctamente.";
+                        return RedirectToAction("Create", "Pedido");
+                    }
+                    catch (PedidoValidationException e)
+                    {
+                        ViewBag.Error = e.Message;
+                    }
+                    catch (Exception)
+                    {
+                        ViewBag.Error = "Ocurrió un error inesperado";
+                    }
+                }
                 return View();
+            }
+        }
+        public ActionResult ListarPedidos()
+        {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuarioLogueado")))
+            {
+                return RedirectToAction("Login", "Usuario");
+            }
+            else
+            {
+                return View(new List<DTOPedido>()); // Retorna una lista vacía al cargar la vista inicialmente.
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ListarPedidos(DateTime FechaPedido)
+        {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuarioLogueado")))
+            {
+                return RedirectToAction("Login", "Usuario");
+            }
+            else
+            {
+                var pedidos = _cuListarPedidos.ListarPedidosNoEntregadosPorFecha(FechaPedido);
+                return View("ListarPedidos", pedidos);
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AnularPedido(int id)
+        {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuarioLogueado")))
+            {
+                return RedirectToAction("Login", "Usuario");
+            }
+            else
+            {
+                try
+                {
+                    _anularPedido.Anular(id);
+                    ViewBag.Message = "Pedido anulado correctamente.";
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Error = "Ocurrió un error al intentar anular el pedido: " + ex.Message;
+                }
+                // Recarga la lista de pedidos después de anular uno.
+                return RedirectToAction("ListarPedidos");
             }
         }
 
@@ -86,20 +142,6 @@ namespace SistemaGestionPedidos.Controllers
             }
         }
 
-        // POST: PedidoController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
         // GET: PedidoController/Delete/5
         public ActionResult Delete(int id)
@@ -109,21 +151,6 @@ namespace SistemaGestionPedidos.Controllers
                 return RedirectToAction("Login", "Usuario");
             }
             else
-            {
-                return View();
-            }
-        }
-
-        // POST: PedidoController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
             {
                 return View();
             }

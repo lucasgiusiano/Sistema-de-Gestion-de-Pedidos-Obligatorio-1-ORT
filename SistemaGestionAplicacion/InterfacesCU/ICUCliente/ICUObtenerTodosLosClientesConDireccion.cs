@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace SistemaGestionAplicacion.InterfacesCU.ICUCliente
 {
-    public interface ICUObtenerTodosLosClientes
+    public interface ICUObtenerTodosLosClientesConDireccion
     {
-        public List<Cliente> ObtenerTodosLosClientes();
-        
+        public List<Cliente> ObtenerTodosLosClientesConDireccion();
     }
 }

@@ -47,6 +47,8 @@ builder.Services.AddScoped<ICUBuscar<DTOAltaArticulo>, CUBuscarArticulo>();
 builder.Services.AddScoped<ICUBuscarClientePorRazonSocial, CUBuscarClientePorRazonSocial>();
 builder.Services.AddScoped<ICUBuscarClientesPorMonto, CUBuscarClientesPorMonto>();
 builder.Services.AddScoped<ICUObtenerTodosLosClientes, CUObtenerTodosLosClientes>();
+builder.Services.AddScoped<ICUObtenerTodosLosClientesConDireccion, CUObtenerTodosLosClientesConDireccion>();
+
 
 //Inyecciones de Repositorios
 builder.Services.AddScoped<IRepositorioDireccion, RepositorioDireccion>();

@@ -52,7 +52,7 @@
             <th>Número</th>
             <th>Ciudad</th>
             <th>Distancia desde el depósito</th>
-            <th>Acciones</th>
+            @* <th>Acciones</th> *@
         </tr>
     </thead>
     <tbody class="text-center">
@@ -67,11 +67,11 @@
                     <td>@cliente.Numero</td>
                     <td>@cliente.Ciudad</td>
                     <td>@cliente.DistanciaDeposito</td>
-                    <td>
-                        <a asp-controller="Cliente" asp-action="Details" asp-route-id="@cliente.Id">Detalles</a> |
-                        <a asp-controller="Cliente" asp-action="Edit" asp-route-id="@cliente.Id">Editar</a> |
-                        <a asp-controller="Cliente" asp-action="Delete" asp-route-id="@cliente.Id">Eliminar</a>
-                    </td>
+                   @*  <td>
+                        <a asp-controller="cliente" asp-action="details" asp-route-id="@cliente.id">detalles</a> |
+                        <a asp-controller="cliente" asp-action="edit" asp-route-id="@cliente.id">editar</a> |
+                        <a asp-controller="cliente" asp-action="delete" asp-route-id="@cliente.id">eliminar</a>
+                    </td>  *@
                 </tr>
             }
         }
