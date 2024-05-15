@@ -159,7 +159,6 @@ namespace SistemaGestionPedidos.Controllers
             {
                 if (HttpContext.Session.GetString("RolUsuarioLogueado") == "Admin")
                 {
-#pragma warning disable CS0168 // La variable está declarada pero nunca se usa
                     try
                     {
                         return View(convertirAViewModel(CUBuscar.Buscar(id)));
@@ -168,7 +167,6 @@ namespace SistemaGestionPedidos.Controllers
                     {
                         ViewBag.Error = "Ocurrio un error inesperado";
                     }
-#pragma warning restore CS0168 // La variable está declarada pero nunca se usa
                     return View();
                 }
                 else
@@ -257,7 +255,6 @@ namespace SistemaGestionPedidos.Controllers
         private DTOAltaUsuario convertirADTO(UsuarioViewModel model)
         {
             DTOAltaUsuario usuario;
-#pragma warning disable CS0472 // El resultado de la expresión siempre es el mismo ya que un valor de este tipo siempre es igual a "null"
             if (model.Id == null || model.Id == 0)
             {
                 usuario = new DTOAltaUsuario(model.Email, model.Nombre, model.Apellido, model.Contrasenia, model.Admin);
@@ -266,7 +263,6 @@ namespace SistemaGestionPedidos.Controllers
             {
                 usuario = new DTOAltaUsuario(model.Id, model.Email, model.Nombre, model.Apellido, model.Contrasenia, model.Admin);
             }
-#pragma warning restore CS0472 // El resultado de la expresión siempre es el mismo ya que un valor de este tipo siempre es igual a "null"
 
             return usuario;
         }
