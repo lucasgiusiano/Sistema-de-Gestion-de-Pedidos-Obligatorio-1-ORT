@@ -14,6 +14,7 @@ namespace SistemaGestionNegocio.Dominio
         public List<Linea> Lineas { get; set; }
         public bool Anulado { get; set; }
         public double PrecioFinal { get; set; }
+
         public abstract double CalcularTotal(double iva);
 
         public virtual void Validar()
