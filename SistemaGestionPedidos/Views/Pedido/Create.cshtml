@@ -23,6 +23,13 @@
         <div class="card-body">
             <form asp-action="Create" method="post">
                 <div class="form-group mb-3">
+                    <label for="TipoPedido">Tipo de Pedido:</label>
+                    <select name="nuevoPedido.TipoPedido" class="form-control" id="TipoPedido">
+                        <option value="express">Pedido Express</option>
+                        <option value="comun">Pedido Común</option>
+                    </select>
+                </div>
+                <div class="form-group mb-3">
                     <label for="FechaEntrega">Fecha de Entrega:</label>
                     <input type="datetime-local" name="nuevoPedido.FechaEntrega" class="form-control" id="FechaEntrega" />
                     <span asp-validation-for="FechaEntrega" class="text-danger"></span>

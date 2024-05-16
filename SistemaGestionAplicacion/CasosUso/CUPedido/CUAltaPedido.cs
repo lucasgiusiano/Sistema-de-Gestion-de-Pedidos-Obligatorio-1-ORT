@@ -35,10 +35,11 @@ namespace SistemaGestionAplicacion.CasosUso.CUPedido
         public async Task<DTOPedido> Alta(DTOAltaPedido nuevoPedido)
         {
             var cliente = ValidarYObtenerCliente(nuevoPedido.ClienteId);
+            var plazoMaximoExpress = _repositorioConfiguracion.ObtenerPlazoMaximoExpress();
 
-            ValidarPedido(nuevoPedido, cliente);
+            ValidarPedido(nuevoPedido, plazoMaximoExpress);
 
-            Pedido pedido = CrearObjetoPedido(nuevoPedido, cliente);
+            Pedido pedido = CrearObjetoPedido(nuevoPedido, cliente, plazoMaximoExpress);
 
             AsignarFechaPedido(pedido);
 
@@ -58,7 +59,7 @@ namespace SistemaGestionAplicacion.CasosUso.CUPedido
             }
             return cliente;
         }
-        private void ValidarPedido(DTOAltaPedido pedidoDTO, Cliente cliente)
+        private void ValidarPedido(DTOAltaPedido pedidoDTO, double plazoMaximoExpress)
         {
 
             // Verificar stock suficiente
@@ -74,21 +75,37 @@ namespace SistemaGestionAplicacion.CasosUso.CUPedido
                 {
                     throw new Exception($"No hay stock suficiente del artículo {articulo.Nombre.Valor}.");
                 }
+
+                // corroboro si es coherente que haya elegido pedido express con el plazo de entrega acorde al tipo de pedido
+                if (pedidoDTO.TipoPedido.Equals("express", StringComparison.OrdinalIgnoreCase))
+                {
+                    if ((pedidoDTO.FechaEntrega - DateTime.Now).TotalDays > plazoMaximoExpress)
+                    {
+                        throw new Exception($"El plazo de entrega para un pedido express no puede ser mayor a {plazoMaximoExpress} días.");
+                    }
+                }
+
+                // corroboro que si eligio pedido coomun, el plazo de entrega no sea menor a una semana como lo pide la letra
+                if (pedidoDTO.TipoPedido.Equals("comun", StringComparison.OrdinalIgnoreCase))
+                {
+                    if ((pedidoDTO.FechaEntrega - DateTime.Now).TotalDays < 7)
+                    {
+                        throw new Exception("El plazo de entrega para un pedido comun no puede ser menor a 7 días.");
+                    }
+                }
+
             }
         }
 
-        private Pedido CrearObjetoPedido(DTOAltaPedido pedidoDTO, Cliente cliente)
+        private Pedido CrearObjetoPedido(DTOAltaPedido pedidoDTO, Cliente cliente, double plazoMaximoEntrega)
         {
             Pedido pedido;
-            // obtengo el plazo maximo configurado para saber si es un pedido express o no a partir de la fecha de entrega
-            double plazoMaximo = _repositorioConfiguracion.ObtenerPlazoMaximoExpress();
 
-            // Determinar si es pedido express o común
-            if (pedidoDTO.FechaEntrega <= DateTime.Today.AddDays(plazoMaximo))
+            if (pedidoDTO.FechaEntrega <= DateTime.Today.AddDays(plazoMaximoEntrega))
             {
                 // Es pedido express
                 pedido = new PedidoExpress();
-                ((PedidoExpress)pedido).PlazoMaximoExpress = Convert.ToInt32(plazoMaximo);
+                ((PedidoExpress)pedido).PlazoMaximoExpress = Convert.ToInt32(plazoMaximoEntrega);
             }
             else
             {

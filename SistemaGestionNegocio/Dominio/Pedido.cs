@@ -20,7 +20,6 @@ namespace SistemaGestionNegocio.Dominio
         public virtual void Validar()
         {
            
-
             if (Lineas == null || !Lineas.Any())
             {
                 throw new InvalidOperationException("El pedido debe contener al menos una línea.");
@@ -36,13 +35,12 @@ namespace SistemaGestionNegocio.Dominio
         public override double CalcularTotal(double iva, double recargoPedidoExpressDia, double recargoPedidoExpress,double recargoPedidoComun)
         {
             double precioTotal = Lineas.Sum(linea => linea.Cantidad * linea.PrecioUnitario);
-
+            // Aplicar recargo por ser express del 10%
             double factorMultiplicidad = 1 + (recargoPedidoExpress/100);
-            // Aplicar recargo por ser express
-            // Verificar si la entrega es en el mismo día
+            
+            // Verificar si la entrega es en el mismo día ya que el recargo pasaria a ser 15 %
             if (FechaEntrega.Date == DateTime.Today)
             {
-                factorMultiplicidad = 0;
                 factorMultiplicidad = 1 + (recargoPedidoExpressDia/100);
             }
 

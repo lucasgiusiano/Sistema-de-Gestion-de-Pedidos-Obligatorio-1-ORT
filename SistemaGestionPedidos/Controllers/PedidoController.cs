@@ -69,7 +69,7 @@ namespace SistemaGestionPedidos.Controllers
                         }
                         else
                         {
-                            ViewBag.Error = "El resultado de la creación del pedido es nulo.";
+                            ViewBag.Error = "No se pudo crear el pedido.";
                             
                         }
 
@@ -79,10 +79,17 @@ namespace SistemaGestionPedidos.Controllers
                     {
                         ViewBag.Error = e.Message;
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
-                        ViewBag.Error = "Ocurrió un error inesperado";
+                        ViewBag.Error = ex.Message;
                     }
+                }
+                else
+                {
+                    // con esto muestro en la vista todos los errores de validacion si es que los hay (a nivel del dto, por ejemplo los datos requeridos y el largo de la lista , etc)
+                    ViewBag.Error = string.Join("; ", ModelState.Values
+                                                      .SelectMany(x => x.Errors)
+                                                      .Select(x => x.ErrorMessage));
                 }
                 return View();
             }
