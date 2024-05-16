@@ -14,13 +14,13 @@ namespace SistemaGestionAPI.Controllers
 
         private readonly ICUAltaPedido _cUAltaPedido;
         private readonly ICUAnularPedido _anularPedido;
-        private readonly ICUListarPedidos _cuListarPedidos;
+        private readonly ICUListarPedidosAnulados _cuListarPedidosAnulados;
 
-        public PedidosController(ICUAltaPedido cUAltaPedido, ICUAnularPedido cUAnularPedido, ICUListarPedidos cuListarPedidos)
+        public PedidosController(ICUAltaPedido cUAltaPedido, ICUAnularPedido cUAnularPedido, ICUListarPedidosAnulados cuListarPedidosAnulados)
         {
             _cUAltaPedido = cUAltaPedido;
             _anularPedido = cUAnularPedido;
-            _cuListarPedidos = cuListarPedidos;
+			_cuListarPedidosAnulados = cuListarPedidosAnulados;
         }
 
         [HttpPost("altaPedido")]
@@ -76,7 +76,7 @@ namespace SistemaGestionAPI.Controllers
             try
             {
                 // Llamar al caso de uso para listar pedidos anulados por fecha
-                var pedidosAnulados = _cuListarPedidos.ListarPedidosAnulados();
+                var pedidosAnulados = _cuListarPedidosAnulados.ListarPedidosAnulados();
 
                 // Si se encuentran pedidos anulados, retornar un Ok con la lista de pedidos
                 return Ok(pedidosAnulados);
