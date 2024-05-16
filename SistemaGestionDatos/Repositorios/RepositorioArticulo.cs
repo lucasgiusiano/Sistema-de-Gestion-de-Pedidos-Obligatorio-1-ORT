@@ -44,7 +44,6 @@ namespace SistemaGestionDatos.Repositorios
             {
                 if (!DBContext.Articulos.Any(a => a.Nombre.Valor == modificado.Nombre.Valor))
                 {
-                    modificado.Validar();
                     DBContext.Articulos.Update(modificado);
                     DBContext.SaveChanges();
                 }

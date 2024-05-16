@@ -21,7 +21,7 @@ namespace SistemaGestionAplicacion.CasosUso.CUArticulo
 
         public void Modificar(DTOAltaArticulo modificado)
         {
-            Repo.Modificar(MapperArticulo.DTOArticuloToArticulo(modificado));
+			Repo.Modificar(MapperArticulo.DTOArticuloToArticulo(modificado));
         }
     }
 }

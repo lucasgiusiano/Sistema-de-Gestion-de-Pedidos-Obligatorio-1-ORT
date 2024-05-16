@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SistemaGestionNegocio.Dominio
 {
-    public class Articulo: IValidable
+    public class Articulo
     {
         public int Id { get; set; }
         public NombreArticulo Nombre { get; set; }
@@ -17,8 +17,6 @@ namespace SistemaGestionNegocio.Dominio
         public CodigoProveedorArticulo CodigoProveedor { get; set; }
         public PrecioVentaArticulo PrecioVenta { get; set; }
         public StockArticulo Stock { get; private set; }
-
-       
 
         public Articulo(int id,NombreArticulo nombre, DescripcionArticulo descripcion, CodigoProveedorArticulo codigoProveedor, PrecioVentaArticulo precioVenta, StockArticulo stock)
 		{
@@ -30,7 +28,6 @@ namespace SistemaGestionNegocio.Dominio
 			Stock = stock;
 		}
         
-
         public Articulo(NombreArticulo nombre, DescripcionArticulo descripcion, CodigoProveedorArticulo codigoProveedor, PrecioVentaArticulo precioVenta, StockArticulo stock)
         {
             Nombre = nombre;
@@ -39,7 +36,13 @@ namespace SistemaGestionNegocio.Dominio
             PrecioVenta = precioVenta;
             Stock = stock;
         }
-        public bool VerificarStockSuficiente(int cantidad)
+
+		public Articulo()
+		{
+
+		}
+
+		public bool VerificarStockSuficiente(int cantidad)
         {
             return Stock.Valor >= cantidad;
         }
@@ -57,15 +60,5 @@ namespace SistemaGestionNegocio.Dominio
             }
         }
 
-
-        public Articulo()
-        {
-            
-        }
-
-        public void Validar()
-        {
-            // a este metodo no llegaria si ya no es valido, porque romperia a nivel de validacion en el view model por las anotaciones
-        }
     }
 }

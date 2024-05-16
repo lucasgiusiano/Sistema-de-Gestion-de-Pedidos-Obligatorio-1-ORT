@@ -21,7 +21,9 @@ namespace SistemaGestionAplicacion.CasosUso.CUUsuario
 
         public void Alta(DTOAltaUsuario nuevo)
         {
-            Repo.Alta(MapperUsuario.DTOAltaUsuarioToUsuario(nuevo));
+            Usuario uNuevo = MapperUsuario.DTOAltaUsuarioToUsuario(nuevo);
+            uNuevo.Validar();
+			Repo.Alta(uNuevo);
         }
     }
 }

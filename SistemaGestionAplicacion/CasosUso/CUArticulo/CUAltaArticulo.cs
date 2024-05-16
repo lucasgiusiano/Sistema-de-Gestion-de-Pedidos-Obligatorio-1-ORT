@@ -21,9 +21,7 @@ namespace SistemaGestionAplicacion.CasosUso.CUArticulo
 
         public void Alta(DTOAltaArticulo nuevo)
         {
-            Articulo art = MapperArticulo.DTOArticuloToArticulo(nuevo);
-            art.Validar();  
-            Repo.Alta(art);
+            Repo.Alta(MapperArticulo.DTOArticuloToArticulo(nuevo));
         }
     }
 }

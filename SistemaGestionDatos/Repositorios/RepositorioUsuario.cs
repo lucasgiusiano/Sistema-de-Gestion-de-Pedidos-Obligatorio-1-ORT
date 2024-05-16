@@ -27,7 +27,6 @@ namespace SistemaGestionDatos.Repositorios
             {
                 if (BuscarXEmail(nuevo.Email) == null)
                 {
-                    nuevo.Validar();
                     DBContext.Usuarios.Add(nuevo);
                     DBContext.SaveChanges();
                 }
@@ -35,7 +34,6 @@ namespace SistemaGestionDatos.Repositorios
                 {
                     throw new UsuarioValidationException("Correo Inválido");
                 }
-
             }
             else
             {
@@ -45,7 +43,7 @@ namespace SistemaGestionDatos.Repositorios
 
         public void Baja(int id)
         {
-            Usuario aEliminar = DBContext.Usuarios.Find(id);
+            Usuario aEliminar = BuscarPorId(id);
             if (aEliminar != null)
             {
                 DBContext.Usuarios.Remove(aEliminar);
@@ -67,7 +65,6 @@ namespace SistemaGestionDatos.Repositorios
         {
             if (modificado != null)
             {
-                modificado.Validar();
                 DBContext.Usuarios.Update(modificado);
                 DBContext.SaveChanges();
             }

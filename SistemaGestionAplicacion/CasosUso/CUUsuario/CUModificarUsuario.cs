@@ -21,7 +21,9 @@ namespace SistemaGestionAplicacion.CasosUso.CUUsuario
 
         public void Modificar(DTOAltaUsuario modificado)
         {
-            Repo.Modificar(MapperUsuario.DTOAltaUsuarioToUsuario(modificado));
+            Usuario uModificado = MapperUsuario.DTOAltaUsuarioToUsuario(modificado);
+            uModificado.Validar();
+			Repo.Modificar(uModificado);
         }
     }
 }
