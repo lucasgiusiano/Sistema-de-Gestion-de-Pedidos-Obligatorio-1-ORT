@@ -10,6 +10,5 @@ namespace SistemaGestionAplicacion.InterfacesCU.ICUPedido
     public interface ICUListarPedidosNoEntregadosPorFecha
     {
         List<DTOPedido> ListarPedidosNoEntregadosPorFecha(DateTime fecha);
-
     }
 }

@@ -40,6 +40,5 @@ namespace SistemaGestionNegocio.VOs
 
             return otro.Valor == this.Valor;
         }
-
     }
 }

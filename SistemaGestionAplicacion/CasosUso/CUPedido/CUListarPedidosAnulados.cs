@@ -25,7 +25,5 @@ namespace SistemaGestionAplicacion.CasosUso.CUPedido
             var pedidos = _repoPedidio.ListarPedidosAnulados();
             return _mapper.MapPedidosADTO(pedidos);
         }
-
-       
     }
 }
