@@ -58,6 +58,7 @@ namespace SistemaGestionAplicacion.CasosUso.CUPedido
             }
             return cliente;
         }
+
         private void ValidarPedido(DTOAltaPedido pedidoDTO, Cliente cliente)
         {
 
