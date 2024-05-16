@@ -47,6 +47,44 @@ namespace SistemaGestionDatos.Repositorios
                 throw new RepositorioConfiguracionException("Error al obtener el valor del IVA.", ex);
             }
         }
+        public double ObtenerRecargoPedidoExpressEnElDia()
+        {
+            try
+            {
+                var configuracion = DBContext.Configuraciones.FirstOrDefault(c => c.Nombre == "RecargoPedidoExpressEnElDia");
+                return configuracion?.Valor ?? 0;
+            }
+            catch (Exception ex)
+            {
 
+                throw new RepositorioConfiguracionException("Error al obtener el valor del Recargo Pedido Express en el dia.", ex);
+            }
+        }
+        public double ObtenerRecargoPedidoExpress()
+        {
+            try
+            {
+                var configuracion = DBContext.Configuraciones.FirstOrDefault(c => c.Nombre == "RecargoPedidoExpress");
+                return configuracion?.Valor ?? 0;
+            }
+            catch (Exception ex)
+            {
+
+                throw new RepositorioConfiguracionException("Error al obtener el valor del Recargo Pedido Express.", ex);
+            }
+        }
+        public double ObtenerRecargoPedidoComun()
+        {
+            try
+            {
+                var configuracion = DBContext.Configuraciones.FirstOrDefault(c => c.Nombre == "RecargoPedidoComun");
+                return configuracion?.Valor ?? 0;
+            }
+            catch (Exception ex)
+            {
+
+                throw new RepositorioConfiguracionException("Error al obtener el valor del Recargo Pedido Comun.", ex);
+            }
+        }
     }
 }

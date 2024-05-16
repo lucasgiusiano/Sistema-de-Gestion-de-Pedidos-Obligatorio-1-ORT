@@ -123,8 +123,12 @@ namespace SistemaGestionAplicacion.CasosUso.CUPedido
         {
 
             double iva = _repositorioConfiguracion.ObtenerIVA();
+            double recargoPedidoExpressDia = _repositorioConfiguracion.ObtenerRecargoPedidoExpressEnElDia();
+            double recargoPedidoExpress = _repositorioConfiguracion.ObtenerRecargoPedidoExpress();
+            double recargoPedidoComun = _repositorioConfiguracion.ObtenerRecargoPedidoComun();
 
-            pedido.PrecioFinal = pedido.CalcularTotal(iva);
+
+            pedido.PrecioFinal = pedido.CalcularTotal(iva,recargoPedidoExpressDia,recargoPedidoExpress, recargoPedidoComun);
         }
 
 

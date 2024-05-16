@@ -49,7 +49,7 @@ namespace DTOs.DTOs_Pedido
                 pedido = new PedidoComun();
             }
 
-            pedido.PrecioFinal = pedido.CalcularTotal(_repositorioConfiguracion.ObtenerIVA()); 
+            pedido.PrecioFinal = pedido.CalcularTotal(_repositorioConfiguracion.ObtenerIVA(), _repositorioConfiguracion.ObtenerRecargoPedidoExpressEnElDia(), _repositorioConfiguracion.ObtenerRecargoPedidoExpress(), _repositorioConfiguracion.ObtenerRecargoPedidoComun()); 
 
             return pedido;
         }

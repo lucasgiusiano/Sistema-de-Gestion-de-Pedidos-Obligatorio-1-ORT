@@ -10,5 +10,8 @@ namespace SistemaGestionNegocio.InterfacesRepositorio
     {
         public double ObtenerPlazoMaximoExpress();
         public double ObtenerIVA();
+        public double ObtenerRecargoPedidoExpressEnElDia();
+        public double ObtenerRecargoPedidoExpress();
+        public double ObtenerRecargoPedidoComun();
     }
 }

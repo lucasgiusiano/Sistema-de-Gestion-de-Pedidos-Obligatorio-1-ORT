@@ -15,11 +15,16 @@ namespace SistemaGestionNegocio.Dominio
         public bool Anulado { get; set; }
         public double PrecioFinal { get; set; }
 
-        public abstract double CalcularTotal(double iva);
+        public abstract double CalcularTotal(double iva, double recargoPedidoExpressDia, double recargoPedidoExpress, double recargoPedidoComun);
 
         public virtual void Validar()
         {
-          
+           
+
+            if (Lineas == null || !Lineas.Any())
+            {
+                throw new InvalidOperationException("El pedido debe contener al menos una línea.");
+            }
         }
     }
 
@@ -28,16 +33,17 @@ namespace SistemaGestionNegocio.Dominio
         [NotMapped]
         public int PlazoMaximoExpress { get; set; }
 
-        public override double CalcularTotal(double iva)
+        public override double CalcularTotal(double iva, double recargoPedidoExpressDia, double recargoPedidoExpress,double recargoPedidoComun)
         {
             double precioTotal = Lineas.Sum(linea => linea.Cantidad * linea.PrecioUnitario);
 
-            double factorMultiplicidad = 1.1;
+            double factorMultiplicidad = 1 + (recargoPedidoExpress/100);
             // Aplicar recargo por ser express
             // Verificar si la entrega es en el mismo día
             if (FechaEntrega.Date == DateTime.Today)
             {
-                factorMultiplicidad = 1.15;
+                factorMultiplicidad = 0;
+                factorMultiplicidad = 1 + (recargoPedidoExpressDia/100);
             }
 
             precioTotal = precioTotal * factorMultiplicidad;
@@ -77,14 +83,14 @@ namespace SistemaGestionNegocio.Dominio
             }
         }
 
-        public override double CalcularTotal(double iva)
+        public override double CalcularTotal(double iva, double recargoPedidoExpressDia, double recargoPedidoExpress, double recargoPedidoComun)
         {
             double precioTotal = Lineas.Sum(linea => linea.Cantidad * linea.PrecioUnitario);
 
             // Aplicar recargo si la distancia a la dirección de entrega supera los 100 km
             if (Cliente.DistanciaDeposito > 100)
             {
-                precioTotal *= 1.05; // Recargo del 5%
+                precioTotal *= 1 + (recargoPedidoComun/100); // Recargo del 5%
             }
 
             // Aplicar IVA
