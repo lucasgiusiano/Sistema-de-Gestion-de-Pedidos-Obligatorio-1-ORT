@@ -1,9 +1,7 @@
 ﻿using DTOs.DTOs_Pedido;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SistemaGestionAplicacion.CasosUso.CUPedido;
 using SistemaGestionAplicacion.InterfacesCU.ICUPedido;
-using SistemaGestionNegocio.Dominio;
 using SistemaGestionNegocio.ExcepcionesPropias;
 
 namespace SistemaGestionPedidos.Controllers

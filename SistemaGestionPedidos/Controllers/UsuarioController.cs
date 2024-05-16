@@ -1,14 +1,9 @@
 ﻿using DTOs.DTOs_Usuario;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.Elfie.Diagnostics;
 using SistemaGestionAplicacion.InterfacesCU.ICUGenericas;
 using SistemaGestionAplicacion.InterfacesCU.ICUUsuario;
-using SistemaGestionNegocio.Dominio;
 using SistemaGestionNegocio.ExcepcionesPropias;
 using SistemaGestionPedidos.Models;
-using System.Reflection.Metadata;
-using System.Security.Cryptography;
 using System.Text;
 
 namespace SistemaGestionPedidos.Controllers
