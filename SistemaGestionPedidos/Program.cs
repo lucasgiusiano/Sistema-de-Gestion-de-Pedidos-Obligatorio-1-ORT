@@ -1,9 +1,5 @@
-using SistemaGestionNegocio;
-using SistemaGestionDatos;
-using SistemaGestionAplicacion.CasosUso;
 using SistemaGestionNegocio.InterfacesRepositorio;
 using SistemaGestionDatos.Repositorios;
-using SistemaGestionNegocio.Dominio;
 using SistemaGestionAplicacion.CasosUso.CUArticulo;
 using SistemaGestionAplicacion.InterfacesCU.ICUGenericas;
 using SistemaGestionAplicacion.InterfacesCU.ICUArticulo;
